@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Role__c</fullName>
+    <label>Role</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Showroom Manager</fullName>
+                <default>false</default>
+                <label>Showroom Manager</label>
+            </value>
+            <value>
+                <fullName>Sales Manager</fullName>
+                <default>false</default>
+                <label>Sales Manager</label>
+            </value>
+            <value>
+                <fullName>Iron Man</fullName>
+                <default>false</default>
+                <label>Iron Man</label>
+            </value>
+            <value>
+                <fullName>Delivery Manager</fullName>
+                <default>false</default>
+                <label>Delivery Manager</label>
+            </value>
+            <value>
+                <fullName>Design Manager</fullName>
+                <default>false</default>
+                <label>Design Manager</label>
+            </value>
+            <value>
+                <fullName>Business Development Manager</fullName>
+                <default>false</default>
+                <label>Business Development Manager</label>
+            </value>
+            <value>
+                <fullName>Pre-Sales Freelancer</fullName>
+                <default>false</default>
+                <label>Pre-Sales Freelancer</label>
+            </value>
+            <value>
+                <fullName>Tele Caller Agent</fullName>
+                <default>false</default>
+                <label>Tele Caller Agent</label>
+            </value>
+            <value>
+                <fullName>Product Consultant</fullName>
+                <default>false</default>
+                <label>Product Consultant</label>
+            </value>
+            <value>
+                <fullName>Doowup Presales</fullName>
+                <default>false</default>
+                <label>Doowup Presales</label>
+            </value>
+            <value>
+                <fullName>Central Team Agent</fullName>
+                <default>false</default>
+                <label>Central Team Agent</label>
+            </value>
+            <value>
+                <fullName>Inside Sales Agent</fullName>
+                <default>false</default>
+                <label>Inside Sales Agent</label>
+            </value>
+            <value>
+                <fullName>Dealer</fullName>
+                <default>false</default>
+                <label>Dealer</label>
+            </value>
+            <value>
+                <fullName>Desgin Manager</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Desgin Manager</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

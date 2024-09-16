@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Hyderabad Pincode List</label>
+    <protected>false</protected>
+    <values>
+        <field>City_Name__c</field>
+        <value xsi:type="xsd:string">Hyderabad</value>
+    </values>
+    <values>
+        <field>Pincode_List__c</field>
+        <value xsi:type="xsd:string">500103,501401,501301,500100,500094,500087,500083,500071,500067,500062,500056,500054,500047,500043,500042,500040,500026,500016,500015,500014,500011,500010,500009,500003,500078,500133,502325,502324,502319,502313,502307,502300,502285,502032,500090,500085,500082,500072,500055,500050,500049,500038,500037</value>
+    </values>
+</CustomMetadata>

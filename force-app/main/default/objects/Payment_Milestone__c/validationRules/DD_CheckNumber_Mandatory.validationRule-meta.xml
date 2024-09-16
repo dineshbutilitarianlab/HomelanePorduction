@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DD_CheckNumber_Mandatory</fullName>
+    <active>true</active>
+    <description>DD_CheckNumber_Mandatory when Payment Mode is Check or DD</description>
+    <errorConditionFormula>AND( OR(ISPICKVAL( Payment_Mode__c , &apos;Cheque&apos;),ISPICKVAL( Payment_Mode__c , &apos;DD&apos;)),
+      ISBLANK(Check_DD_Number__c ))</errorConditionFormula>
+    <errorDisplayField>Check_DD_Number__c</errorDisplayField>
+    <errorMessage>Check / DD number Cannot be NULL when Payment Mode is Check or DD</errorMessage>
+</ValidationRule>

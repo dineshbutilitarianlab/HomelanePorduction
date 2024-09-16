@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SignUp_Source_Scoring</fullName>
+    <columns>NAME</columns>
+    <columns>SignUp_Source__c</columns>
+    <columns>SignUp_Source_Score__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Lead_Class_Scoring__c.SignUp_Source_Scoring</value>
+    </filters>
+    <label>SignUp Source Scoring</label>
+    <language>en_US</language>
+</ListView>

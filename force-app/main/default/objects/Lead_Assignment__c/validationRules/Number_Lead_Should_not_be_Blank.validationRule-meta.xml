@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Number_Lead_Should_not_be_Blank</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISBLANK( Number_of_Leads__c )</errorConditionFormula>
+    <errorDisplayField>Number_of_Leads__c</errorDisplayField>
+    <errorMessage>Number of Leads Should not be Blank</errorMessage>
+</ValidationRule>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PreAppointment_Lead_Source_List__c</fullName>
+    <label>PreAppointment Lead Source List</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>google seo</fullName>
+                <default>false</default>
+                <label>google seo</label>
+            </value>
+            <value>
+                <fullName>instagram</fullName>
+                <default>false</default>
+                <label>instagram</label>
+            </value>
+            <value>
+                <fullName>bing</fullName>
+                <default>false</default>
+                <label>bing</label>
+            </value>
+            <value>
+                <fullName>Paid Search</fullName>
+                <default>false</default>
+                <label>Paid Search</label>
+            </value>
+            <value>
+                <fullName>Facebook Ad</fullName>
+                <default>false</default>
+                <label>Facebook Ad</label>
+            </value>
+            <value>
+                <fullName>All</fullName>
+                <default>false</default>
+                <label>All</label>
+            </value>
+            <value>
+                <fullName>Taboola</fullName>
+                <default>false</default>
+                <label>Taboola</label>
+            </value>
+            <value>
+                <fullName>Direct</fullName>
+                <default>false</default>
+                <label>Direct</label>
+            </value>
+            <value>
+                <fullName>discovery</fullName>
+                <default>false</default>
+                <label>discovery</label>
+            </value>
+            <value>
+                <fullName>local</fullName>
+                <default>false</default>
+                <label>local</label>
+            </value>
+            <value>
+                <fullName>HomeBliss_FB</fullName>
+                <default>false</default>
+                <label>HomeBliss_FB</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>M1_Month_Residence_Conversion__c</fullName>
+    <formula>IF(    (M1_Total_Residence_Meetings__c + M2_Total_Residence_Meetings__c + M3_Total_Residence_Meetings__c
+) &gt; 0,   (Residence_Order1_Time2__c + Residence_Order2_Time3__c + Residence_Order3_Time4__c
+)/   (M1_Total_Residence_Meetings__c + M2_Total_Residence_Meetings__c + M3_Total_Residence_Meetings__c
+) ,  0 )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>M1 Month Residence Conversion</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Percent</type>
+</CustomField>

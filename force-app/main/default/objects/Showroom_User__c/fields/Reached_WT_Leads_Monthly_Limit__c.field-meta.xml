@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reached_WT_Leads_Monthly_Limit__c</fullName>
+    <formula>IF(( WT_Leads_Monthly_Assignment__c &gt;= WT_Leads_Monthly_Assignment_Limit__c ),true,false)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Reached WT Leads Monthly Limit</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

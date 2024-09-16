@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ambassador</fullName>
+    <active>true</active>
+    <description>Ambassador</description>
+    <label>Ambassador</label>
+    <picklistValues>
+        <picklist>BDM_Name__c</picklist>
+        <values>
+            <fullName>Annesha Das</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aryan Gaur</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Avinash Dnyanoba Ghule</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Avinash Giri</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chetna Mishra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deepak Kalauni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Keerthivasan Vishvanathan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lokesh Agarwal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manju Reddy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manmeet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meruva Ashok Kumar Reddy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Muhammed Thahir</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nenavath Moneesh</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ram Thakur</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ramakant M</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ravi Teja</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SATHYANARAIN LV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sameer Sangle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shahil</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shashank Mamdapure</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shashi D</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shubham Chourey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Soumya Chankraborty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sourabh Kumar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sudeepto Das</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Syed Mudhassir</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vinodh Selvaraj</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Classification_of_Channel_Partners__c</picklist>
+        <values>
+            <fullName>Builders</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Housing Loan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Others</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Real Estate - Institution</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Real estate - Individual</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>MOU_Signed__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Payment_Type__c</picklist>
+        <values>
+            <fullName>Fixed Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revenue Share</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Revenue_Share_Applicable_On__c</picklist>
+        <values>
+            <fullName>Overall Quote Value</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quote Value Net Taxes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Woodwork</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Woodwork %26 Accessories</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Woodwork Net Taxes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Revenue_Share_Payable_On__c</picklist>
+        <values>
+            <fullName>10%25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>40%25</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status__c</picklist>
+        <values>
+            <fullName>Active</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dormant</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inactive</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Sub_Source__c</picklist>
+        <values>
+            <fullName>Ambassador</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+</RecordType>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>on_status_complete_date_should_not_null</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF( ISPICKVAL( Status__c , &apos;Completed&apos;) ,  ISBLANK( Expected_Start_Date__c )  , false)</errorConditionFormula>
+    <errorDisplayField>Expected_Start_Date__c</errorDisplayField>
+    <errorMessage>Actual Start Date should not be blank for status as &apos;Completed&apos; !!</errorMessage>
+</ValidationRule>

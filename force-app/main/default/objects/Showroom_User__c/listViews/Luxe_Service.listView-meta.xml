@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Luxe_Service</fullName>
+    <columns>NAME</columns>
+    <columns>Luxe_Service_Showroom__c</columns>
+    <columns>IsActive__c</columns>
+    <columns>IM_Class__c</columns>
+    <columns>Daily_Assignment__c</columns>
+    <columns>Showroom_Name__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Luxe_Service_Showroom__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <filters>
+        <field>IM_Class__c</field>
+        <operation>equals</operation>
+        <value>Gold,Silver</value>
+    </filters>
+    <label>Luxe Service</label>
+</ListView>

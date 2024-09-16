@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Available_at_Showroom__c</fullName>
+    <label>Available at Showroom</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Kanakapura Showroom</fullName>
+                <default>false</default>
+                <label>Kanakapura Showroom</label>
+            </value>
+            <value>
+                <fullName>Gopalan Showroom</fullName>
+                <default>false</default>
+                <label>Gopalan Showroom</label>
+            </value>
+            <value>
+                <fullName>Pushparang Showroom</fullName>
+                <default>false</default>
+                <label>Pushparang Showroom</label>
+            </value>
+            <value>
+                <fullName>Durga Petals Showroom</fullName>
+                <default>false</default>
+                <label>Durga Petals Showroom</label>
+            </value>
+            <value>
+                <fullName>Test Showroom 2</fullName>
+                <default>false</default>
+                <label>Test Showroom 2</label>
+            </value>
+            <value>
+                <fullName>Sanghvi Valley</fullName>
+                <default>false</default>
+                <label>Sanghvi Valley</label>
+            </value>
+            <value>
+                <fullName>Noida Showroom</fullName>
+                <default>false</default>
+                <label>Noida Showroom</label>
+            </value>
+            <value>
+                <fullName>Gurgaon Showroom</fullName>
+                <default>false</default>
+                <label>Gurgaon Showroom</label>
+            </value>
+            <value>
+                <fullName>Kodambakkam Showroom</fullName>
+                <default>false</default>
+                <label>Kodambakkam Showroom</label>
+            </value>
+            <value>
+                <fullName>Gachibowli Showroom</fullName>
+                <default>false</default>
+                <label>Gachibowli Showroom</label>
+            </value>
+            <value>
+                <fullName>Kandivali Showroom</fullName>
+                <default>false</default>
+                <label>Kandivali Showroom</label>
+            </value>
+            <value>
+                <fullName>Yelahanka Showroom</fullName>
+                <default>false</default>
+                <label>Yelahanka Showroom</label>
+            </value>
+            <value>
+                <fullName>HSR Showroom</fullName>
+                <default>false</default>
+                <label>HSR Showroom</label>
+            </value>
+            <value>
+                <fullName>Thane Showroom</fullName>
+                <default>false</default>
+                <label>Thane Showroom</label>
+            </value>
+            <value>
+                <fullName>Test Showroom</fullName>
+                <default>false</default>
+                <label>Test Showroom</label>
+            </value>
+            <value>
+                <fullName>Gulbarga</fullName>
+                <default>false</default>
+                <label>Gulbarga</label>
+            </value>
+            <value>
+                <fullName>Hebbal Showroom</fullName>
+                <default>false</default>
+                <label>Hebbal Showroom</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>5</visibleLines>
+</CustomField>

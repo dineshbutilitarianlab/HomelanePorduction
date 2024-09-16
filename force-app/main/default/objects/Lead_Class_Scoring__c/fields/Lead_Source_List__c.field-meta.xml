@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Source_List__c</fullName>
+    <label>Lead Source List</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Referral</fullName>
+                <default>false</default>
+                <label>Referral</label>
+            </value>
+            <value>
+                <fullName>Walk-In</fullName>
+                <default>false</default>
+                <label>Walk-In</label>
+            </value>
+            <value>
+                <fullName>bing</fullName>
+                <default>false</default>
+                <label>bing</label>
+            </value>
+            <value>
+                <fullName>sfleadgen</fullName>
+                <default>false</default>
+                <label>sfleadgen</label>
+            </value>
+            <value>
+                <fullName>Toll-free</fullName>
+                <default>false</default>
+                <label>Toll-free</label>
+            </value>
+            <value>
+                <fullName>local</fullName>
+                <default>false</default>
+                <label>local</label>
+            </value>
+            <value>
+                <fullName>Facebook Ad</fullName>
+                <default>false</default>
+                <label>Facebook Ad</label>
+            </value>
+            <value>
+                <fullName>google seo</fullName>
+                <default>false</default>
+                <label>google seo</label>
+            </value>
+            <value>
+                <fullName>Paid Search</fullName>
+                <default>false</default>
+                <label>Paid Search</label>
+            </value>
+            <value>
+                <fullName>instagram</fullName>
+                <default>false</default>
+                <label>instagram</label>
+            </value>
+            <value>
+                <fullName>HomeBliss</fullName>
+                <default>false</default>
+                <label>HomeBliss</label>
+            </value>
+            <value>
+                <fullName>yahoo seo</fullName>
+                <default>false</default>
+                <label>yahoo seo</label>
+            </value>
+            <value>
+                <fullName>SEO</fullName>
+                <default>false</default>
+                <label>SEO</label>
+            </value>
+            <value>
+                <fullName>bing seo</fullName>
+                <default>false</default>
+                <label>bing seo</label>
+            </value>
+            <value>
+                <fullName>an</fullName>
+                <default>false</default>
+                <label>an</label>
+            </value>
+            <value>
+                <fullName>ig</fullName>
+                <default>false</default>
+                <label>ig</label>
+            </value>
+            <value>
+                <fullName>Customer experience</fullName>
+                <default>false</default>
+                <label>Customer experience</label>
+            </value>
+            <value>
+                <fullName>taboola</fullName>
+                <default>false</default>
+                <label>taboola</label>
+            </value>
+            <value>
+                <fullName>HomeBliss_FB</fullName>
+                <default>false</default>
+                <label>HomeBliss_FB</label>
+            </value>
+            <value>
+                <fullName>Quikr</fullName>
+                <default>false</default>
+                <label>Quikr</label>
+            </value>
+            <value>
+                <fullName>Direct</fullName>
+                <default>false</default>
+                <label>Direct</label>
+            </value>
+            <value>
+                <fullName>FB Lead Form</fullName>
+                <default>false</default>
+                <label>FB Lead Form</label>
+            </value>
+            <value>
+                <fullName>LinkedIn Lead Form</fullName>
+                <default>false</default>
+                <label>LinkedIn Lead Form</label>
+            </value>
+            <value>
+                <fullName>LinkedIn</fullName>
+                <default>false</default>
+                <label>LinkedIn</label>
+            </value>
+            <value>
+                <fullName>Offline Ads</fullName>
+                <default>false</default>
+                <label>Offline Ads</label>
+            </value>
+            <value>
+                <fullName>Showroom Order</fullName>
+                <default>false</default>
+                <label>Showroom Order</label>
+            </value>
+            <value>
+                <fullName>Affiliates</fullName>
+                <default>false</default>
+                <label>Affiliates</label>
+            </value>
+            <value>
+                <fullName>Blog</fullName>
+                <default>false</default>
+                <label>Blog</label>
+            </value>
+            <value>
+                <fullName>Facebook Post</fullName>
+                <default>false</default>
+                <label>Facebook Post</label>
+            </value>
+            <value>
+                <fullName>HomeBliss_PaidSearch</fullName>
+                <default>false</default>
+                <label>HomeBliss_PaidSearch</label>
+            </value>
+            <value>
+                <fullName>organic</fullName>
+                <default>false</default>
+                <label>organic</label>
+            </value>
+            <value>
+                <fullName>Others</fullName>
+                <default>false</default>
+                <label>Others</label>
+            </value>
+            <value>
+                <fullName>performance_max</fullName>
+                <default>false</default>
+                <label>performance_max</label>
+            </value>
+            <value>
+                <fullName>print</fullName>
+                <default>false</default>
+                <label>print</label>
+            </value>
+            <value>
+                <fullName>webengage</fullName>
+                <default>false</default>
+                <label>webengage</label>
+            </value>
+            <value>
+                <fullName>youtube</fullName>
+                <default>false</default>
+                <label>youtube</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

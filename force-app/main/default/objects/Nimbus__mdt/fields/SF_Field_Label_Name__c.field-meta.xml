@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SF_Field_Label_Name__c</fullName>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>SF Field Label Name</label>
+    <required>false</required>
+    <type>TextArea</type>
+</CustomField>

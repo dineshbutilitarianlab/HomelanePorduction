@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Opportunity_Transfer</fullName>
+    <active>true</active>
+    <label>Lead Opportunity Transfer</label>
+    <picklistValues>
+        <picklist>Operation_Status__c</picklist>
+        <values>
+            <fullName>Closed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Failed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type_Of_Transfer__c</picklist>
+        <values>
+            <fullName>Cubico Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doowup Presales Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doowup Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Freelancer Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Globiva Digital Centre Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Globiva Digital East Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Globiva Digital North Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Globiva Digital South Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Globiva Digital West Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Globiva Feedback Digital Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Globiva Offline PB Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Globiva Offline RL Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Globiva Relanded Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IM Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inside Sales Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nimbus DL Digital Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nimbus DL Offline Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nimbus Doowup Offline Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nimbus Doowup Opp Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nimbus HL Missed Call Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nimbus Hindi Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nimbus Relanded Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nimbus Telugu Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nimbus Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offline Relanded Transfer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Telecaller Transfer</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

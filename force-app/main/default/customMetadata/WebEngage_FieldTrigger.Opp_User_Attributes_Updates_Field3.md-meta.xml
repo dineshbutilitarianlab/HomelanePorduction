@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <description>Field3</description>
+    <label>Opp User Attributes Updates Field3</label>
+    <protected>false</protected>
+    <values>
+        <field>Field_Api_Name__c</field>
+        <value xsi:type="xsd:string">No_of_Meetings_Done__c</value>
+    </values>
+    <values>
+        <field>SobjectName__c</field>
+        <value xsi:type="xsd:string">Opportunity</value>
+    </values>
+    <values>
+        <field>WebEngage_Event_Name__c</field>
+        <value xsi:type="xsd:string">Opportunity_User_Attributes_Updates</value>
+    </values>
+</CustomMetadata>

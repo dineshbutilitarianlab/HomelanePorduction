@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ticket_Status_On_Hold_Reason</fullName>
+    <active>true</active>
+    <description>If Ticket &apos;Status&apos; is &quot;On Hold&quot;, the On Hold Reason field should be filled.</description>
+    <errorConditionFormula>TEXT(Status__c)==&quot;On Hold&quot; &amp;&amp; On__c==NULL</errorConditionFormula>
+    <errorMessage>If Ticket &apos;Status&apos; is &quot;On Hold&quot;, the On Hold Reason field should be filled.</errorMessage>
+</ValidationRule>

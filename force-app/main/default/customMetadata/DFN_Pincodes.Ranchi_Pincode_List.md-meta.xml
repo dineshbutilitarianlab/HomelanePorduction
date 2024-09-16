@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Ranchi Pincode List</label>
+    <protected>false</protected>
+    <values>
+        <field>City_Name__c</field>
+        <value xsi:type="xsd:string">Ranchi</value>
+    </values>
+    <values>
+        <field>Pincode_List__c</field>
+        <value xsi:type="xsd:string">834008,834002,834004,834009,834006,835217,834001,835221,834003,834005,835215,834010,835222,834007,835103</value>
+    </values>
+</CustomMetadata>

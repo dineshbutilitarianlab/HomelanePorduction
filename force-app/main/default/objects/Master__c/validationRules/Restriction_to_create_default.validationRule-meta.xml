@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restriction_to_create_default</fullName>
+    <active>false</active>
+    <errorConditionFormula>Name =&apos;Default Builder&apos; || Name =&apos;default builder&apos; || Name =&apos;Default Property&apos; || Name =&apos;default property&apos; || Name =&apos;default&apos; || Name =&apos;Default&apos;</errorConditionFormula>
+    <errorDisplayField>Name</errorDisplayField>
+    <errorMessage>You Cannot Create Default Record !!</errorMessage>
+</ValidationRule>

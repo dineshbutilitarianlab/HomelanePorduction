@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DP_Status__c</fullName>
+    <label>DP Status</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Active - Available to take meetings</fullName>
+                <default>false</default>
+                <label>Active - Available to take meetings</label>
+            </value>
+            <value>
+                <fullName>Inactive - Available to take meetings</fullName>
+                <default>false</default>
+                <label>Inactive - Available to take meetings</label>
+            </value>
+            <value>
+                <fullName>Active - Overloaded available to meetings</fullName>
+                <default>false</default>
+                <label>Active - Overloaded available to meetings</label>
+            </value>
+            <value>
+                <fullName>Active - Under showroom assessment</fullName>
+                <default>true</default>
+                <label>Active - Under showroom assessment</label>
+            </value>
+            <value>
+                <fullName>Active - Overloaded 10-40</fullName>
+                <default>false</default>
+                <label>Active - Overloaded 10-40</label>
+            </value>
+            <value>
+                <fullName>Active - Overloaded 0-10</fullName>
+                <default>false</default>
+                <label>Active - Overloaded 0-10</label>
+            </value>
+            <value>
+                <fullName>Inactive - No Response</fullName>
+                <default>false</default>
+                <label>Inactive - No Response</label>
+            </value>
+            <value>
+                <fullName>Inactive - On short leave</fullName>
+                <default>false</default>
+                <label>Inactive - On short leave</label>
+            </value>
+            <value>
+                <fullName>Inactive - On long leave</fullName>
+                <default>false</default>
+                <label>Inactive - On long leave</label>
+            </value>
+            <value>
+                <fullName>Inactive - PIP</fullName>
+                <default>false</default>
+                <label>Inactive - PIP</label>
+            </value>
+            <value>
+                <fullName>Inactive - Terminated</fullName>
+                <default>false</default>
+                <label>Inactive - Terminated</label>
+            </value>
+            <value>
+                <fullName>Inactive - Quit HL</fullName>
+                <default>false</default>
+                <label>Inactive - Quit HL</label>
+            </value>
+            <value>
+                <fullName>Inactive- Busy with 10-40</fullName>
+                <default>false</default>
+                <label>Inactive- Busy with 10-40</label>
+            </value>
+            <value>
+                <fullName>Active</fullName>
+                <default>false</default>
+                <label>Active</label>
+            </value>
+            <value>
+                <fullName>Under showroom assessment</fullName>
+                <default>false</default>
+                <label>Under showroom assessment</label>
+            </value>
+            <value>
+                <fullName>Quit HL</fullName>
+                <default>false</default>
+                <label>Quit HL</label>
+            </value>
+            <value>
+                <fullName>Overloaded 0-10</fullName>
+                <default>false</default>
+                <label>Overloaded 0-10</label>
+            </value>
+            <value>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+                <label>Inactive</label>
+            </value>
+            <value>
+                <fullName>Overloaded 10-40</fullName>
+                <default>false</default>
+                <label>Overloaded 10-40</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

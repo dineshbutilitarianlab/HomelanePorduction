@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_Source_Scoring</fullName>
+    <columns>NAME</columns>
+    <columns>Lead_Source__c</columns>
+    <columns>Lead_Source_Score__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Lead_Class_Scoring__c.Lead_Source_Scoring</value>
+    </filters>
+    <label>Lead Source Scoring</label>
+    <language>en_US</language>
+</ListView>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Payment_Mode__c</fullName>
+    <label>Payment Mode</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Cash</fullName>
+                <default>false</default>
+                <label>Cash</label>
+            </value>
+            <value>
+                <fullName>Cheque</fullName>
+                <default>false</default>
+                <label>Cheque</label>
+            </value>
+            <value>
+                <fullName>DD</fullName>
+                <default>false</default>
+                <label>DD</label>
+            </value>
+            <value>
+                <fullName>Wire Transfer</fullName>
+                <default>false</default>
+                <label>Wire Transfer</label>
+            </value>
+            <value>
+                <fullName>NEFT/RTGS</fullName>
+                <default>false</default>
+                <label>NEFT/RTGS</label>
+            </value>
+            <value>
+                <fullName>CC Avenue</fullName>
+                <default>false</default>
+                <label>CC Avenue</label>
+            </value>
+            <value>
+                <fullName>Paytm</fullName>
+                <default>false</default>
+                <label>Paytm</label>
+            </value>
+            <value>
+                <fullName>Kissht</fullName>
+                <default>false</default>
+                <label>Kissht</label>
+            </value>
+            <value>
+                <fullName>Card Swipe</fullName>
+                <default>false</default>
+                <label>Card Swipe</label>
+            </value>
+            <value>
+                <fullName>HDFC</fullName>
+                <default>false</default>
+                <label>HDFC</label>
+            </value>
+            <value>
+                <fullName>PayU</fullName>
+                <default>false</default>
+                <label>PayU</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

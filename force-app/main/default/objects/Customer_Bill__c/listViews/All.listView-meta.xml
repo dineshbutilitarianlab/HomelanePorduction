@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>Amount_to_be_paid__c</columns>
+    <columns>Bill_Status__c</columns>
+    <columns>Design_Partner__c</columns>
+    <columns>Opportunity__c</columns>
+    <columns>Quote_Value__c</columns>
+    <columns>CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Bill_Status__c</field>
+        <operation>equals</operation>
+        <value>10% Payment Approved,10% Payment Received,10% Intermediate,10% Approved</value>
+    </filters>
+    <label>10% approved</label>
+    <language>en_US</language>
+</ListView>

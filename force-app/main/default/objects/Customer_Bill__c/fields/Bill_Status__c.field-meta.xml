@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bill_Status__c</fullName>
+    <label>Bill Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>10% Payment Received</fullName>
+                <default>false</default>
+                <label>10% Payment Received</label>
+            </value>
+            <value>
+                <fullName>10% Payment Approved</fullName>
+                <default>false</default>
+                <label>10% Payment Approved</label>
+            </value>
+            <value>
+                <fullName>10% Payment Rejected</fullName>
+                <default>false</default>
+                <label>10% Payment Rejected</label>
+            </value>
+            <value>
+                <fullName>40% Payment Received</fullName>
+                <default>false</default>
+                <label>40% Payment Received</label>
+            </value>
+            <value>
+                <fullName>40% Payment Approved</fullName>
+                <default>false</default>
+                <label>40% Payment Approved</label>
+            </value>
+            <value>
+                <fullName>40% Payment Rejected</fullName>
+                <default>false</default>
+                <label>40% Payment Rejected</label>
+            </value>
+            <value>
+                <fullName>50% Payment Received</fullName>
+                <default>false</default>
+                <label>50% Payment Received</label>
+            </value>
+            <value>
+                <fullName>50% Payment Approved</fullName>
+                <default>false</default>
+                <label>50% Payment Approved</label>
+            </value>
+            <value>
+                <fullName>50% Payment Rejected</fullName>
+                <default>false</default>
+                <label>50% Payment Rejected</label>
+            </value>
+            <value>
+                <fullName>Full and Final Settlement Received</fullName>
+                <default>false</default>
+                <label>Full and Final Settlement Received</label>
+            </value>
+            <value>
+                <fullName>Full and Final Settlement Approved</fullName>
+                <default>false</default>
+                <label>Full and Final Settlement Approved</label>
+            </value>
+            <value>
+                <fullName>Full and Final Settlement Rejected</fullName>
+                <default>false</default>
+                <label>Full and Final Settlement Rejected</label>
+            </value>
+            <value>
+                <fullName>10% Intermediate</fullName>
+                <default>false</default>
+                <label>10% Intermediate</label>
+            </value>
+            <value>
+                <fullName>10% Approved</fullName>
+                <default>false</default>
+                <label>10% Approved</label>
+            </value>
+            <value>
+                <fullName>40% Intermediate</fullName>
+                <default>false</default>
+                <label>40% Intermediate</label>
+            </value>
+            <value>
+                <fullName>40% Approved</fullName>
+                <default>false</default>
+                <label>40% Approved</label>
+            </value>
+            <value>
+                <fullName>50% Intermediate</fullName>
+                <default>false</default>
+                <label>50% Intermediate</label>
+            </value>
+            <value>
+                <fullName>50% Approved</fullName>
+                <default>false</default>
+                <label>50% Approved</label>
+            </value>
+            <value>
+                <fullName>100% Intermediate</fullName>
+                <default>false</default>
+                <label>100% Intermediate</label>
+            </value>
+            <value>
+                <fullName>100% Approved</fullName>
+                <default>false</default>
+                <label>100% Approved</label>
+            </value>
+            <value>
+                <fullName>Deleted</fullName>
+                <default>false</default>
+                <label>Deleted</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

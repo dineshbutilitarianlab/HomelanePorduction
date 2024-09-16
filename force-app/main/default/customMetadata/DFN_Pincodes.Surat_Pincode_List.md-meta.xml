@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Surat Pincode List</label>
+    <protected>false</protected>
+    <values>
+        <field>City_Name__c</field>
+        <value xsi:type="xsd:string">Surat</value>
+    </values>
+    <values>
+        <field>Pincode_List__c</field>
+        <value xsi:type="xsd:string">394105,394130,394248,394230,395011,394370,394517,394235,394515,394326,394180,395002,394335,394270,394670,394220,394310,395010,394550,394640,395023,395003,395005,394305,394325,394150,395008,395007,394210,395001,395006,395004,395009,394315,394250,394601,394445,394160,394410,394185,394540,394510,394101,394107,394221,395017</value>
+    </values>
+</CustomMetadata>

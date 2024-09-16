@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Future_date_validation</fullName>
+    <active>false</active>
+    <errorConditionFormula>IF(  DATEVALUE(Payment_Date__c  ) &gt;  Today(), true, false)</errorConditionFormula>
+    <errorDisplayField>Payment_Date__c</errorDisplayField>
+    <errorMessage>The date should be today or in the past, not in the future</errorMessage>
+</ValidationRule>

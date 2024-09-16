@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pincode_Numbers</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(LEN(Pincode__c) &lt;&gt;6,NOT(ISNUMBER(Pincode__c)))</errorConditionFormula>
+    <errorDisplayField>Pincode__c</errorDisplayField>
+    <errorMessage>Please enter only 6 digit numbers!!</errorMessage>
+</ValidationRule>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TitleV2__c</fullName>
+    <label>Title</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Design Partner</fullName>
+                <default>false</default>
+                <label>Design Partner</label>
+            </value>
+            <value>
+                <fullName>Intern</fullName>
+                <default>false</default>
+                <label>Intern</label>
+            </value>
+            <value>
+                <fullName>DRM</fullName>
+                <default>false</default>
+                <label>DRM</label>
+            </value>
+            <value>
+                <fullName>ADRM</fullName>
+                <default>false</default>
+                <label>ADRM</label>
+            </value>
+            <value>
+                <fullName>Associate Designer</fullName>
+                <default>false</default>
+                <label>Associate Designer</label>
+            </value>
+            <value>
+                <fullName>Internal Buddy</fullName>
+                <default>false</default>
+                <label>Internal Buddy</label>
+            </value>
+            <value>
+                <fullName>Community Manager</fullName>
+                <default>false</default>
+                <label>Community Manager</label>
+            </value>
+            <value>
+                <fullName>Design Manager</fullName>
+                <default>false</default>
+                <label>Design Manager</label>
+            </value>
+            <value>
+                <fullName>Assistant Design Manager</fullName>
+                <default>false</default>
+                <label>Assistant Design Manager</label>
+            </value>
+            <value>
+                <fullName>Sales Manager</fullName>
+                <default>false</default>
+                <label>Sales Manager</label>
+            </value>
+            <value>
+                <fullName>Community Manager Digital Products</fullName>
+                <default>false</default>
+                <label>Community Manager Digital Products</label>
+            </value>
+            <value>
+                <fullName>Showroom Manager</fullName>
+                <default>false</default>
+                <label>Showroom Manager</label>
+            </value>
+            <value>
+                <fullName>Sr. Project Manager</fullName>
+                <default>false</default>
+                <label>Sr. Project Manager</label>
+            </value>
+            <value>
+                <fullName>Squarelet Partner</fullName>
+                <default>false</default>
+                <label>Squarelet Partner</label>
+            </value>
+            <value>
+                <fullName>PDDE</fullName>
+                <default>false</default>
+                <label>PDDE</label>
+            </value>
+            <value>
+                <fullName>QA</fullName>
+                <default>false</default>
+                <label>QA</label>
+            </value>
+            <value>
+                <fullName>Training DP</fullName>
+                <default>false</default>
+                <label>Training DP</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

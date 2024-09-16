@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BDM_Name__c</fullName>
+    <label>BDM Name</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Sameer Sangle</fullName>
+                <default>false</default>
+                <label>Sameer Sangle</label>
+            </value>
+            <value>
+                <fullName>Shashi D</fullName>
+                <default>false</default>
+                <label>Shashi D</label>
+            </value>
+            <value>
+                <fullName>Muhammed Thahir</fullName>
+                <default>false</default>
+                <label>Muhammed Thahir</label>
+            </value>
+            <value>
+                <fullName>Keerthivasan Vishvanathan</fullName>
+                <default>false</default>
+                <label>Keerthivasan Vishvanathan</label>
+            </value>
+            <value>
+                <fullName>SATHYANARAIN LV</fullName>
+                <default>false</default>
+                <label>SATHYANARAIN LV</label>
+            </value>
+            <value>
+                <fullName>Meruva Ashok Kumar Reddy</fullName>
+                <default>false</default>
+                <label>Meruva Ashok Kumar Reddy</label>
+            </value>
+            <value>
+                <fullName>Deepak Kalauni</fullName>
+                <default>false</default>
+                <label>Deepak Kalauni</label>
+            </value>
+            <value>
+                <fullName>Vinodh Selvaraj</fullName>
+                <default>false</default>
+                <label>Vinodh Selvaraj</label>
+            </value>
+            <value>
+                <fullName>Shahil</fullName>
+                <default>false</default>
+                <label>Shahil</label>
+            </value>
+            <value>
+                <fullName>Shubham Chourey</fullName>
+                <default>false</default>
+                <label>Shubham Chourey</label>
+            </value>
+            <value>
+                <fullName>Ramakant M</fullName>
+                <default>false</default>
+                <label>Ramakant M</label>
+            </value>
+            <value>
+                <fullName>Sourabh Kumar</fullName>
+                <default>false</default>
+                <label>Sourabh Kumar</label>
+            </value>
+            <value>
+                <fullName>Syed Mudhassir</fullName>
+                <default>false</default>
+                <label>Syed Mudhassir</label>
+            </value>
+            <value>
+                <fullName>Shashank Mamdapure</fullName>
+                <default>false</default>
+                <label>Shashank Mamdapure</label>
+            </value>
+            <value>
+                <fullName>Manmeet</fullName>
+                <default>false</default>
+                <label>Manmeet</label>
+            </value>
+            <value>
+                <fullName>Annesha Das</fullName>
+                <default>false</default>
+                <label>Annesha Das</label>
+            </value>
+            <value>
+                <fullName>Avinash Giri</fullName>
+                <default>false</default>
+                <label>Avinash Giri</label>
+            </value>
+            <value>
+                <fullName>Lokesh Agarwal</fullName>
+                <default>false</default>
+                <label>Lokesh Agarwal</label>
+            </value>
+            <value>
+                <fullName>Avinash Dnyanoba Ghule</fullName>
+                <default>false</default>
+                <label>Avinash Dnyanoba Ghule</label>
+            </value>
+            <value>
+                <fullName>Chetna Mishra</fullName>
+                <default>false</default>
+                <label>Chetna Mishra</label>
+            </value>
+            <value>
+                <fullName>Satyajit</fullName>
+                <default>false</default>
+                <label>Satyajit</label>
+            </value>
+            <value>
+                <fullName>Rahul Tiwari</fullName>
+                <default>false</default>
+                <label>Rahul Tiwari</label>
+            </value>
+            <value>
+                <fullName>Ram Thakur</fullName>
+                <default>false</default>
+                <label>Ram Thakur</label>
+            </value>
+            <value>
+                <fullName>Manju Reddy</fullName>
+                <default>false</default>
+                <label>Manju Reddy</label>
+            </value>
+            <value>
+                <fullName>Aryan Gaur</fullName>
+                <default>false</default>
+                <label>Aryan Gaur</label>
+            </value>
+            <value>
+                <fullName>Ravi Teja</fullName>
+                <default>false</default>
+                <label>Ravi Teja</label>
+            </value>
+            <value>
+                <fullName>Sudeepto Das</fullName>
+                <default>false</default>
+                <label>Sudeepto Das</label>
+            </value>
+            <value>
+                <fullName>Nenavath Moneesh</fullName>
+                <default>false</default>
+                <label>Nenavath Moneesh</label>
+            </value>
+            <value>
+                <fullName>Soumya Chankraborty</fullName>
+                <default>false</default>
+                <label>Soumya Chankraborty</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

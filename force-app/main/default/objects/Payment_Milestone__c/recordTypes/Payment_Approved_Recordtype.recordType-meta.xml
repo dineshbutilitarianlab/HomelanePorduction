@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Payment_Approved_Recordtype</fullName>
+    <active>true</active>
+    <label>Payment Approved Recordtype</label>
+    <picklistValues>
+        <picklist>Payment_Mode__c</picklist>
+        <values>
+            <fullName>CC Avenue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Card Swipe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cash</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cheque</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HDFC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kissht</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NEFT%2FRTGS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PayU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paytm</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Wire Transfer</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Payment_Status__c</picklist>
+        <values>
+            <fullName>Deleted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payment Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payment Received</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Payment Rejected</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Payment_Type__c</picklist>
+        <values>
+            <fullName>Final Installment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Installment 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Installment 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Installment 3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Installment 4</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

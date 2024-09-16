@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Serail_Number_Mandatory_for_Milestone</fullName>
+    <active>false</active>
+    <errorConditionFormula>ISPICKVAL(Item_Type__c, &apos;Milestone&apos;) &amp;&amp; ISBLANK(Sr_No__c)</errorConditionFormula>
+    <errorDisplayField>Sr_No__c</errorDisplayField>
+    <errorMessage>Please enter serial number</errorMessage>
+</ValidationRule>

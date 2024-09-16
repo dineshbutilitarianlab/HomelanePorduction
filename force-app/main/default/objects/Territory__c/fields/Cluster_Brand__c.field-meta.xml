@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cluster_Brand__c</fullName>
+    <label>Cluster Brand</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Homelane</fullName>
+                <default>true</default>
+                <label>Homelane</label>
+            </value>
+            <value>
+                <fullName>Doow up</fullName>
+                <default>false</default>
+                <label>Doow up</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

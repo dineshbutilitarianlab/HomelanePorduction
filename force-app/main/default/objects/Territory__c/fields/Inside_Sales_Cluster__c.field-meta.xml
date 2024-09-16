@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Inside_Sales_Cluster__c</fullName>
+    <label>Inside Sales Cluster</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>INSALES_DOUP_BLR_1</fullName>
+                <default>false</default>
+                <label>INSALES_DOUP_BLR_1</label>
+            </value>
+            <value>
+                <fullName>INSALES_BHU_1</fullName>
+                <default>false</default>
+                <label>INSALES_BHU_1</label>
+            </value>
+            <value>
+                <fullName>INSALES_ROTN_1</fullName>
+                <default>false</default>
+                <label>INSALES_ROTN_1</label>
+            </value>
+            <value>
+                <fullName>INSALES_MYS_1</fullName>
+                <default>false</default>
+                <label>INSALES_MYS_1</label>
+            </value>
+            <value>
+                <fullName>INSALES_VIJ_VIZ</fullName>
+                <default>false</default>
+                <label>INSALES_VIJ_VIZ</label>
+            </value>
+            <value>
+                <fullName>INSALES_PUN_1</fullName>
+                <default>false</default>
+                <label>INSALES_PUN_1</label>
+            </value>
+            <value>
+                <fullName>INSALES_AHM_1</fullName>
+                <default>false</default>
+                <label>INSALES_AHM_1</label>
+            </value>
+            <value>
+                <fullName>INSALES_SUR_1</fullName>
+                <default>false</default>
+                <label>INSALES_SUR_1</label>
+            </value>
+            <value>
+                <fullName>INSALES_NOI</fullName>
+                <default>false</default>
+                <label>INSALES_NOI</label>
+            </value>
+            <value>
+                <fullName>InSales_Cluster_1_Mum</fullName>
+                <default>false</default>
+                <label>InSales_Cluster_1_Mum</label>
+            </value>
+            <value>
+                <fullName>InSales_Cluster_2_Viz</fullName>
+                <default>false</default>
+                <label>InSales_Cluster_2_Viz</label>
+            </value>
+            <value>
+                <fullName>InSales_Cluster_3_Ben</fullName>
+                <default>false</default>
+                <label>InSales_Cluster_3_Ben</label>
+            </value>
+            <value>
+                <fullName>InSales_Cluster_4_Ben_Che</fullName>
+                <default>false</default>
+                <label>InSales_Cluster_4_Ben_Che</label>
+            </value>
+            <value>
+                <fullName>InSales_Cluster_5_Bhu</fullName>
+                <default>false</default>
+                <label>InSales_Cluster_5_Bhu</label>
+            </value>
+            <value>
+                <fullName>InSales_Cluster_5_Mum/Bhu</fullName>
+                <default>false</default>
+                <label>InSales_Cluster_5_Mum/Bhu</label>
+            </value>
+            <value>
+                <fullName>INSales_Cluster 6_Mum</fullName>
+                <default>false</default>
+                <label>INSales_Cluster 6_Mum</label>
+            </value>
+            <value>
+                <fullName>INSales_Cluster 1_BenMys</fullName>
+                <default>false</default>
+                <label>INSales_Cluster 1_BenMys</label>
+            </value>
+            <value>
+                <fullName>INSales_Cluster 3_HydViz</fullName>
+                <default>false</default>
+                <label>INSales_Cluster 3_HydViz</label>
+            </value>
+            <value>
+                <fullName>INSales_Cluster 5_KolBhu</fullName>
+                <default>false</default>
+                <label>INSales_Cluster 5_KolBhu</label>
+            </value>
+            <value>
+                <fullName>INSales_Cluster 10_Nag</fullName>
+                <default>false</default>
+                <label>INSales_Cluster 10_Nag</label>
+            </value>
+            <value>
+                <fullName>INSales_Cluster 7_Pun</fullName>
+                <default>false</default>
+                <label>INSales_Cluster 7_Pun</label>
+            </value>
+            <value>
+                <fullName>INSales_Cluster 8_Ahm</fullName>
+                <default>false</default>
+                <label>INSales_Cluster 8_Ahm</label>
+            </value>
+            <value>
+                <fullName>INSales_Cluster 9_Koc</fullName>
+                <default>false</default>
+                <label>INSales_Cluster 9_Koc</label>
+            </value>
+            <value>
+                <fullName>DWP_Insales_Hyd</fullName>
+                <default>false</default>
+                <label>DWP_Insales_Hyd</label>
+            </value>
+            <value>
+                <fullName>DWP_Insales_Mys</fullName>
+                <default>false</default>
+                <label>DWP_Insales_Mys</label>
+            </value>
+            <value>
+                <fullName>INSales_Cluster 2_CheRotn</fullName>
+                <default>false</default>
+                <label>INSales_Cluster 2_CheRotn</label>
+            </value>
+            <value>
+                <fullName>INSales_Cluster 4_NcrJaiLuc</fullName>
+                <default>false</default>
+                <label>INSales_Cluster 4_NcrJaiLuc</label>
+            </value>
+            <value>
+                <fullName>InSales_South</fullName>
+                <default>false</default>
+                <label>InSales_South</label>
+            </value>
+            <value>
+                <fullName>InSales_North</fullName>
+                <default>false</default>
+                <label>InSales_North</label>
+            </value>
+            <value>
+                <fullName>InSales_East</fullName>
+                <default>false</default>
+                <label>InSales_East</label>
+            </value>
+            <value>
+                <fullName>Doowup_Inside_North</fullName>
+                <default>false</default>
+                <label>Doowup_Inside_North</label>
+            </value>
+            <value>
+                <fullName>Doowup_InSales_East</fullName>
+                <default>false</default>
+                <label>Doowup_InSales_East</label>
+            </value>
+            <value>
+                <fullName>Doowup_Inside_South</fullName>
+                <default>false</default>
+                <label>Doowup_Inside_South</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

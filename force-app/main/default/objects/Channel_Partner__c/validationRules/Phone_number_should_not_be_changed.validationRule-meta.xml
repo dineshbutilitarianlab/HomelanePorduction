@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Phone_number_should_not_be_changed</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISCHANGED(Phone__c),
+$Profile.Name &lt;&gt; &quot;System Administrator&quot;
+)</errorConditionFormula>
+    <errorDisplayField>Phone__c</errorDisplayField>
+    <errorMessage>You don’t have access to Change Channel Partner Number. Please contact Salesforce Admin.</errorMessage>
+</ValidationRule>

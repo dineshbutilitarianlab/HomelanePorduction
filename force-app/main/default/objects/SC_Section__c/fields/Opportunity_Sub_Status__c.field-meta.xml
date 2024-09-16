@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opportunity_Sub_Status__c</fullName>
+    <label>Opportunity Sub Status</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>IQ Follow Up - Unable To Contact</fullName>
+                <default>false</default>
+                <label>IQ Follow Up - Unable To Contact</label>
+            </value>
+            <value>
+                <fullName>IQ Follow Up - Follow Up Later</fullName>
+                <default>false</default>
+                <label>IQ Follow Up - Follow Up Later</label>
+            </value>
+            <value>
+                <fullName>IQ Follow Up - Property on Hold</fullName>
+                <default>false</default>
+                <label>IQ Follow Up - Property on Hold</label>
+            </value>
+            <value>
+                <fullName>Customer Needs More Time</fullName>
+                <default>false</default>
+                <label>Customer Needs More Time</label>
+            </value>
+            <value>
+                <fullName>Customer Not Free To Talk</fullName>
+                <default>false</default>
+                <label>Customer Not Free To Talk</label>
+            </value>
+            <value>
+                <fullName>Site Measurement Proposed</fullName>
+                <default>false</default>
+                <label>Site Measurement Proposed</label>
+            </value>
+            <value>
+                <fullName>Site Measurement Meeting Confirmed</fullName>
+                <default>false</default>
+                <label>Site Measurement Meeting Confirmed</label>
+            </value>
+            <value>
+                <fullName>3D Design &amp; Quote Reviewed by Buddy</fullName>
+                <default>false</default>
+                <label>3D Design &amp; Quote Reviewed by Buddy</label>
+            </value>
+            <value>
+                <fullName>3D Design &amp; Quote Sent</fullName>
+                <default>false</default>
+                <label>3D Design &amp; Quote Sent</label>
+            </value>
+            <value>
+                <fullName>Design Presentation Proposed</fullName>
+                <default>false</default>
+                <label>Design Presentation Proposed</label>
+            </value>
+            <value>
+                <fullName>Design Presentation Confirmed</fullName>
+                <default>false</default>
+                <label>Design Presentation Confirmed</label>
+            </value>
+            <value>
+                <fullName>Design Presentation Completed</fullName>
+                <default>false</default>
+                <label>Design Presentation Completed</label>
+            </value>
+            <value>
+                <fullName>Production Drawings &amp; Quote Review Complete</fullName>
+                <default>false</default>
+                <label>Production Drawings &amp; Quote Review Complete</label>
+            </value>
+            <value>
+                <fullName>Production Drawings Sent</fullName>
+                <default>false</default>
+                <label>Production Drawings Sent</label>
+            </value>
+            <value>
+                <fullName>Project Kick-off Proposed</fullName>
+                <default>false</default>
+                <label>Project Kick-off Proposed</label>
+            </value>
+            <value>
+                <fullName>Project Kick-off Meeting Confirmed</fullName>
+                <default>false</default>
+                <label>Project Kick-off Meeting Confirmed</label>
+            </value>
+            <value>
+                <fullName>Project Kick-off Completed</fullName>
+                <default>false</default>
+                <label>Project Kick-off Completed</label>
+            </value>
+            <value>
+                <fullName>Drawings &amp; Quote Approved</fullName>
+                <default>false</default>
+                <label>Drawings &amp; Quote Approved</label>
+            </value>
+            <value>
+                <fullName>Production Folder shared with factory for Review</fullName>
+                <default>false</default>
+                <label>Production Folder shared with factory for Review</label>
+            </value>
+            <value>
+                <fullName>Drawings approved by factory</fullName>
+                <default>false</default>
+                <label>Drawings approved by factory</label>
+            </value>
+            <value>
+                <fullName>Final Drawings, Quote &amp; Works Contract Sent</fullName>
+                <default>false</default>
+                <label>Final Drawings, Quote &amp; Works Contract Sent</label>
+            </value>
+            <value>
+                <fullName>Final Drawings, Quote &amp; Works Contract Approved</fullName>
+                <default>false</default>
+                <label>Final Drawings, Quote &amp; Works Contract Approved</label>
+            </value>
+            <value>
+                <fullName>40% payment collected</fullName>
+                <default>false</default>
+                <label>40% payment collected</label>
+            </value>
+            <value>
+                <fullName>Project sent to production</fullName>
+                <default>false</default>
+                <label>Project sent to production</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

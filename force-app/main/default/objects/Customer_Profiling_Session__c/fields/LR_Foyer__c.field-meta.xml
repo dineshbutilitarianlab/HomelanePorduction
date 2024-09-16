@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LR_Foyer__c</fullName>
+    <label>LR Foyer</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>I don&apos;t need it</fullName>
+                <default>false</default>
+                <label>I don&apos;t need it</label>
+            </value>
+            <value>
+                <fullName>Additional Storage</fullName>
+                <default>false</default>
+                <label>Additional Storage</label>
+            </value>
+            <value>
+                <fullName>Seating</fullName>
+                <default>false</default>
+                <label>Seating</label>
+            </value>
+            <value>
+                <fullName>Drawers</fullName>
+                <default>false</default>
+                <label>Drawers</label>
+            </value>
+            <value>
+                <fullName>Attribute 1</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Attribute 1</label>
+            </value>
+            <value>
+                <fullName>Attribute 2</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Attribute 2</label>
+            </value>
+            <value>
+                <fullName>Attribute 3</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Attribute 3</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

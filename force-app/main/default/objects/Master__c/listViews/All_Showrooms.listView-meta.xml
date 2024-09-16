@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Showrooms</fullName>
+    <columns>NAME</columns>
+    <columns>X18_Digit_Record_ID__c</columns>
+    <columns>WalkIn_SSA__c</columns>
+    <columns>Residence_Visit_SSA__c</columns>
+    <columns>SSM__c</columns>
+    <columns>Sales_Manager_Virtual_Meeting__c</columns>
+    <columns>Type__c</columns>
+    <columns>RECORDTYPE</columns>
+    <columns>Property_Type__c</columns>
+    <columns>Google_Map_Link__c</columns>
+    <columns>Second_Meeting_Calendar_ID__c</columns>
+    <columns>IsActive__c</columns>
+    <columns>Pilot_ShowRoom__c</columns>
+    <columns>CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Type__c</field>
+        <operation>equals</operation>
+        <value>Showroom</value>
+    </filters>
+    <label>All Showrooms</label>
+    <language>en_US</language>
+</ListView>

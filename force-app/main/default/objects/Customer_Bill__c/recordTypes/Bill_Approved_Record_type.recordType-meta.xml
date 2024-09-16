@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bill_Approved_Record_type</fullName>
+    <active>true</active>
+    <label>Bill Approved Record type</label>
+    <picklistValues>
+        <picklist>Bill_Status__c</picklist>
+        <values>
+            <fullName>10%25 Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>10%25 Intermediate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>10%25 Payment Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>10%25 Payment Received</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>10%25 Payment Rejected</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>100%25 Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>100%25 Intermediate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>40%25 Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>40%25 Intermediate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>40%25 Payment Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>40%25 Payment Received</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>40%25 Payment Rejected</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>50%25 Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>50%25 Intermediate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>50%25 Payment Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>50%25 Payment Received</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>50%25 Payment Rejected</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deleted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Full and Final Settlement Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Full and Final Settlement Received</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Full and Final Settlement Rejected</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

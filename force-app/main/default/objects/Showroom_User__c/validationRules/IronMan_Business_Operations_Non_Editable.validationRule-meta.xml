@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IronMan_Business_Operations_Non_Editable</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( OR($Profile.Name=&apos;IronMan Business Operations&apos;),OR(ISCHANGED( Backlogs__c),ISCHANGED(City__c),ISCHANGED( Daily_Assignment__c),ISCHANGED(Email__c),ISCHANGED( IronMan__c),ISCHANGED( Phone__c),ISCHANGED(Role__c),ISCHANGED(Name)))</errorConditionFormula>
+    <errorMessage>You don&apos;t have permission to edit these fields.</errorMessage>
+</ValidationRule>

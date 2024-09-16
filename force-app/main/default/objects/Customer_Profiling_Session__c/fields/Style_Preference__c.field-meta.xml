@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Style_Preference__c</fullName>
+    <label>Style Preference</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Traditional</fullName>
+                <default>false</default>
+                <label>Traditional</label>
+            </value>
+            <value>
+                <fullName>Transitional</fullName>
+                <default>false</default>
+                <label>Transitional</label>
+            </value>
+            <value>
+                <fullName>Contemporary</fullName>
+                <default>false</default>
+                <label>Contemporary</label>
+            </value>
+            <value>
+                <fullName>Minimal</fullName>
+                <default>false</default>
+                <label>Minimal</label>
+            </value>
+            <value>
+                <fullName>Eclectic/Chic</fullName>
+                <default>false</default>
+                <label>Eclectic/Chic</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

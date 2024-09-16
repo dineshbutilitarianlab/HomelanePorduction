@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type_Of_Transfer__c</fullName>
+    <label>Type Of Transfer</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>IM Transfer</fullName>
+                <default>false</default>
+                <label>IM Transfer</label>
+            </value>
+            <value>
+                <fullName>Freelancer Transfer</fullName>
+                <default>false</default>
+                <label>Freelancer Transfer</label>
+            </value>
+            <value>
+                <fullName>Telecaller Transfer</fullName>
+                <default>false</default>
+                <label>Telecaller Transfer</label>
+            </value>
+            <value>
+                <fullName>Nimbus Transfer</fullName>
+                <default>false</default>
+                <label>Nimbus Transfer</label>
+            </value>
+            <value>
+                <fullName>Doowup Transfer</fullName>
+                <default>false</default>
+                <label>Doowup Transfer</label>
+            </value>
+            <value>
+                <fullName>Doowup Presales Transfer</fullName>
+                <default>false</default>
+                <label>Doowup Presales Transfer</label>
+            </value>
+            <value>
+                <fullName>Nimbus DL Offline Transfer</fullName>
+                <default>false</default>
+                <label>Nimbus DL Offline Transfer</label>
+            </value>
+            <value>
+                <fullName>Nimbus DL Digital Transfer</fullName>
+                <default>false</default>
+                <label>Nimbus DL Digital Transfer</label>
+            </value>
+            <value>
+                <fullName>Offline Relanded Transfer</fullName>
+                <default>false</default>
+                <label>Offline Relanded Transfer</label>
+            </value>
+            <value>
+                <fullName>IM Classification</fullName>
+                <default>false</default>
+                <label>IM Classification</label>
+            </value>
+            <value>
+                <fullName>Inside Sales Transfer</fullName>
+                <default>false</default>
+                <label>Inside Sales Transfer</label>
+            </value>
+            <value>
+                <fullName>Nimbus Relanded Transfer</fullName>
+                <default>false</default>
+                <label>Nimbus Relanded Transfer</label>
+            </value>
+            <value>
+                <fullName>Nimbus Hindi Transfer</fullName>
+                <default>false</default>
+                <label>Nimbus Hindi Transfer</label>
+            </value>
+            <value>
+                <fullName>Nimbus Telugu Transfer</fullName>
+                <default>false</default>
+                <label>Nimbus Telugu Transfer</label>
+            </value>
+            <value>
+                <fullName>Cubico Transfer</fullName>
+                <default>false</default>
+                <label>Cubico Transfer</label>
+            </value>
+            <value>
+                <fullName>Nimbus Doowup Offline Transfer</fullName>
+                <default>false</default>
+                <label>Nimbus Doowup Offline Transfer</label>
+            </value>
+            <value>
+                <fullName>Nimbus HL Missed Call Transfer</fullName>
+                <default>false</default>
+                <label>Nimbus HL Missed Call Transfer</label>
+            </value>
+            <value>
+                <fullName>Nimbus Doowup Opp Transfer</fullName>
+                <default>false</default>
+                <label>Nimbus Doowup Opp Transfer</label>
+            </value>
+            <value>
+                <fullName>Globiva Offline RL Transfer</fullName>
+                <default>false</default>
+                <label>Globiva Offline RL Transfer</label>
+            </value>
+            <value>
+                <fullName>Globiva Offline PB Transfer</fullName>
+                <default>false</default>
+                <label>Globiva Offline PB Transfer</label>
+            </value>
+            <value>
+                <fullName>Globiva Relanded Transfer</fullName>
+                <default>false</default>
+                <label>Globiva Relanded Transfer</label>
+            </value>
+            <value>
+                <fullName>Globiva Feedback Digital Transfer</fullName>
+                <default>false</default>
+                <label>Globiva Feedback Digital Transfer</label>
+            </value>
+            <value>
+                <fullName>Globiva Digital North Transfer</fullName>
+                <default>false</default>
+                <label>Globiva Digital North Transfer</label>
+            </value>
+            <value>
+                <fullName>Globiva Digital South Transfer</fullName>
+                <default>false</default>
+                <label>Globiva Digital South Transfer</label>
+            </value>
+            <value>
+                <fullName>Globiva Digital East Transfer</fullName>
+                <default>false</default>
+                <label>Globiva Digital East Transfer</label>
+            </value>
+            <value>
+                <fullName>Globiva Digital West Transfer</fullName>
+                <default>false</default>
+                <label>Globiva Digital West Transfer</label>
+            </value>
+            <value>
+                <fullName>Globiva Digital Centre Transfer</fullName>
+                <default>false</default>
+                <label>Globiva Digital Centre Transfer</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

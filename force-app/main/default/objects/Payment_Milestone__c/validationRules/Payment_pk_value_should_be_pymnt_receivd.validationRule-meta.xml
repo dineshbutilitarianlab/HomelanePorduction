@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Payment_pk_value_should_be_pymnt_receivd</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(NOT(ISPICKVAL(Payment_Status__c , &quot;Payment Received&quot;)),$Profile.Name = &apos;Design Partner Profile&apos;)</errorConditionFormula>
+    <errorDisplayField>Payment_Status__c</errorDisplayField>
+    <errorMessage>Picklist value should be Payment Received.</errorMessage>
+</ValidationRule>

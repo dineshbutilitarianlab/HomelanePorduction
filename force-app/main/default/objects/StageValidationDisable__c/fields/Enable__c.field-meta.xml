@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enable__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>If it is enabled then only sage validation for opportunity will work.</description>
+    <label>Enable</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

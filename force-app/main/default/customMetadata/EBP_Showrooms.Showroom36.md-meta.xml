@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Showroom36</label>
+    <protected>false</protected>
+    <values>
+        <field>End_Date__c</field>
+        <value xsi:type="xsd:date">2022-08-31</value>
+    </values>
+    <values>
+        <field>Showroom_Name__c</field>
+        <value xsi:type="xsd:string">GST Road Showroom</value>
+    </values>
+    <values>
+        <field>Showroom_SF_18_Digit_ID__c</field>
+        <value xsi:type="xsd:string">a092x000003gNdbAAE</value>
+    </values>
+    <values>
+        <field>Start_Date__c</field>
+        <value xsi:type="xsd:date">2020-03-22</value>
+    </values>
+</CustomMetadata>

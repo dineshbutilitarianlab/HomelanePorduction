@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lead_curation_class</fullName>
+    <columns>NAME</columns>
+    <columns>Email__c</columns>
+    <columns>City__c</columns>
+    <columns>IsActive__c</columns>
+    <columns>Role__c</columns>
+    <columns>IM_Class__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>City__c</field>
+        <operation>equals</operation>
+        <value>Mumbai,New Delhi,Gurgaon,Noida,Thane</value>
+    </filters>
+    <filters>
+        <field>Role__c</field>
+        <operation>equals</operation>
+        <value>Sales Manager,Iron Man</value>
+    </filters>
+    <label>Lead curation Class</label>
+    <language>en_US</language>
+</ListView>

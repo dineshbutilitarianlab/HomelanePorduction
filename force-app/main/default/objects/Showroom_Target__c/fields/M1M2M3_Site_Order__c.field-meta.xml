@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>M1M2M3_Site_Order__c</fullName>
+    <formula>M1_M1M2M3_Site_Order_Amt__c + M2_M1M2M3_Site_Order_Amt__c + M3_M1M2M3_Site_Order_Amt__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>M-1,M-2,M-3 Site Order Amt</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lat_long_limit_validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(Lat_Long__Latitude__s&lt;5,Lat_Long__Latitude__s&gt;=35,Lat_Long__Longitude__s&lt;70,Lat_Long__Longitude__s&gt;=120)</errorConditionFormula>
+    <errorMessage>Latitude should be in between 5 to 35 and long should be in between 70 to 120.</errorMessage>
+</ValidationRule>
