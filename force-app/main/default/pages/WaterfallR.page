@@ -1,0 +1,62 @@
+<apex:page showHeader="false">
+   <apex:stylesheet value="https://homelane--c.ap2.visual.force.com/resource/1499152115000/SLDS232"/>
+   
+   
+   
+   <style>
+   .divalign1{
+        margin-bottom: 50px;
+        margin-top: 50px;
+        width: 95%;
+   }
+   .divalign2{
+       width: 95%;
+   }
+   .clsbtn{
+        margin-left: 36%;
+        margin-top: 15%;
+   }
+   </style>
+<div style="width:30%; margin:0 auto;">
+<a href="https://homelane--c.ap2.visual.force.com/apex/Waterfallreport">
+<div class="slds-page-header divalign1">
+  <div class="slds-media">
+    <div class="slds-media__figure">
+      <span class="slds-icon_container slds-icon-standard-opportunity" title="Description of icon when needed">
+        <svg class="slds-icon" aria-hidden="true">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#opportunity"></use>
+        </svg>
+      </span>
+    </div>
+    <div class="slds-media__body">
+      <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="Rohde Corp - 80,000 Widgets">WaterFall Report By Lead Cities</h1>
+      <p class="slds-text-body_small slds-line-height_reset">Shows Lead Details With Respect To Lead Cities</p>
+    </div>
+  </div>
+</div>
+</a>
+
+
+<a href="https://homelane--c.ap2.visual.force.com/apex/SourceWaterfallreport">
+<div class="slds-page-header divalign2">
+  <div class="slds-media">
+    <div class="slds-media__figure">
+      <span class="slds-icon_container slds-icon-standard-opportunity" title="Description of icon when needed">
+        <svg class="slds-icon" aria-hidden="true">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#opportunity"></use>
+        </svg>
+      </span>
+    </div>
+    <div class="slds-media__body">
+      <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="Rohde Corp - 80,000 Widgets">WaterFall Report By Lead Source</h1>
+      <p class="slds-text-body_small slds-line-height_reset">Shows Lead Details With Respect To Lead Source</p>
+    </div>
+  </div>
+</div>
+</a>
+<a id="cancelButton" class='atag' href="https://homelane.my.salesforce.com/">
+    <button class="slds-button clsbtn slds-button_destructive">Close</button>
+</a>
+</div>
+
+</apex:page>

@@ -1,0 +1,353 @@
+<apex:page lightningStyleSheets="true" docType="html-5.0" sidebar="false" Action="{!getDesginPartnerData}" standardStylesheets="false" showHeader="false" controller="DesignPartnerSelectionCntlr">
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<style>
+.divCenter{
+      width: 90%;
+    display: inline-block;
+}
+th{
+  text-align: center;
+}
+td{
+  text-align: center;
+}
+.coldpclass{
+     cursor: pointer;
+}
+</style>
+ <apex:slds />
+ <apex:form >
+ <apex:actionFunction action="{!updateDesignPartner}" name="SendToController" reRender="">
+   <apex:param assignTo="{!strDPId}" name="Param1" value="Param"/>
+   <apex:param assignTo="{!strRowId}" name="Param2" value="Param"/>
+   </apex:actionFunction>
+   <apex:actionFunction action="{!GetSearchData}" name="SearchDPOnCntlr" reRender="SearchResultPanel">
+   <apex:param assignTo="{!strSearchDP}" name="Param1" value="Param"/>
+   </apex:actionFunction>
+   </apex:form>
+  <div class="slds-scope" style="text-align:center;">
+   <div class="demo-only" style="height: 70px;">
+<header class="slds-global-header_container">
+<div class="slds-global-header slds-grid slds-grid_align-spread">
+<div class="slds-global-header__item">
+<div class="header" style="text-align: left;">
+            <img style="max-width: 100%;" src="https://s3-ap-southeast-1.amazonaws.com/hlmicrosite/homelaneLogo.png" alt="HomeLane Logo" />
+        </div>
+</div>
+<div class="slds-global-header__item slds-global-header__item_search">
+<div aria-expanded="false" aria-haspopup="listbox" class="slds-form-element slds-lookup" role="combobox">
+<label class="slds-assistive-text" for="global-search-01">Search Design Partner</label>
+<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left-right">
+<a href="" onclick="DPSearchData();"><svg class="slds-input__icon slds-input__icon_left" aria-hidden="true">
+<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#search" />
+</svg></a>
+<input type="text" aria-autocomplete="list" aria-controls="global-search-list-01" autocomplete="off" class="slds-input slds-lookup__search-input" id="global-search-01" placeholder="Search Design Partner" role="textbox" />
+</div>
+</div>
+</div>
+<ul class="slds-global-header__item slds-grid slds-grid_vertical-align-center">
+<li class="slds-grid">
+<h2 class="slds-section__title">
+              <span class="slds-truncate" title="Section Title" id="opp-name-span">{!recordName}</span>
+</h2>
+
+</li>
+<li class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_x-small">
+<button class="slds-button" title="person name" aria-haspopup="true">
+<span class="slds-avatar slds-avatar_circle slds-avatar_medium">
+<img alt="Person name" src="/apexpages/slds/latest/assets/images/avatar2.jpg" title="{!recordName}" />
+</span>
+</button>
+</li>
+</ul>
+</div>
+</header>
+</div>
+<div class="slds-section  slds-is-open divCenter" id="section">
+  <apex:outputPanel id="SearchResultPanel">
+       
+         <apex:outputPanel rendered="{!strSearchDP !=''}">
+           <h1 class="slds-section__title">
+              <span class="slds-truncate" title="Section Title" id="dp-search-span">Search Design Partner Results....</span>
+            </h1>
+            <div aria-hidden="false" class="slds-section__content" id="expando-Search-id">
+            <apex:variable value="{!1}" var="sdp"/>
+            <apex:dataTable value="{!lstSerchData}" var="record" styleClass="slds-table slds-table--bordered " rendered="{!lstSerchData.size !=0}">
+            <apex:column value="{!record.Name}" onclick="SelectedDP('{!record.Id}','SDP-{!sdp}')" styleclass="coldpclass">
+            <apex:facet name="header">Design Partner</apex:facet>
+             </apex:column>
+            <apex:column rendered="{!record.OverLoaded__c == true}">
+            <apex:facet name="header">OverLoaded</apex:facet>
+              <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_right slds-icon-text-error" aria-hidden="true">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#warning" />
+            </svg>
+            </apex:column>
+        <apex:column rendered="{!record.OverLoaded__c !=true}">
+            <apex:facet name="header">OverLoaded</apex:facet>
+            </apex:column>
+            <apex:column rendered="{!record.Property_Exp__c == true}" style="color: blue;">
+            <apex:facet name="header">Project Experience</apex:facet>
+              <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_right" aria-hidden="true">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#home" />
+             </svg>
+             </apex:column>
+             <apex:column rendered="{!record.Property_Exp__c != true}" >
+             <apex:variable value="{!sdp+1}" var="sdp"/>
+            <apex:facet name="header">Project Experience</apex:facet>
+             </apex:column>
+              
+        </apex:dataTable>
+        <apex:dataTable value="{!NoDataList}" var="record" styleClass="slds-table slds-table--bordered " rendered="{!lstSerchData.size ==0}">
+        <apex:column value="{!record}" style="color: red; text-align: center;"/>
+        </apex:dataTable>
+        </div>
+         </apex:outputPanel>
+         </apex:outputPanel>
+         <div aria-hidden="false" class="slds-section__content" id="expando-DPSection-id"></div>
+         </div>
+   <div class="slds-section  slds-is-open divCenter" id="section-1">
+        <h3 class="slds-section__title">
+        <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action" id="1">
+        <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#switch" />
+        </svg>
+        <span class="slds-truncate" title="Section Title">High Lead High Conversion</span>
+        </button>
+        </h3>
+        <div aria-hidden="false" class="slds-section__content" id="expando-HLHC-id">
+        <apex:variable value="{!1}" var="hlhc"/> 
+       <apex:dataTable value="{!HLHCList}" var="record" styleClass="slds-table slds-table--bordered " rendered="{!HLHCList.size !=0}">
+            <apex:column value="{!record.Name}" onclick="SelectedDP('{!record.Id}','HLHC-{!hlhc}')" styleclass="coldpclass">
+            <apex:facet name="header">Design Partner</apex:facet>
+             </apex:column>
+            <apex:column rendered="{!record.OverLoaded__c == true}">
+            <apex:facet name="header">OverLoaded</apex:facet>
+            <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_right slds-icon-text-error" aria-hidden="true">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#warning" />
+        </svg>
+        </apex:column>
+        <apex:column rendered="{!record.OverLoaded__c !=true}">
+            <apex:facet name="header">OverLoaded</apex:facet>
+            </apex:column>
+             <apex:column rendered="{!record.Property_Exp__c == true}" style="color: blue;">
+            <apex:facet name="header">Project Experience</apex:facet>
+               <svg class="slds-section__title-action-icon slds-button__icon  slds-button__icon_right" aria-hidden="true">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#home" />
+                </svg>
+             </apex:column>
+             <apex:column rendered="{!record.Property_Exp__c != true}">
+             <apex:variable value="{!hlhc+1}" var="hlhc"/>
+                <apex:facet name="header">Project Experience</apex:facet>
+             </apex:column>
+             
+        </apex:dataTable>
+        <apex:dataTable value="{!NoDataList}" var="record" styleClass="slds-table slds-table--bordered " rendered="{!HLHCList.size ==0}">
+        <apex:column value="{!record}" style="color: red; text-align: center;"/>
+        </apex:dataTable>
+        </div>
+    </div>
+    <div class="slds-section divCenter" id="section-2">
+        <h3 class="slds-section__title">
+        <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action" id="2">
+        <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#switch" />
+        </svg>
+        <span class="slds-truncate" title="Section Title">Low Lead High Conversion</span>
+        </button>
+        </h3>
+        <div aria-hidden="false" class="slds-section__content" id="expando-LLHC-id">
+        <apex:variable value="{!1}" var="llhc"/>
+        <apex:dataTable value="{!LLHCList}" var="record" styleClass="slds-table slds-table--bordered" rendered="{!LLHCList.size !=0}">
+            <apex:column value="{!record.Name}" onclick="SelectedDP('{!record.Id}','LLHC-{!llhc}')" styleclass="coldpclass">
+            <apex:facet name="header">Design Partner</apex:facet>
+             </apex:column>
+            <apex:column rendered="{!record.OverLoaded__c == true}">
+            <apex:facet name="header">OverLoaded</apex:facet>
+            <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_right slds-icon-text-error" aria-hidden="true">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#warning" />
+        </svg>
+        </apex:column>
+        <apex:column rendered="{!record.OverLoaded__c !=true}">
+            <apex:facet name="header">OverLoaded</apex:facet>
+            </apex:column>
+             <apex:column rendered="{!record.Property_Exp__c == true}" style="color: blue;">
+            <apex:facet name="header">Project Experience</apex:facet>
+               <svg class="slds-section__title-action-icon slds-button__icon  slds-button__icon_right" aria-hidden="true">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#home" />
+                </svg>
+             </apex:column>
+             <apex:column rendered="{!record.Property_Exp__c != true}">
+             <apex:variable value="{!llhc+1}" var="llhc"/>
+            <apex:facet name="header">Project Experience</apex:facet>
+              
+             </apex:column>
+              
+        </apex:dataTable>
+        <apex:dataTable value="{!NoDataList}" var="record" styleClass="slds-table slds-table--bordered " rendered="{!LLHCList.size ==0}">
+        <apex:column value="{!record}" style="color: red; text-align: center;"/>
+        </apex:dataTable>
+    </div>
+    </div>
+    <div class="slds-section divCenter" id="section-3">
+        <h3 class="slds-section__title">
+        <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action" id="3">
+        <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#switch" />
+        </svg>
+        <span class="slds-truncate" title="Section Title">New Joinee</span>
+        </button>
+        </h3>
+        <div aria-hidden="false" class="slds-section__content" id="expando-NJ-id">
+        <apex:variable value="{!1}" var="nj"/>
+        <apex:dataTable value="{!NJList}" var="record" styleClass="slds-table slds-table--bordered  " rendered="{!NJList.size !=0}">
+            <apex:column value="{!record.Name}" onclick="SelectedDP('{!record.Id}','NJ-{!nj}')" styleclass="coldpclass">
+            <apex:facet name="header">Design Partner</apex:facet>
+             </apex:column>
+            <apex:column rendered="{!record.OverLoaded__c == true}">
+            <apex:facet name="header">OverLoaded</apex:facet>
+            <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_right slds-icon-text-error" aria-hidden="true">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#warning" />
+        </svg>
+        </apex:column>
+        <apex:column rendered="{!record.OverLoaded__c !=true}">
+            <apex:facet name="header">OverLoaded</apex:facet>
+            </apex:column>
+             <apex:column rendered="{!record.Property_Exp__c == true}" style="color: blue;">
+            <apex:facet name="header">Project Experience</apex:facet>
+               <svg class="slds-section__title-action-icon slds-button__icon  slds-button__icon_right" aria-hidden="true">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#home" />
+                </svg>
+             </apex:column>
+             <apex:column rendered="{!record.Property_Exp__c != true}">
+              <apex:variable value="{!nj+1}" var="nj"/>
+            <apex:facet name="header">Project Experience</apex:facet>
+              
+             </apex:column>
+            
+        </apex:dataTable>
+        <apex:dataTable value="{!NoDataList}" var="record" styleClass="slds-table slds-table--bordered " rendered="{!NJList.size ==0}">
+        <apex:column value="{!record}" style="color: red; text-align: center;"/>
+        </apex:dataTable>
+        </div>
+    </div>
+    <div class="slds-section divCenter" id="section-4">
+        <h3 class="slds-section__title">
+        <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action" id="4">
+        <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#switch" />
+        </svg>
+        <span class="slds-truncate" title="Section Title">High Lead Low Conversion</span>
+        </button>
+        </h3>
+        <div aria-hidden="false" class="slds-section__content" id="expando-HLLC-id">
+        <apex:variable value="{!1}" var="hllc"/>
+        <apex:dataTable value="{!HLLCList}" var="record" styleClass="slds-table slds-table--bordered  " rendered="{!HLLCList.size !=0}">
+            <apex:column value="{!record.Name}" onclick="SelectedDP('{!record.Id}','HLLC-{!hllc}')" styleclass="coldpclass">
+            <apex:facet name="header">Design Partner</apex:facet>
+             </apex:column>
+            <apex:column rendered="{!record.OverLoaded__c == true}">
+            <apex:facet name="header">OverLoaded</apex:facet>
+            <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_right slds-icon-text-error" aria-hidden="true">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#warning" />
+        </svg>
+        </apex:column>
+        <apex:column rendered="{!record.OverLoaded__c !=true}">
+            <apex:facet name="header">OverLoaded</apex:facet>
+            </apex:column>
+             <apex:column rendered="{!record.Property_Exp__c == true}" style="color: blue;">
+            <apex:facet name="header">Project Experience</apex:facet>
+               <svg class="slds-section__title-action-icon slds-button__icon  slds-button__icon_right" aria-hidden="true">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#home" />
+                </svg>
+             </apex:column>
+             <apex:column rendered="{!record.Property_Exp__c != true}">
+            <apex:facet name="header">Project Experience</apex:facet>
+              
+             </apex:column>
+             <apex:variable value="{!hllc+1}" var="hllc"/>
+        </apex:dataTable>
+        <apex:dataTable value="{!NoDataList}" var="record" styleClass="slds-table slds-table--bordered " rendered="{!HLLCList.size ==0}">
+        <apex:column value="{!record}" style="color: red; text-align: center;"/>
+        </apex:dataTable>
+        </div>
+    </div>
+    <div class="slds-section divCenter" id="section-5">
+        <h3 class="slds-section__title">
+        <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action" id="5">
+        <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#switch" />
+        </svg>
+        <span class="slds-truncate" title="Section Title">Low Lead Low Conversion</span>
+        </button>
+        </h3>
+        <div aria-hidden="false" class="slds-section__content" id="expando-LLLC-id">
+        <apex:variable value="{!1}" var="lllc"/>
+        <apex:dataTable value="{!LLLCList}" var="record" styleClass="slds-table slds-table--bordered  " rendered="{!LLLCList.size !=0}">
+            <apex:column value="{!record.Name}" onclick="SelectedDP('{!record.Id}','LLLC-{!lllc}')" styleclass="coldpclass">
+            <apex:facet name="header">Design Partner</apex:facet>
+             </apex:column>
+            <apex:column rendered="{!record.OverLoaded__c == true}">
+            <apex:facet name="header">OverLoaded</apex:facet>
+            <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_right slds-icon-text-error" aria-hidden="true">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#warning" />
+        </svg>
+        </apex:column>
+        <apex:column rendered="{!record.OverLoaded__c !=true}">
+            <apex:facet name="header">OverLoaded</apex:facet>
+            </apex:column>
+             <apex:column rendered="{!record.Property_Exp__c == true}" style="color: blue;">
+            <apex:facet name="header">Project Experience</apex:facet>
+               <svg class="slds-section__title-action-icon slds-button__icon  slds-button__icon_right" aria-hidden="true">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#home" />
+                </svg>
+             </apex:column>
+             <apex:column rendered="{!record.Property_Exp__c != true}">
+              <apex:variable value="{!lllc+1}" var="lllc"/>
+            <apex:facet name="header">Project Experience</apex:facet>
+              
+             </apex:column>
+            
+        </apex:dataTable>
+        <apex:dataTable value="{!NoDataList}" var="record" styleClass="slds-table slds-table--bordered " rendered="{!LLLCList.size ==0}">
+        <apex:column value="{!record}" style="color: red; text-align: center;"/>
+        </apex:dataTable>
+        </div>
+    </div>
+</div>
+
+</html>
+<script>
+
+$(document).ready(function(){
+   
+    $("button").click(function(){
+      $("#section-"+this.id).toggleClass("slds-is-open");
+    });
+    
+});
+$('#global-search-01').keypress(function (e) {
+
+ var key = e.which;
+ if(key == 13)  // the enter key code
+  {
+  
+    DPSearchData();
+    return false; 
+  }
+}); 
+
+function SelectedDP(dpid,rowId){
+   // alert(rowId);
+    SendToController(dpid,rowId);
+}
+function DPSearchData(){
+    var text = document.getElementById('global-search-01').value;
+    if(text.trim() != '')
+       SearchDPOnCntlr(text.trim());
+    
+}
+
+</script>
+</apex:page>

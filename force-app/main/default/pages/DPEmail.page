@@ -1,0 +1,12 @@
+<apex:page standardController="Interior_Designer__c"   showHeader="false" sidebar="false">
+  <h1>You have been marked as "Active - Overloaded available to meetings."</h1> 
+  <script>
+      window.onload = function() {
+   if(!window.location.hash) {
+   console.log('INSIDE');
+       window.location = window.location + '#loaded';
+       window.location.reload();
+   }
+}
+  </script>
+</apex:page>

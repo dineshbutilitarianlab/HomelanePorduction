@@ -1,0 +1,5 @@
+<apex:page standardController="Lead" extensions="CalculateRankDP" action="{!CalculateRank}">
+<apex:form >
+<apex:inputHidden value="{!Lead.Id}"/>
+</apex:form>
+</apex:page>

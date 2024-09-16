@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="This is to call child components helper methods of SC_MISalesprocess">
+	<aura:attribute name="StageName" type="String" default="none"/>
+</aura:event>

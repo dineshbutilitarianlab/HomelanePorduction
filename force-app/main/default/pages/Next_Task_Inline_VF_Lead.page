@@ -1,0 +1,79 @@
+<apex:page standardController="Lead" extensions="NextStep_Controller" showHeader="false">
+<apex:stylesheet value="{!URLFOR($Resource.SLDS0122, 'assets/styles/salesforce-lightning-design-system.css')}" />
+<!--<style>
+.breadcrumb { 
+    list-style: none; 
+    overflow: hidden; 
+    font: .8125rem Helvetica, Arial, Sans-Serif;
+}
+.breadcrumb li { 
+    float: left; 
+}
+.breadcrumb li a {
+    color: white;
+    text-decoration: none; 
+    padding: 10px 0 10px 14px;
+        margin-left: 4px;
+    background: brown;                  
+    background: #4bca81; 
+    position: relative; 
+    display: block;
+    float: left;
+}
+.breadcrumb li a:after { 
+    content: " "; 
+    display: block; 
+    width: 0; 
+    height: 0;
+    border-top: 50px solid transparent;           
+    border-bottom: 50px solid transparent;
+    border-left: 30px solid #4bca81;
+    position: absolute;
+    top: 50%;
+    margin-top: -50px; 
+    left: 100%;
+    z-index: 2; 
+}
+.breadcrumb li a:before { 
+    content: " "; 
+    display: block; 
+    width: 0; 
+    height: 0;
+    border-top: 50px solid transparent;       
+    border-bottom: 50px solid transparent;
+    border-left: 32px solid white;
+    position: absolute;
+    top: 50%;
+    margin-top: -50px; 
+    margin-left: 1px;
+    left: 100%;
+    z-index: 1; 
+}
+.breadcrumb li:first-child a{
+    border-radius: 20px 0 0 20px;
+}
+</style>-->
+ <!--<ul class="breadcrumb">
+    <li><a>Next Step</a></li>
+    <li><a>{!nextsteprec[0].Next_Step__c}</a></li>
+</ul>
+-->
+<div class="slds-card slds-card--narrow">
+  <div class="slds-card__header slds-grid">
+    <div class="slds-media slds-media--center slds-has-flexi-truncate">
+      <div class="slds-media__figure">
+        
+      </div>
+      <div class="slds-media__body slds-truncate">
+        <a href="javascript:void(0);" class="slds-text-link--reset">
+          <span class="slds-text-heading--small">Next Step</span>
+        </a>
+      </div>
+    </div>
+    <div class="slds-no-flex">
+      
+    </div>
+  </div>
+  <div class="slds-card__body slds-text-align--center slds-text-heading--small">{!nextsteprec[0].Next_Step__c}</div>
+</div>
+</apex:page>

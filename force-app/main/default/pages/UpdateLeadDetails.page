@@ -1,0 +1,1557 @@
+<!--
+  @Page Name          : UpdateLeadDetails.page
+  @Description        : 
+  @Author             : Bharatesh Shetty
+  @Group              : 
+  @Last Modified By   : Bharatesh Shetty
+  @Last Modified On   : 8/14/2019, 4:09:15 PM
+  @Modification Log   : 
+  ==============================================================================
+  Ver         Date                     Author                 Modification
+  ==============================================================================
+  1.0    8/12/2019, 12:40:47 PM   Bharatesh Shetty     Initial Version
+-->
+<apex:page standardController="Lead" extensions="UpdateLeadDetails_Controller" docType="html-5.0">
+
+  <apex:form id="mainfrm">
+  
+          <!-- <apex:pageBlock id="pageMsgBlock">
+         <apex:pageMessages rendered="true" id="msgId"/>
+      </apex:pageBlock> -->   
+
+<html>
+
+<head>
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1" /> -->
+    <meta name="viewport" content="width=1000"/>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>  
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5MU7FIbIIQfmDwJUCvX_oQDa4tLM_v8o&libraries=places"></script>
+    <script>
+    
+    
+    var url_string = window.location.href;
+    var page_url = new URL(url_string);
+    var page_lead_id = page_url.searchParams.get("id");
+
+    
+    
+        var itemLocality = '';
+        var itemCountry = '';
+        var uName = '';
+        var postparams = '';
+        var flag = '';
+        var property_name = '';
+
+    // debugger;
+    function init1() {
+        var input = document.getElementById('j_id0:mainfrm:property_search');
+        if(input==null){
+        return false;
+        }
+        var options = {
+        // types: ['establishment'],
+        componentRestrictions: {country: "in"}
+        };
+        var autocomplete = new google.maps.places.Autocomplete(input, options);
+
+        // autocomplete.setComponentRestrictions(
+        //     {'country': ['us', 'pr', 'vi', 'gu', 'mp']});
+
+        google.maps.event.addListener(autocomplete, 'place_changed',
+            function() {
+                var place = autocomplete.getPlace();
+                var lat = place.geometry.location.lat().toString();
+                var lng = place.geometry.location.lng().toString();
+                jQuery.each(place.address_components, function (i, address_component) {
+                    console.log('address_component:'+i);
+
+                    if (address_component.types[0] == "locality"){
+                        console.log("town:"+address_component.long_name);
+                        itemLocality = address_component.long_name;
+                    }
+
+                    if (address_component.types[0] == "country"){ 
+                        console.log("country:"+address_component.long_name); 
+                        itemCountry = address_component.long_name;
+                    }
+                    //return false; // break the loop   
+                });
+                var lead_property_type_add = $("[id$=property_type]").val();
+                var city = itemLocality;
+                var country = itemCountry;
+                var addr = place.formatted_address;
+                property_name=place.name;
+                var lead_id = page_lead_id;
+                //postparams={latitude:lat,longitude:lng,city:city,country:country,searched_address:addr,property_name:property_name,map_url:place.url,lead_id:lead_id,Street:property_name};
+                postparams={Street:addr,lat:lat,lng:lng,City:city,Name:property_name,'Map Link':place.url,Landmark:"",Property_Type__c:lead_property_type_add,PlaceId:place.place_id,UserName:"Homelane",Type:"Property",LeadId:lead_id,OppId:""};
+                place.address_components.forEach(row=>{
+                    type=row['types'][0];                    
+                    switch(type.toLowerCase())
+                    {
+                        case "sublocality":
+                        case "locality":
+                        postparams["Locality"]=row.short_name;break;
+                        case "administrative_area_level_1":postparams.State=row.short_name;break;
+                        //case "route":postparams.Street=row.short_name;break;
+                        case "postal_code":postparams["Postal Code"] =row.short_name;break;
+                    }
+
+                });
+                
+                if(postparams.Locality)
+                    postparams.Locality=postparams.Locality.replace(/(^,)|(,$)/g, "");
+                //console.log(postparams);
+            } 
+        );
+    }
+
+    google.maps.event.addDomListener(window, 'load', init1);
+    
+    </script>
+
+<script>
+        var mitemLocality = '';
+        var mitemCountry = '';
+        var muName = '';
+        var mpostparams = '';
+        var mflag = '';
+        var mproperty_name = '';
+
+    // debugger;
+    function init2() {
+        var input = document.getElementById('j_id0:mainfrm:address_search');
+           var options = {
+        // types: ['establishment'],
+        componentRestrictions: {country: "in"}
+        };
+        var autocomplete = new google.maps.places.Autocomplete(input, options);
+
+        // autocomplete.setComponentRestrictions(
+        //     {'country': ['us', 'pr', 'vi', 'gu', 'mp']});
+
+        google.maps.event.addListener(autocomplete, 'place_changed',
+            function() {
+                var place = autocomplete.getPlace();                
+                var lat = place.geometry.location.lat().toString();
+                var lng = place.geometry.location.lng().toString();
+                jQuery.each(place.address_components, function (i, address_component) {
+                    console.log('address_component:'+i);
+
+                    if (address_component.types[0] == "locality"){
+                        console.log("town:"+address_component.long_name);
+                        mitemLocality = address_component.long_name;
+                    }
+
+                    if (address_component.types[0] == "country"){ 
+                        console.log("country:"+address_component.long_name); 
+                        mitemCountry = address_component.long_name;
+                    }
+                    //return false; // break the loop   
+                });
+                var lead_appointment_type_add = $("[id$=appointment_type]").val();
+                var city = mitemLocality;
+                var country = mitemCountry;
+                var addr = place.formatted_address;
+                mproperty_name=place.name;
+                var lead_id = page_lead_id;
+                //mpostparams={latitude:lat,longitude:lng,city:city,country:country,searched_address:addr,property_name:mproperty_name,map_url:place.url,lead_id:lead_id};
+                mpostparams = {Street:addr,lat:lat,lng:lng,City:city,Name:mproperty_name,'Map Link':place.url,Landmark:"",Property_Type__c:lead_appointment_type_add,PlaceId:place.place_id,UserName:"Homelane",Type:"Property",LeadId:lead_id,OppId:""};
+                
+                place.address_components.forEach(row=>{
+                    type=row['types'][0];                    
+                    switch(type.toLowerCase())
+                    {
+                        case "sublocality":
+                        case "locality":
+                        mpostparams["Locality"]=row.short_name;break;
+                        case "administrative_area_level_1":mpostparams.State=row.short_name;break;
+                        //case "route":mpostparams.Street=row.short_name;break;
+                        case "postal_code":mpostparams["Postal Code"]=row.short_name;break;
+                    }
+
+                });
+                
+                if(mpostparams.Locality)
+                    mpostparams.Locality=mpostparams.Locality.replace(/(^,)|(,$)/g, "");
+                //console.log(mpostparams);
+                
+            } 
+        );
+    }
+
+    google.maps.event.addDomListener(window, 'load', init2);    
+    </script>
+    <!--<script>
+        // Wait for the page to finish loading
+        document.addEventListener('DOMContentLoaded', function () {
+        // Attach `change` event listener to checkbox
+    document.getElementById('goole_find_property').onchange = toggleBilling;
+}, false);
+
+function toggleBilling() {
+  // Select the billing text fields
+    //var billingItems = document.querySelectorAll('#billing input[type="text"]');
+
+    var google_property_not_exist = document.getElementById('google_property_not_exist')
+    google_property_not_exist.disabled = !google_property_not_exist.disabled;
+  // Toggle the billing text fields
+    /*for (var i = 0; i < billingItems.length; i++) {
+    billingItems[i].disabled = !billingItems[i].disabled;
+  }*/
+} 
+
+
+    </script> -->
+    <style>
+        .titleDiv{
+        	margin-bottom: 30px;
+            text-align: center;
+            padding: 4px 0px;
+        }
+        .title{
+        	font-size: 35px;
+    		font-weight: 500;
+        }
+        .bPageHeader .multiforce .messages .msgContent {
+                    display: none;
+        }
+        .bPageHeader td.right.vtop {
+                    display: none;
+        }
+        #AppBodyHeader .phHeader td.left img:first-child{
+                    display: none;
+            }
+        body {
+            font-family: Arial;
+        }
+
+        /* Style the tab */
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+        .sticky {
+          position: fixed;
+          top: 0;
+          width: 97.5%;
+          z-index: 10000;
+        }
+
+
+        /* Style the buttons inside the tab */
+        .tab a {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+            color: #000;
+            text-decoration: none;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab :hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: block;
+            padding: 20px 0px;
+            /*border: 1px solid #ccc;*/
+            border-top: none;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .frm_label {
+            margin-left: 10px;
+        }
+
+        label {
+            display: inline-block;
+            max-width: 100%;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        }
+
+        .frm_input {
+            margin-left: 10px;
+            width: 28%;
+            height: 28px;
+            line-height: 28px;
+        }
+
+        .frm_select {
+            margin-left: 10px;
+            width: 29.4%;
+            height: 42px;
+        }
+
+        .checkbox_input {
+            width: 20px;
+            margin-left: 12px !important;
+            /*display: inline;*/
+        }
+
+        .checkbox_text {
+            display: inline-block;
+            margin-top: -27px;
+            padding-top: 0;
+            position: absolute;
+            margin-left: 45px;
+            font-weight: 900;
+        }
+        .save{
+            position: absolute;
+            right: 15px;
+            top: 14px;
+        }
+        .save>input{
+            font-size: 18px;
+            color: white;
+            background-color: #42804df7;
+            width: 85px;
+            border: 1px solid;
+            height: 30px;
+        }
+        .topheadline{
+            position: relative;
+            text-align: center;
+            margin-bottom: 50px;
+            margin-top: 50px;
+        }
+        .footersubmit{
+        position: fixed;
+        left: 10px;
+        right: 10px;
+        bottom: 0;
+        height: 40px;
+        margin-bottom: 0px;
+        background-color: #eee;
+        padding: 17px 0px;
+        text-align: center;
+        }
+        .footersubmit > input{
+            font-size: 18px;
+            color: white;
+            background-color: #42804df7;
+            width: 85px;
+            border: 1px solid;
+            height: 30px;
+        }
+        .error_cls{        
+            color: #ca4040;
+            margin: 12px;
+            padding-top: 4px !important;
+        }
+         .error_txt{
+             font-size: 16px;
+             margin: 15px 0;
+             padding: 14px 0;
+             border: 1px solid #000000;
+             text-align: center;
+             color: #ca4040;
+             font:small-caption;
+        }
+        .leadTab .brdPalette {
+            border-top-color: transparent;
+        }
+        
+        .frm-body{
+            display:block;
+        }
+        .date{
+            width: 28% !important;
+            height: 30px !important;
+
+        }
+        fieldset legend{
+            font-size: 17px;
+            margin-bottom: 15px;
+        }
+        .chkbox-frm-grp {
+            margin-top: -16px;
+            margin-bottom: 14px;
+        }
+        .read-only{
+            background-color: #ededed;
+        	outline: none;
+        }
+        .footersubmit > .cancelBtn{
+                margin-left: 30px;
+        }
+        .textArea{
+            height: 110px;
+            resize: none;
+        }
+        .legend_cls{
+          pointer-events: none;
+        }
+        
+        .checkbox_input{
+            box-shadow: none;
+            -webkit-box-shadow: none;
+        }
+        body input.btn, body input.btnDisabled, body input.btnCancel {
+            height: 5vh;
+            -webkit-appearance: none;
+            font-size: 25px !important;
+            color: #fff !important;
+            background: none;
+            background-color: #ff4713;
+            border-radius: 10px;
+            width: 6vw;
+        }     
+        
+        
+         @media only screen and (max-device-width: 768px){
+ 		
+        	.titleDiv{
+                margin-bottom: 30px;
+                text-align: center;
+                padding: 4px 0px;
+            }
+            .title{
+                font-size: 5vw;
+                font-weight: 500;
+            }
+        
+            .legend_cls{
+              pointer-events: all;
+            }
+        
+            #AppBodyHeader .phHeader td.left img:first-child{
+                    width: 40vw !important;
+                    height: 8vh;
+                    display: none;
+            }
+            
+            .phHeaderCustomLogo #helpNavLabel, .phHeaderCustomLogo #notificationsNavLabel, .phHeaderCustomLogo #userNavLabel{
+                    font-size: 3vw;
+            }
+            .messages .textOnly.normalImportance, .messages .textOnly.highImportance {
+                    font-size: 33px;
+                    height: 40px;
+                    width: 275px;
+            }
+            
+            .frm_input {
+                    margin-left: 10px;
+                    width: 90%;
+                    height: 70px;
+                    font-size: 4vw;
+                    padding: 2vw;
+                    line-height: 70px;
+            }
+        
+            .frm_label {
+                    margin-left: 10px;
+                    font-size: 4vw;
+                    margin-top: 1vw;
+                    
+            }
+        
+            .frm_select {
+                margin-left: 10px;
+                width: 95%;
+                height: 110px !important;
+                font-size: 4vw;
+                padding: 2vw;
+            }
+        
+            .checkbox_input{
+                width: 4vw;
+            }
+            
+            .checkbox_text {
+                display: inline-block;
+                margin-top: -40px;
+                padding-top: 0;
+                position: absolute;
+                margin-left: 58px;
+                margin-right: 62px;
+                font-size: 4vw;
+            }
+            .topheadline {
+                font-size:6vw;
+            }
+            .tab{
+                display: none;
+            }
+            .tab a{
+                padding: 21px 8px;
+                font-size: 24px;
+            }
+            .sticky{
+                left: 0;
+            }
+            .book_meeting_link{
+                font-size: 3vw;
+            }
+            body input.btn, body input.btnDisabled, body input.btnCancel {
+                height: 80px;
+                -webkit-appearance: none;
+                font-size: 4vw !important;
+                color: #fff !important;
+                background: none;
+                background-color: #ff4713;
+                border-radius: 12px;
+                width: 18vw;
+            }
+            fieldset legend{
+                font-size: 5vw;
+                background-color: #eee;
+                color: #444;
+                padding: 18px;
+                width: 92%;
+                border: none;
+                text-align: left;
+                outline: none;
+            }
+            .noSidebarCell, .sidebarCell .fixed {
+                padding: 10px;
+            }
+        
+            .form-group {
+                margin-bottom: 35px;
+                margin-top: 20px;
+            }
+            .fieldset_cls{
+                padding-bottom: 10px;
+                padding-top: 10px;
+                padding-left: 40px;
+                border: none;
+            }
+            .chkbox-frm-grp{
+                margin-bottom: 70px;
+                margin-top: 40px;
+            }
+        .footersubmit{
+               position: fixed;
+                left: 10px;
+                right: 12px;
+                bottom: 0;
+                height: 80px;
+        		margin-bottom: 0px;        		 
+                background-color: #eee;
+                padding: 17px 0px;
+            }
+            .smallText{
+                color: #979797;
+                font-weight: 500;
+                display: block;
+                font-size: 3.5vw;
+            }
+            .date{
+                width: 89% !important;
+                height: 75px !important;
+                font-size: 4vw !important;
+                -webkit-appearance: none; 
+                -moz-appearance: none; 
+                background: transparent;
+                background-image: url(data:image/svg+xml;base64,PHN2ZyBmaWxsPSdibGFjaycgaGVpZ2h0PScyNCcgdmlld0JveD0nMCAwIDI0IDI0JyB3aWR0aD0nMjQnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHBhdGggZD0nTTcgMTBsNSA1IDUtNXonLz48cGF0aCBkPSdNMCAwaDI0djI0SDB6JyBmaWxsPSdub25lJy8+PC9zdmc+) !important; 
+                background-repeat: no-repeat; 
+                background-position-x: 100%; 
+                background-position-y: 20px; 
+                border: 1px solid #dfdfdf; 
+                border-radius: 2px; 
+                margin-right: 2rem; 
+                padding: 1rem; 
+                padding-right: 2rem;
+                background-size: 65px 65px;
+
+            }
+            .footersubmit > .cancelBtn{
+                width: unset !important;
+                padding: 0 20px;
+                margin-left: 40px;
+            }
+            select { 
+                -webkit-appearance: none; 
+                -moz-appearance: none; 
+                background: transparent; 
+                background-image: url(data:image/svg+xml;base64,PHN2ZyBmaWxsPSdibGFjaycgaGVpZ2h0PScyNCcgdmlld0JveD0nMCAwIDI0IDI0JyB3aWR0aD0nMjQnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHBhdGggZD0nTTcgMTBsNSA1IDUtNXonLz48cGF0aCBkPSdNMCAwaDI0djI0SDB6JyBmaWxsPSdub25lJy8+PC9zdmc+) !important; 
+                background-repeat: no-repeat; 
+                background-position-x: 100%; 
+                background-position-y: 25px; 
+                border: 1px solid #dfdfdf; 
+                border-radius: 2px; 
+                margin-right: 2rem; 
+                padding: 1rem; 
+                padding-right: 2rem;
+                background-size: 65px 65px; 
+            }
+            .frm-body{
+                display: none;
+            }
+            .active, fieldset legend:active{
+                    background-color: #ccc;
+            }
+        
+            legend:after {
+                content: '\002B';
+                color: black;
+                font-weight: bold;
+                float: right;
+                margin-left: 5px;
+            }
+            
+            legend.active:after {
+                content: "\2212";
+            }
+           .pac-item *{
+                font-size: 4vw;
+            }
+            .pac-item {
+                padding-top: 40px;
+                padding-bottom: 40px;
+            }
+            .textArea{
+                height: 210px;
+                font-size: 3vw;
+            }
+            body .bPageBlock, body #bodyCell .bResource .secondaryPalette, 
+            body .secondaryPalette.bPageBlock, body .individualPalette .secondaryPalette.bPageBlock, 
+            body .bodyDiv .genericTable, body .genericPageBlockTable, 
+            body .bodyDiv .bSubBlock, body .bComponentBlock .bPageBlock, 
+            body .bMyDashboard .bPageBlock, body.rlHoverFrame .bPageBlock, 
+            body.subjectSelectionPopup div.choicesBox, body.lookupTab .secondaryPalette.bPageBlock, 
+            body.popupTab .secondaryPalette.bPageBlock, 
+            body.UserTagStatsPage .secondaryPalette.bPageBlock{
+        		margin-top:65px;
+        	}
+        	
+        }
+    </style>
+    
+</head>
+
+
+<body>
+
+<div>
+        <div class="topheadline">
+            <img src=" https://super.homelane.com/hllogo_0119_big1.png" onclick="window.location.href='https://www.homelane.com'" />
+        </div>       
+    
+    	<div class="titleDiv">
+            <h1 class="title">
+                LEAD DETAILS
+            </h1>
+    </div>
+        <span class="save">
+            
+             <!-- <apex:commandButton value="Save" action="{!saveAccountDetails}"/> -->
+
+            
+        </span>
+    </div>
+    <div class="tab" id="stickyTab">
+        <a class="tablinks" href="#customer_details" id="customer_details_tab">Customer Details</a>
+        <a class="tablinks" href="#additional_details" id="additional_details_tab">Lead Status Details</a>
+        <a class="tablinks" href="#property_details" id="property_details_tab">Property Details </a>
+        <a class="tablinks" href="#requirements" id="requirements_tab">Requirements</a>       
+        <a class="tablinks" href="#apointment" id="apointment_tab">Appointment Details</a>
+        <a class="tablinks" href="#hl_awarness" id="hl_awarness_tab">HL Awareness</a>
+        
+    </div>
+    
+    <div>
+        <apex:pageBlock id="pageMsgBlock">
+         <apex:pageMessages rendered="true" id="msgId"/>
+        </apex:pageBlock>
+    </div>
+
+    <div id="customer_details" class="tabcontent">
+        <fieldset class="fieldset_cls">
+            <legend class="legend_cls active">Customer Details </legend>
+            <div class="frm-body" style="display:block;">
+            <div class="form-group">
+                <label for="name" class="frm_label">Name</label> 
+                <apex:inputHidden value="{!endPointUrl}" id="goole-sheet-url" />               
+                <!--<apex:input value="{!leadLastName}" styleClass="form-control frm_input"  id="leadLastName"/>-->
+                <apex:outputText value="{!leadLastName}" styleClass="form-control frm_input  read-only"  id="leadLastName"/>
+                <span Class="error_cls" id="leadLastName_error" style="display:none;"></span>                
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="frm_label">Email</label>
+                <apex:input value="{!email}" styleClass="form-control frm_input" id="lead_email" disabled="{!NOT(isBulkOfflineLead)}"/>
+                <!--<apex:outputText value="{!email}" styleClass="form-control frm_input  read-only"  id="lead_email"/>-->
+                <span Class="error_cls" id="lead_email_error" style="display:none;"></span>
+            </div>
+
+           <div class="form-group">
+                <label for="mobile" class="frm_label">Mobile</label>
+                <!--<apex:input value="{!phone}" styleClass="form-control frm_input" id="mobile_id" required="true" /> -->
+                <apex:outputText value="{!phone}" styleClass="form-control frm_input  read-only"  id="mobile_id"/>
+                <span Class="error_cls" id="lead_mobile_error" style="display:none;"></span>
+            </div>
+            <div class="form-group">
+                <label for="alt_phone" class="frm_label">Alternative Phone Number</label>
+                <apex:input value="{!altPhoneNumber}" styleClass="form-control frm_input" id="alt_phone"/>
+                <span Class="error_cls" id="alt_phone_error" style="display:none;"></span>
+            </div>
+            <div class="form-group">
+                <label for="city" class="frm_label">City </label> 
+                <apex:selectList size="1" value="{!selectedCity}" id="lead_city" styleClass="form-control frm_select" disabled="{!NOT(isFromOthersCity)}">
+                <apex:selectOptions value="{!listOfCities}"/>
+                </apex:selectList>
+                <!--<apex:outputText value="{!selectedCity}" styleClass="form-control frm_input  read-only"  id="lead_city"/>-->
+                <span Class="error_cls" id="lead_city_error" style="display:none;"></span>
+            </div>
+                <div class="form-group">
+                    <label for="pincode" class="frm_label">Pincode</label>
+                    <apex:input value="{!pincode}" styleClass="form-control frm_input" id="lead_pincode" type="text" disabled="{!NOT(OR(isFromOthersCity,isPincodeBlank))}"/>
+                    <span Class="error_cls" id="lead_pincode_error" style="display:none;"></span>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div id="additional_details" class="tabcontent">
+        <fieldset class="fieldset_cls">
+            <legend class="legend_cls">Lead Status Details </legend>
+              <div class="frm-body">
+            <apex:outputPanel id="additional_Details_Panel">              
+                    <div class="form-group">            
+                        <label for="Status" class="frm_label">Status</label>
+                        <apex:selectList size="1" value="{!selectedStatus}" styleClass="form-control frm_select" id="Status">
+                            <apex:selectOptions value="{!listOfStatus}"/>
+                            <apex:actionsupport event="onchange" action="{!handleStatusFieldDependency}" rerender="additional_Details_Panel,Appointment_Details_Panel"/>
+                        </apex:selectList>
+                        <span Class="error_cls" id="lead_status_error" style="display:none;"></span>
+                    </div>
+                    <div class="form-group">            
+                        <label for="Sub_Status" class="frm_label">Sub Status</label>
+                        <apex:selectList size="1" value="{!selectedSubStatus}" styleClass="form-control frm_select" id="Sub_Status">
+                            <apex:selectOptions value="{!listOfSubStatus}"/>
+                            <apex:actionsupport event="onchange" action="{!handleStatusFieldDependency}" rerender="additional_Details_Panel"/>
+                        </apex:selectList>
+                        <span Class="error_cls" id="lead_Sub_status_error" style="display:none;"></span>
+                    </div>
+                            
+                    <apex:outputPanel id="Dead_Lead_Reason_Panel" rendered="{!displayReasonForDeadLead}">
+                        <div class="form-group" >
+                            <label for="Reason_For_Dead_Lead" class="frm_label">Reason For Dead Lead</label>
+                            <apex:selectList size="1" value="{!selectedReasonForDeadLead}" styleClass="form-control frm_select" id="Reason_For_Dead_Lead">
+                                <apex:selectOptions value="{!listOfReasonForDeadLead}"/>
+                            </apex:selectList>
+                            <span Class="error_cls" id="lead_Reason_For_Dead_Lead_error" style="display:none;"></span>
+                        </div>
+                    </apex:outputPanel>
+                	<apex:outputPanel id="out_Of_Serving_Area_City_Panel" rendered="{!isNonServiceableCity}">
+                        <div class="form-group">
+                            <label for="out_Of_Serving_Area_City" class="frm_label">Out Of Servicing Area City</label>
+                            <apex:inputText value="{!outOfServicingAreaCity}" StyleClass="form-control frm_input" id="out_Of_Serving_Area_City"/>
+                            <span Class="error_cls" id="out_Of_Serving_Area_City_error" style="display:none;"></span>
+                        </div>
+                    </apex:outputPanel>
+                    <div class="form-group"> 
+                        <label for="Description" class="frm_label">Description</label>
+                        <apex:inputTextarea value="{!description }" styleClass="form-control frm_input textArea" id="Description"/>
+                        <span Class="error_cls" id="lead_description_error" style="display:none;"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Follow-Up_Time" class="frm_label">Follow-Up Time</label>
+                        <apex:input value="{!followUpTime}" styleClass="form-control frm_input date" type="datetime-local" id="Follow_Up_Time"/>
+                        <span Class="error_cls" id="lead_follow_Up_time_error" style="display:none;"></span>
+                    </div>
+                <div class="form-group">
+                        <label for="Preferred_Appointment_Slot" class="frm_label">Preferred Appointment Slot</label>
+                        <apex:input value="{!preferredAppointmentSlot}" styleClass="form-control frm_input date" type="datetime-local" id="Preferred_Appointment_Slot"/>
+                        <span Class="error_cls" id="lead_preferred_appointment_slot_error" style="display:none;"></span>
+                    </div>
+                <div class="form-group chkbox-frm-grp">
+                        <apex:inputCheckbox value="{!meetingFixedByWarroomAgent}" styleClass="form-control checkbox_input" id="checkboxId"/> 
+                        <span class="checkbox_text">Meeting Fixed by War-room Agent</span>
+                	</div>
+            </apex:outputPanel>
+              </div>
+        </fieldset>
+    </div>
+   
+    <div id="property_details" class="tabcontent">
+        <fieldset class="fieldset_cls">
+            <legend class="legend_cls">Property Details</legend>
+            <div class="frm-body">
+            <apex:outputPanel id="Property_Details_Panel">
+                
+                    <div class="form-group">
+                        <label for="property_type" class="frm_label">Property Type</label>
+                        <apex:selectList size="1" value="{!selectedPropertyType}" id="property_type" styleClass="form-control frm_select">
+                            <apex:selectOptions value="{!listOfPropertyType }"/>
+                        </apex:selectList>
+                        <span Class="error_cls" id="lead_property_type_error" style="display:none;"></span>                
+                    </div>
+                    <div class="form-group">
+                        <label for="property_status" class="frm_label">Property Status</label>
+                        <apex:selectList size="1" value="{!selectedPropertyStatus}" id="property_status" styleClass="form-control frm_select">
+                            <apex:selectOptions value="{!listOfPropertyStatus }"/>
+                        </apex:selectList>
+                        <span Class="error_cls" id="lead_property_status_error" style="display:none;"></span>               
+                    </div>
+                    <apex:outputPanel rendered="{!alreadyHasProperty}">
+                        <label for="existing_Property_Name" class="frm_label">Property Name(Existing)</label>
+                        <apex:outputText value="{!existingPropertyName}" styleClass="form-control frm_input  read-only"  id="existing_Property_Name"/>
+                        <apex:inputCheckbox value="{!isPropertyUpdate}" StyleClass="form-control checkbox_input" id="is_Property_Update">
+                            <apex:actionsupport event="onchange" rerender="Property_Details_Panel" oncomplete="init1();" />
+                        </apex:inputCheckbox>
+                        <span class="checkbox_text">Update Property?</span>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{! ( NOT(alreadyHasProperty) || isPropertyUpdate)}" id="property_Search_And_Name_Panel">
+                        <div class="form-group">
+                            <label for="property_search" class="frm_label">Property Name</label>                
+                            <apex:inputText value="{!propertyNameFromGoogle}" id="property_search" styleClass="form-control frm_input" disabled="{!shouldDisableGoogleProperty}" />            
+                        </div>
+                        
+                        
+                        <div class="form-group chkbox-frm-grp">
+                            <apex:inputCheckbox value="{!propertyNotFoundInGoogle}" StyleClass="form-control checkbox_input" id="goole_find_property">
+                                <apex:actionsupport action="{!googlePropertySearchDisableToggle}" event="onchange" rerender="property_Search_And_Name_Panel" oncomplete="init1();"/>
+                            </apex:inputCheckbox>
+                            <span class="checkbox_text">Cannot find property name in Google?</span>
+                        </div>
+                        <apex:outputPanel id="property_Name_Panel">
+                            <div class="form-group" id="google_property_not_exist" >
+                                <apex:inputText value="{!propertyNameManual}" styleClass="form-control frm_input" html-placeholder="Enter property name" id="property_name_not_google" rendered="{!propertyNotFoundInGoogle}" />
+                            </div>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                    <div class="form-group">
+                        <label for="property_conf" class="frm_label">Property Config</label>
+                        <apex:selectList size="1" value="{!selectedPropertyConfig}" styleClass="form-control frm_select" id="property_config">
+                            <apex:selectOptions value="{!listOfPropertyConfig }"/>
+                        </apex:selectList>
+                        <span Class="error_cls" id="lead_property_config_error" style="display:none;"></span>
+                        
+                    </div>
+                    <div class="form-group">
+                        <label for="possession_month" class="frm_label">Possession Month</label>
+                        <apex:input id="possession_month" value="{!possessionDate}" type="date" styleClass="form-control date" style="width: 27.5%;margin-left: 10px;height: 20px;font-size:14px"/>
+                    </div>
+                    <span Class="error_cls" id="lead_possession_month_error" style="display:none;"></span>
+                </apex:outputPanel>
+                </div>
+            	
+                 	<div class="form-group">
+                        <label for="builder_name" class="frm_label">Builder Name</label>
+                        <apex:selectList size="1" value="{!selectedBuilderName}" id="builder_name" styleClass="form-control frm_select">
+                            <apex:selectOptions value="{!listOfBuilderName }"/>
+                        </apex:selectList>
+                        <span Class="error_cls" id="lead_builder_name_error" style="display:none;"></span>                
+                    </div>
+            
+        </fieldset>
+    </div>
+    <div id="requirements" class="tabcontent">
+        <fieldset class="fieldset_cls">
+            <legend class="legend_cls">Requirements </legend>
+            <div class="frm-body">
+            <span Class="error_cls" id="lead_requirements_error" style="display:none;"></span>
+            <div class="form-group chkbox-frm-grp">
+                    <apex:inputCheckbox value="{!kitchenCheckbox}" styleClass="form-control checkbox_input"  id="kitchen"/> 
+                    <span class="checkbox_text">Kitchen</span>
+                </div>
+                
+                <div class="form-group chkbox-frm-grp">
+                    <apex:inputCheckbox value="{!wardrobesCheckbox}" styleClass="form-control checkbox_input" id="wardrobes"/> 
+                    <span class="checkbox_text">Wardrobes</span>
+                </div>
+                <div class="form-group chkbox-frm-grp">
+                    <apex:inputCheckbox value="{!modularStorgeCheckbox}" styleClass="form-control checkbox_input" id="modular_storage" /> 
+                    <span class="checkbox_text">Modular Storage<span class="smallText">(Includes TV, crockery, bookshelf and more!)</span></span>
+                </div>
+                <div class="form-group chkbox-frm-grp">
+                    <apex:inputCheckbox value="{!looseFurnitureCheckbox}" styleClass="form-control checkbox_input" id="lose_furniture" /> 
+                    <span class="checkbox_text">Loose Furniture<span class="smallText">(Includes beds, sofa and more!)</span></span>
+                </div>
+                <div class="form-group chkbox-frm-grp">
+                    <apex:inputCheckbox value="{!hdsCheckbox}" styleClass="form-control checkbox_input" id="hds"/> 
+                    <span class="checkbox_text">HDS<span class="smallText">(Includes false ceiling, painting and more!)</span></span>
+                </div>
+            <!--newly added for renovation Servce-->
+           <!-- <div class="form-group">
+                <label for="renovation_Services" class="frm_label">Renovation Services</label>
+                
+                <apex:panelGrid columns="3"  id="abcd">
+                    
+                    <apex:selectList id="sel1" value="{!leftselected}" Label="Available" title="Renovation Services - Available" multiselect="true" style="width:130px" size="5">
+                        <apex:selectOptions value="{!unselectedvalues}" />
+                    </apex:selectList>
+                    <apex:panelGroup >
+                        <br/>
+                        <apex:image value="{!$Resource.multiselected}" >
+                            <apex:actionSupport event="onclick" action="{!selectclick}" reRender="abcd"/>
+                        </apex:image>
+                        <br/><br/>
+                        <apex:image value="{!$Resource.multiunselected}" >
+                            <apex:actionSupport event="onclick" action="{!unselectclick}" reRender="abcd"/>
+                        </apex:image>
+                    </apex:panelGroup>
+                    
+                    <apex:selectList id="sel2" value="{!rightselected}" Label="Chosen" title="Renovation Services - Chosen" multiselect="true" style="width:130px" size="5">
+                        <apex:selectOptions value="{!SelectedValues}" />
+                    </apex:selectList>
+                </apex:panelGrid>
+                
+            </div> -->
+                <div class="form-group">
+                    <label for="Upload_Floor_Plan" class="frm_label">Upload Floor Plan</label>
+                    <a class="Upload_Floor_Plan_link" href="{!uploadFloorPlanURl}" target="_blank" style="display: inherit; margin-left: 10px;">Click here to add Floor Plan</a>
+                </div>
+                <div class="form-group">
+                <label for="purpose_interiors" class="frm_label">Purpose of Interiors</label>
+                <apex:selectList size="1" value="{!selectedPurposeOfInteriors}" styleClass="form-control frm_select" id="purpose_interiors">
+                <apex:selectOptions value="{!listOfPurposeOfInteriors }"/>
+                </apex:selectList>
+                <span Class="error_cls" id="lead_purpose_interiors_error" style="display:none;"></span>
+                </div>
+
+                <div class="form-group">
+                <label for="budget_range" class="frm_label">Budget Range</label>
+                <apex:selectList size="1" value="{!selectedBudgetRange}" styleClass="form-control frm_select" id="budget_range">
+                <apex:selectOptions value="{!listOfBudgetRange }"/>
+                </apex:selectList>
+                <span Class="error_cls" id="lead_budget_range_error" style="display:none;"></span>
+                </div>
+
+                <div class="form-group">
+                        <label for="move_in_date" class="frm_label">Move-In Date</label>
+                        <apex:input value="{!propertyMoveInDate}" Type="date" styleClass="form-control frm_select date" id="move_in_date" style="width: 27.5%;margin-left: 10px;height: 20px;"/>
+                        <!--div class='input-group frm_select date' id='move_in_date_dp'>
+                        
+                        </div-->
+                         
+                </div>
+               
+                <span Class="error_cls" id="lead_move_in_date_error" style="display:none;"></span>
+                <div class="form-group"> 
+                <label for="floor_plan_received" class="frm_label">Floor Plan Received?</label>
+                <apex:selectList size="1" value="{!selectedFloorPlanRecieved}" styleClass="form-control frm_select" id="floor_plan_received">
+                <apex:selectOptions value="{!listOfFloorPlanRecieved }"/>
+                </apex:selectList>
+                <span Class="error_cls" id="lead_floor_plan_received_error" style="display:none;"></span>
+                </div>
+                <div class="form-group">
+                <label for="first_home" class="frm_label">First Home?</label>
+                <apex:selectList size="1" value="{!selectedFirstHome}" styleClass="form-control frm_select" id="first_home">
+                <apex:selectOptions value="{!listOfFirstHome }"/>
+                </apex:selectList>
+                <span Class="error_cls" id="lead_first_home_error" style="display:none;"></span>
+                </div>
+                <div class="form-group">
+                <label for="Primary_Language" class="frm_label">Primary Language</label>
+                <apex:selectList size="1" value="{!selectedPrimaryLanguage}" styleClass="form-control frm_select" id="Primary_Language">
+                <apex:selectOptions value="{!listOfPrimaryLanguage}"/>
+                </apex:selectList>
+                <span Class="error_cls" id="lead_PrimaryLanguage_error" style="display:none;"></span>
+                </div>
+                <div class="form-group">
+                <label for="Secondary_Language" class="frm_label">Secondary Language</label>
+                <apex:selectList size="1" value="{!selectedSecondaryLanguage}" styleClass="form-control frm_select" id="Secondary_Language">
+                <apex:selectOptions value="{!listOfSecondaryLanguage}"/>
+                </apex:selectList>
+                <span Class="error_cls" id="lead_SecondaryLanguage_error" style="display:none;"></span>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+   
+
+    <div id="apointment" class="tabcontent">
+        <fieldset class="fieldset_cls">
+            <legend class="legend_cls">Appointment Details </legend>
+            <div class="frm-body">
+            <apex:outputPanel id="Appointment_Details_Panel">
+            <div class="form-group">            
+                <label for="appointment_type" class="frm_label">Appointment Type</label>
+                <apex:selectList size="1" value="{!selectedAppointmentType}" styleClass="form-control frm_select" id="appointment_type">
+                <apex:selectOptions value="{!listOfAppointmentType }"/>
+                <apex:actionsupport event="onchange" action="{!checkAppointMentType}" rerender="Appointment_Details_Panel" oncomplete="init2();"/>
+                </apex:selectList>
+                <span Class="error_cls" id="lead_appointment_type_error" style="display:none;"></span>
+            </div>
+                <apex:outputPanel id="Alternative_Appointment_Time_Panel" rendered="{!shouldRenderAltAppointmentTime}">   
+                    <div class="form-group">
+                        <label for="Alternative_Appointment_Time" class="frm_label">Alternative Appointment Time</label>
+                        <apex:input value="{!alternativeAppointmentTime}" styleClass="form-control frm_input date" type="datetime-local" id="Alternative_Appointment_Time"/>
+                        <span Class="error_cls" id="Alternative_Appointment_Time_error" style="display:none;"></span>
+                    </div>
+                </apex:outputPanel>         
+            <apex:outputPanel id="Appointment_Venue_Panel" >
+            <div class="form-group">
+                <Label class="frm_label" > Appointment Venue </Label>
+                <apex:selectList size="1" value="{!selectedShowRoom}" styleClass="form-control frm_select" id="appointment_venue">
+                <apex:selectOptions value="{!listOfAppointmentVenue }"/>
+                </apex:selectList>
+                <span Class="error_cls" id="lead_appointment_venue_error" style="display:none;"></span>
+            </div>
+            </apex:outputPanel>
+            <div class="form-group">
+                <Label class="frm_label" > Appointment Time (Book via Acuity link provided below)</Label>
+                <apex:outputText value="{!appointmentTimeString}" styleClass="form-control frm_input  read-only"  id="Appointment_Time"/>         
+            <span Class="error_cls" id="lead_Appointment_Time_error" style="display:none;"></span>
+            </div>
+            <apex:outputPanel id="Address_Details_Panel" rendered="{!isResidenceOrSiteVisitType}">
+              
+            <div class="form-group">
+                <label for="address_search" class="frm_label">Address</label>
+                <apex:inputTextarea value="{!addressFromGoogle}" styleClass="form-control frm_input" id="address_search" html-placeholder="Search" />
+                <span Class="error_cls" id="lead_address_search_error" style="display:none;"></span>
+            </div>
+            <div class="form-group chkbox-frm-grp">
+                <apex:inputCheckbox value="{!addressNotFoundInGoogle}" StyleClass="form-control checkbox_input" id="goole_find_address">
+                    <apex:actionsupport event="onchange" rerender="Enter_The_Address_Panel" />
+                 </apex:inputCheckbox>
+                <span class="checkbox_text">Cannot find address in Google?</span>
+            </div>
+            <apex:outputPanel id="Enter_The_Address_Panel">
+            <div class="form-group" id="google_address_not_exist">
+                    <apex:inputText value="{!appointmentAddressMannualEnter}" styleClass="form-control frm_input" html-placeholder="Enter the address" id="address_name_not_google" rendered="{!addressNotFoundInGoogle}" />
+            </div>
+            <span Class="error_cls" id="lead_address_name_not_google_error" style="display:none;"></span>
+            </apex:outputPanel>
+            <div class="form-group">
+                <label for="door_flat_no" class="frm_label">Door/Flat No.</label>
+                <apex:inputText value="{!appointmentDoorNumber}" StyleClass="form-control frm_input" id="door_flat_no" html-placeholder="Enter street" />
+                <span Class="error_cls" id="lead_door_flat_no_error" style="display:none;"></span>
+            </div>
+            <div class="form-group">
+                <label for="landmark" class="frm_label">Landmark</label>
+                <apex:inputText value="{!appointmentLandmark}" StyleClass="form-control frm_input" id="landmark" html-placeholder="Enter street"/>
+                <span Class="error_cls" id="lead_landmark_error" style="display:none;"></span>
+            </div>
+            </apex:outputPanel>
+            </apex:outputPanel>
+            <div class="form-group">
+                <label for="schedule_meeting_in_acuity" class="frm_label">Schedule Meeting in Acuity</label>
+                <a class="book_meeting_link" href="{!meetingBookingUrl}" target="_blank" style="display: inherit; margin-left: 10px;">Click here to Book Meeting</a>
+            </div>
+            </div>
+        </fieldset>
+    </div>
+
+    <div id="hl_awarness" class="tabcontent">
+        <fieldset class="fieldset_cls">
+            <legend class="legend_cls">HL Awareness </legend>
+            <div class="frm-body">
+            <div class="form-group">
+                        <label for="name" class="frm_label">How did you hear about us?</label>
+                        <apex:selectList size="1" value="{!selectedHowDidYouHearAboutUs}"  onchange="how_did_you_hear_about_us(this.value)" styleClass="form-control frm_select" id="how_did_you_hear_about_us">
+                       <apex:selectOptions value="{!listOfHowDidYouHearAboutUs }"/>
+                       </apex:selectList>
+                       <span Class="error_cls" id="lead_how_did_you_hear_about_us_error" style="display:none;"></span>                        
+                    </div>
+                    <div class="form-group" id="referrer_phone_container" style="display:none">
+                       <label for="referrer_phone" class="frm_label">Referrer phone</label>
+                       <apex:inputText value="{!referrerPhoneNumber}" StyleClass="form-control frm_input" id="referrer_phone" html-placeholder="Enter Referrer phone"/>
+                       <span Class="error_cls" id="lead_referrer_phone_error" style="display:none;"></span>                        
+                    </div>
+                    <div class="form-group" id="other_Source_container" style="display:none">
+                       <label for="other_Source" class="frm_label">Other source</label>
+                       <apex:inputText value="{!otherSource}" StyleClass="form-control frm_input" id="other_Source" html-placeholder="Enter Other Source"/>
+                       <span Class="error_cls" id="lead_other_Source_error" style="display:none;"></span> 
+                    </div>
+            </div>
+        </fieldset>
+    </div>
+    
+
+    <div class="error_txt" style="display:none;" id="comman_error_msg">
+        
+    </div>
+    <div class="footersubmit">
+        <apex:outputPanel id="buttons_Panel" rendered="{!dispalyButtons}">
+            
+                
+                    <apex:commandButton value="Save" onclick="return set_appointment_fixed()" style="font-size:15px;color:#403d3d;" status="idActionStatus" rerender="idActionStatus" id="Save_Button" disabled="false"/>
+                
+                
+            <apex:actionFunction name="saveToSf" action="{!SubmitLeadRecord}" reRender="pageMsgBlock" oncomplete="buttonsEnabled(true);">
+                 
+                <!--<apex:param id="para-Called_From_Button" name="calledFromButton" value="" /> -->
+                <apex:param id="para-Google_Property_Details" name="googlePropertyDetails" value="" />
+            </apex:actionFunction>
+            
+                
+         <!--<apex:commandButton styleClass="cancelBtn" value="Set as Appointment Fixed"  onclick="return set_appointment_fixed()" id="set_appointment_fixed" style="font-size:15px;width:235px;color:#403d3d;" oncomplete="window.scrollTo(0,0);scrollToTopMessageBlock();" /> -->
+         </apex:outputPanel>
+    </div>  
+</body>
+    <script>
+    function buttonsEnabled(enabled) {
+        // retrieve all of the buttons or links on the page
+        // with the css class of btn
+        var $buttons = jQuery('.btn');
+        if (enabled === false) {
+            // add the btnDisabled class to give it the look of being disabled
+            // add the disabled attribute to actually disable interactability
+            $buttons.toggleClass('btnDisabled', true).attr('disabled', 'disabled');
+        } else {
+            // remove the css class and the disabled attribute
+            $buttons.toggleClass('btnDisabled', false).attr('disabled', null);
+        } 
+    }
+
+   
+    
+    
+    function confirmDisbaled() {
+        //oncomplete="confirmDisbaled(this);"
+alert('hi');
+        document.getElementById('property_search').disabled = true;
+        /*if($(this).prop("checked") == true){
+            $("#google_property_not_exist").css("display","block");
+            //$("#google_property_not_exist").show();
+            $("[id$=property_search]").val('').prop("readonly", true);
+            $("[id$=property_search]").addClass("read-only",true);
+            
+        }else if($(this).prop("checked") == false){
+            $("#google_property_not_exist").css("display","none");
+            //$("#google_property_not_exist").hide();
+            $("[id$=property_search]").val('').prop("readonly", false);
+            $("[id$=property_search]").removeClass("read-only",true);
+        }*/
+}
+    function scrollToTopMessageBlock() {
+        //document.querySelector('#pageMsgBlock').scrollIntoView();
+        var google_sheet_url = $("[id$=goole-sheet-url]").val();
+        console.log(google_sheet_url);
+        if(google_sheet_url!=""){        
+            var jqxhr = $.ajax({
+                url: google_sheet_url,
+                method: "GET",
+                dataType: "json",
+                data: ""
+            }).success(
+                // do something
+            );
+        }
+    }
+    
+    /* function SaveLead(){
+        $(".error_cls").hide();
+       $("[id$=comman_error_msg]").html('').hide();
+        var postString = JSON.stringify(postparams);
+        saveToSf('SAVE',postString);
+        
+    }
+    */
+    function disableButton(){
+        var toDisable = document.getElementById("Save_Button");
+        console.log('disable function called');
+        toDisable.disabled = 'disabled';
+    }
+    
+    function set_appointment_fixed(){
+        //event.preventDefault();
+        setFormSubmitting();
+         buttonsEnabled(false);
+        $(".error_cls").hide();
+        $("[id$=comman_error_msg]").html('').hide();
+        
+        var postString = JSON.stringify(postparams);
+        var error_flag = 0;
+        
+        var leadLastName = document.getElementById('j_id0:mainfrm:leadLastName').value;
+        var lead_mobile = $("[id$=mobile_id]").val();
+        var lead_email = document.getElementById('j_id0:mainfrm:lead_email').value;
+        console.log('lead_email: '+lead_email);
+        /*console.log('lead_mobile: '+lead_mobile);
+        console.log('lead_email: '+lead_email);
+        console.log('leadLastName: '+leadLastName);*/
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        var lead_Status = $("[id$=Status]").val();
+        var lead_SubStatus = $("[id$=Sub_Status]").val();
+        var lead_BuilderName = $("[id$=builder_name]").val();
+        var Lead_reasonForDeadLead = $("[id$=Reason_For_Dead_Lead]").val();
+        var Lead_description = $("[id$=Description]").val();
+        var Lead_Follow_Up_Time = $("[id$=Follow_Up_Time]").val();
+        var lead_alt_Phone = $("[id$=alt_phone]").val();
+        var lead_pincode = $("[id$=lead_pincode]").val();
+        var letters = /^[A-Za-z]+$/;
+        //var phoneRegExp = /^0[0-9].*$/;
+        var pincodeRegExp = /^[1-9][0-9]{5}$/;
+        console.log('lead_alt_Phone: '+lead_alt_Phone);
+        //console.log('indexOfZero: '+lead_alt_Phone.indexOf('0'));
+        if(lead_alt_Phone !='' &&(lead_alt_Phone.length!=10 || lead_alt_Phone.match(letters) || lead_alt_Phone.indexOf('0')==0)){
+            $("#alt_phone_error").html("Please enter a valid 10 digit alternative phone number which does not start with 0.").show();
+            error_flag=1;
+        }
+        if(lead_pincode !='' && !pincodeRegExp.test(lead_pincode)){
+            $("#lead_pincode_error").html("Please enter a valid 6 digit Pincode which does not start with 0.").show();
+            error_flag=1;
+        }
+        if(lead_email ==''){
+            $("#lead_email_error").html("Email cannot be blank.").show();
+            error_flag=1;
+        }else if(!regex.test(lead_email)){
+            $("#lead_email_error").html("Email address must be in the format of name@domain.com.").show();
+            error_flag=1;
+        }
+        /*if(leadLastName ==''){
+            $("#leadLastName_error").html("Please enter name.").show();
+            error_flag=1;
+        }
+        if(lead_email ==''){
+            $("#lead_email_error").html("Please enter email.").show();
+            error_flag=1;
+        }else if(!regex.test(lead_email)){
+            $("#lead_email_error").html("Email address must be in the format of name@domain.com.").show();
+            error_flag=1;
+        }
+        if(lead_mobile ==''){
+            $("#lead_mobile_error").html("Please enter mobile no.").show();
+            error_flag=1;
+        }*/
+        if(lead_Status =='' || !lead_Status.trim()){
+            $("#lead_status_error").html("Status cannot be empty.").show();
+            error_flag=1;
+        }
+        if(lead_SubStatus ==''|| !lead_Status.trim()){
+            $("#lead_Sub_status_error").html("Sub Status cannot be empty.").show();
+            error_flag=1;
+        }
+        if(lead_Status=='Dead Lead'){
+            if(Lead_reasonForDeadLead=='' || !Lead_reasonForDeadLead.trim()){
+                $("#lead_Reason_For_Dead_Lead_error").html("Reason for dead lead is mandatory when Status is Dead Lead.").show();
+                error_flag=1;
+            }
+        }
+        if(lead_Status=='Appointment Fixed' && (lead_BuilderName == '' || lead_BuilderName == '--SELECT BUILDER NAME--' ))
+        {  
+            $("#lead_builder_name_error").html("Builder Name missing. Builder Name is mandatory when Status is Appointment Fixed.").show();
+                error_flag=1;           
+        }
+        if(lead_Status=='Appointment Fixed'){
+            var appointmentTime = document.getElementById('j_id0:mainfrm:Appointment_Time').innerHTML;
+            
+            
+            
+            var lead_city = $("[id$=lead_city]").val();
+            var lead_property_type = $("[id$=property_type]").val();
+            var lead_property_status = $("[id$=property_status]").val();
+            
+            var lead_property_config = $("[id$=property_config]").val();
+            var lead_possession_month = $("[id$=possession_month]").val();
+            var lead_move_in_date = $("[id$=move_in_date]").val();
+            
+            
+            var lead_kitchen = ($("[id$=kitchen]").prop("checked") == true)?'Yes':'No';
+            var lead_wardrobes = ($("[id$=wardrobes]").prop("checked") == true)?'Yes':'No';  
+            var lead_modular_storage = ($("[id$=modular_storage]").prop("checked") == true)?'Yes':'No';  
+            var lead_lose_furniture = ($("[id$=lose_furniture]").prop("checked") == true)?'Yes':'No'; 
+            var lead_hds = ($("[id$=hds]").prop("checked") == true)?'Yes':'No';     
+            var lead_floor_plan_received = $("[id$=floor_plan_received]").val();
+            var lead_first_home = $("[id$=first_home]").val();
+            var lead_budget_range = $("[id$=budget_range]").val();
+            var lead_purpose_interiors = $("[id$=purpose_interiors]").val();
+            var lead_appointment_type = $("[id$=appointment_type]").val();
+            var lead_address_search = $("[id$=address_search]").val();
+            //var lead_goole_find_address = ($("[id$=goole_find_address]").prop("checked") == true)?'Yes':'No';                     
+            var lead_address_name_not_google = $("[id$=address_name_not_google]").val();
+            var lead_landmark = $("[id$=landmark]").val();
+            var lead_door_flat_no = $("[id$=door_flat_no]").val();
+            var lead_how_did_you_hear_about_us = $("[id$=how_did_you_hear_about_us]").val();
+            var lead_referrer_phone = $("[id$=referrer_phone]").val();
+            var lead_other_Source = $("[id$=other_Source]").val();
+            var lead_Appointment_Time = $("[id$=Appointment_Time]").html();
+            var lead_appointment_venue = $("[id$=appointment_venue]").val();
+            
+            if(Lead_description =='' || !Lead_description.trim()){
+                $("#lead_description_error").html("Description is Empty.").show();
+                error_flag=1;
+            }
+            
+            if(lead_how_did_you_hear_about_us =='--NONE--'){
+                $("#lead_how_did_you_hear_about_us_error").html("Please select how did you hear about us ?.").show();
+                error_flag=1;
+            }else{
+                if((lead_how_did_you_hear_about_us =='Refered by a friend who has used HL' || lead_how_did_you_hear_about_us =='Refered by a friend who knows about HL') && lead_referrer_phone==""){
+                    $("#lead_referrer_phone_error").html("Please entre referrer phone.").show();
+                    error_flag=1;
+                }
+                if(lead_how_did_you_hear_about_us =='Other' ){
+                    $("#lead_other_Source_error").html("Please entre other Source.").show();
+                    error_flag=1;
+                }
+            }
+            if(lead_city ==''){
+                $("#lead_city_error").html("Please select city.").show();
+                error_flag=1;
+            }
+            
+            // Commented as this was not required
+            /*if(lead_Appointment_Time ==''){
+                $("#lead_Appointment_Time_error").html("Please set appointment time via Click here to Book Meeting Link.").show();
+                error_flag=1;
+            }*/
+            
+            /*if(lead_city ==''){
+                $("#lead_city_error").html("Please select city.").show();
+                error_flag=1;
+            }*/
+            if(lead_property_type =="--NONE--"){
+                $("#lead_property_type_error").html("Please select property type.").show();
+                error_flag=1;
+            }
+            if(lead_property_status =="--NONE--"){
+                $("#lead_property_status_error").html("Please select property status.").show();
+                error_flag=1;
+            }
+            
+            if(lead_property_config =="--NONE--"){
+                $("#lead_property_config_error").html("Please select property config.").show();
+                error_flag=1;
+            }
+            if(lead_possession_month ==""){
+                $("#lead_possession_month_error").html("Please enter possession month.").show();
+                error_flag=1;
+            }
+            if(lead_move_in_date ==""){
+                $("#lead_move_in_date_error").html("Please enter move in date.").show();
+                error_flag=1;
+            }
+            
+            if(lead_kitchen =='No' && lead_wardrobes =='No' && lead_modular_storage =='No' && lead_lose_furniture =='No' && lead_hds == "No"){
+                $("#lead_requirements_error").html("Please select at least one").show();
+                error_flag=1;
+            }
+            
+            if(lead_first_home =="--NONE--"){
+                $("#lead_first_home_error").html("Please select first home.").show();
+                error_flag=1;
+            }
+            if(lead_floor_plan_received =="--NONE--"){
+                $("#lead_floor_plan_received_error").html("Please select floor plan received.").show();
+                error_flag=1;
+            } 
+            if(lead_budget_range =="--NONE--"){
+                $("#lead_budget_range_error").html("Please select budget range.").show();
+                error_flag=1;
+            }
+            if(lead_purpose_interiors =="--NONE--"){
+                $("#lead_purpose_interiors_error").html("Please select purpose interiors.").show();
+                error_flag=1;
+            }
+            
+            if(lead_appointment_venue =="--SELECT AN APPOINTMENT VENUE--"){
+                $("#lead_appointment_venue_error").html("Please select appointment venue.").show();
+                error_flag=1;
+            }
+            if(lead_appointment_type =="--NONE--"){
+                $("#lead_appointment_type_error").html("Please select appointment type.").show();
+                error_flag=1;
+            }else if(lead_appointment_type =="Residence Visit" || lead_appointment_type =="Site Visit"){
+                
+                /* if(lead_address_search =="" && lead_goole_find_address =='No' ){
+                    $("#lead_address_search_error").html("Please enter address search.").show();
+                    error_flag=1;
+                }else if(lead_address_search =="" && lead_goole_find_address =='Yes' && lead_address_name_not_google==""){
+                    $("#lead_address_name_not_google_error").html("Please enter the address.").show();
+                    error_flag=1;
+                }*/
+                if(lead_landmark =="" ){
+                    $("#lead_landmark_error").html("Please enter landmark.").show();
+                    error_flag=1;
+                }
+                if(lead_door_flat_no =="" ){
+                    $("#lead_door_flat_no_error").html("Please enter door flat no.").show();
+                    error_flag=1;
+                }
+                
+            }
+        }
+        
+        if(error_flag==0){
+            //saveToSf('APPOINTMENT',postString);
+            var val = false;
+            if(lead_Status == 'Appointment Fixed'){
+            val = confirm('Please confirm if the filled property details are correct. Click on cancel to edit or click on OK to confirm.');
+            }
+            if(lead_Status == 'Appointment Fixed' && val == true){
+                window.scrollTo(0,0)
+                saveToSf(postString);
+                //return true;
+            }
+           
+            window.scrollTo(0,0)
+            saveToSf(postString);
+        }else{
+            $("[id$=comman_error_msg]").html("Please update the mandatory fields to proceed!.");
+            $("[id$=comman_error_msg]").show();
+            
+        }
+        
+        return false;    
+                
+    }
+    
+    var formSubmitting = false;
+    var setFormSubmitting = function() { formSubmitting = true; };
+    window.onload = function() {
+        window.addEventListener("beforeunload", function (e) {
+            if (formSubmitting) {
+                return undefined;
+            }
+    
+            var confirmationMessage = 'It looks like you have been editing something. '
+                                    + 'If you leave before saving, your changes will be lost.';
+    
+            (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+            return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+        });
+    };
+    
+    function how_did_you_hear_about_us(e){
+        //debug
+        $("#referrer_phone_container").hide();
+        $("#other_Source_container").hide();               
+        if(e =='Refered by a friend who has used HL' || e =='Refered by a friend who knows about HL'){
+            $("#referrer_phone_container").show();
+        }else if(e =='Others'){
+            $("#other_Source_container").show();
+        }
+        
+    }
+    /************Phone Vaildtion */
+    $("[id$=mobile_id]").on("keypress keyup blur",function (event) {
+        var myval = $(this).val();
+        $(this).val($(this).val().replace(/[^\d].+/, ""));
+        
+        if ((event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        } 
+        
+        if(myval.length > 9){
+            event.preventDefault();
+        }
+    });
+    $("[id$=referrer_phone]").on("keypress keyup blur",function (event) {
+        var myval = $(this).val();
+        console.log('myval: '+myval);
+        $(this).val($(this).val().replace(/[^\d].+/, ""));
+        
+        if ((event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        } 
+        
+        if(myval.length > 9){
+            event.preventDefault();
+        }
+    });
+    $("[id$=alt_phone]").on("keypress keyup blur",function (event) {
+        var myval = $(this).val();
+        console.log('myval: '+myval);
+        $(this).val($(this).val().replace(/[^\d].+/, ""));
+        
+        if ((event.which < 48 || event.which > 57)) {
+            event.preventDefault();
+        } 
+        
+        if(myval.length > 9){
+            event.preventDefault();
+        }
+    });
+    
+    
+    $("[id$=goole_find_property]").click(function(){
+        /*alert('Something changed');
+        debugger;*/
+        if($(this).prop("checked") == true){
+            $("#google_property_not_exist").css("display","block");
+            //$("#google_property_not_exist").show();
+            $("[id$=property_search]").val('').prop("readonly", true);
+            $("[id$=property_search]").addClass("read-only",true);
+            
+        }else if($(this).prop("checked") == false){
+            $("#google_property_not_exist").css("display","none");
+            //$("#google_property_not_exist").hide();
+            $("[id$=property_search]").val('').prop("readonly", false);
+            $("[id$=property_search]").removeClass("read-only",true);
+        }
+    });
+    
+    $("[id$=goole_find_address]").click(toggleAddress);
+    
+    function toggleAddress(){
+        if($("[id$=goole_find_address]").prop("checked") == true){
+            $("#google_address_not_exist").css("display","block");
+            //$("#google_property_not_exist").show();
+            $("[id$=address_search]").val('').prop("readonly", true);
+            $("[id$=address_search]").addClass("read-only",true);
+            
+        }else if($("[id$=goole_find_address]").prop("checked") == false){
+            $("#google_address_not_exist").css("display","none");
+            //$("#google_property_not_exist").hide();
+            $("[id$=address_search]").val('').prop("readonly", false);
+            $("[id$=address_search]").removeClass("read-only",true);
+        }
+    }
+    
+    //stickyTab
+    window.onscroll = function() {fixTab()};
+    
+    var header = document.getElementById("stickyTab");
+    var sticky = header.offsetTop;
+    
+    function fixTab() {
+        if (window.pageYOffset > sticky) {
+            header.classList.add("sticky");
+        } else {
+            header.classList.remove("sticky");
+        }
+    }
+    
+    $(document).ready(function(){
+        toggleAddress();
+        var coll = document.getElementsByClassName("legend_cls");
+        var i;
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        }
+    });
+    
+    </script>
+   </html> 
+  </apex:form>
+</apex:page>

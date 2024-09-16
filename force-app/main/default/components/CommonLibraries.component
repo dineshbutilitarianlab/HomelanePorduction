@@ -1,0 +1,54 @@
+<apex:component >
+   <apex:attribute name="userLocaleSidKey" type="string" required="false" description="userLocaleSidKey"/>
+         <!--    Kendo CSS    -->
+     <!--<apex:stylesheet value="{!URLFOR($Resource.FT_AlohaDependency, '/Kendo_ui_2015_1_318/styles/kendo.default.min.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.FT_AlohaDependency, '/Kendo_ui_2015_1_318/styles/kendo.dataviz.min.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.FT_AlohaDependency, '/Kendo_ui_2015_1_318/styles/kendo.dataviz.default.min.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.FT_AlohaDependency, '/Kendo_ui_2015_1_318/styles/kendo.common.min.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.FT_AlohaDependency, '/Kendo_ui_2015_1_318/styles/kendo.dataviz.metro.min.css')}"/> -->
+    
+    <!--<apex:stylesheet value="https://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css"/>-->
+    
+    <apex:stylesheet value="{!URLFOR($Resource.fileupload, '/uploadfile.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.AWS_Dependency, '/Kendo_ui_2015_1_318/styles/kendo.default.min.css')}"/> 
+      <!-- <apex:stylesheet value="{!URLFOR($Resource.AWS_Dependency, '/Kendo_ui_2015_1_318/styles/kendo.bootstrap.min.css')}"/>-->
+    <apex:stylesheet value="{!URLFOR($Resource.AWS_Dependency, '/Kendo_ui_2015_1_318/styles/kendo.common.min.css')}"/>
+    <!--<apex:stylesheet value="{!URLFOR($Resource.FT_AlohaDependency, '/Kendo_ui_2015_1_318/styles/kendo.rtl.min.css')}"/>-->
+    <!--<apex:stylesheet value="{!URLFOR($Resource.FT_AlohaDependency, '/Kendo_ui_2015_1_318/styles/kendo.metro.min.css')}"/>-->
+    <apex:stylesheet value="{!URLFOR($Resource.AWS_Dependency, '/Kendo_ui_2015_1_318/styles/kendo.default.mobile.min.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.AWS_Dependency, '/Kendo_ui_2015_1_318/styles/kendo.dataviz.min.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.AWS_Dependency, '/Kendo_ui_2015_1_318/styles/kendo.dataviz.default.min.css')}"/>
+    <!--<apex:stylesheet value="{!URLFOR($Resource.FT_AlohaDependency, '/Kendo_ui_2015_1_318/styles/kendo.dataviz.metro.min.css')}"/>-->
+    
+    
+    <!--<apex:stylesheet value="{!URLFOR($Resource.FT_Dependency, '/Others/IcoMoon/style.css')}"/>   -->  
+    <apex:stylesheet value="{!URLFOR($Resource.AWS_Dependency, '/styles/usermultiselect.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.humanejsmaster, 'humane-js-master/themes/libnotify.css')}"/>     
+              
+    <apex:includeScript value="{! if( OR( $CurrentPage.name == 'fingertip_a__ActivityTab',$CurrentPage.name == 'ActivityTab'),  URLFOR($Resource.AWS_Dependency, '/Kendo_ui_2015_1_318/js/jquery.v1.11.2.js'), URLFOR($Resource.AWS_Dependency, '/Kendo_ui_2015_1_318/js/jquery.min.js')  )   }"/>   
+    <apex:includeScript value="{!URLFOR($Resource.AWS_Dependency, '/Kendo_ui_2015_1_318/js/kendo.all.js')}"/> 
+    <apex:includeScript value="{!URLFOR($Resource.AWS_Dependency, '/Kendo_ui_2015_1_318/js/cultures/kendo.culture')}{!userLocaleSidKey}.min.js"/> 
+    <apex:includeScript value="{!URLFOR($Resource.AWS_Dependency, '/scripts/usermultiselect.js')}"/>
+    <!-- <apex:includeScript value="{!URLFOR($Resource.AWS_Dependency, '/scripts/humane.min.resource.js')}"/>   -->
+    <apex:includeScript value="{!URLFOR($Resource.humanejsmaster, '/humane-js-master/humane.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.fileupload, '/jquery.uploadfile.min.js')}"/>
+    <!--<apex:includeScript value="https://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"/>-->
+         
+     <!-- <div id="FT-Tabs"> 
+        <c:FingerTipTabs id="FT-Tabs"/>
+    </div>  
+    
+    <c:FT_ConfigurationEnabled /> --> 
+    <!-- Switch to lightning fix -->
+    <script>
+        //switch to lightning fix
+        if(sfdcPage && sfdcPage.switchToLightning){
+            sfdcPage.switchToLightning_bkp = sfdcPage.switchToLightning;
+            sfdcPage.switchToLightning = function(a,b,c){
+                sfdcPage.switchToLightning_bkp(a,b,c);
+                window.location.href = '/one/one.app';
+            }
+        }
+    </script>
+ 
+</apex:component>

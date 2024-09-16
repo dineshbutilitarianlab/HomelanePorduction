@@ -1,0 +1,18 @@
+<apex:page controller="AgentSignInController" >
+
+   <apex:form >
+       <apex:outputPanel id="message">
+           <Center>
+              <p style="font-family: initial; font-size: 18px; color: red;">
+                {!strPageMessage}  
+               </p> <br />
+               <apex:commandButton action="{!UpdateUserRoster}" disabled="{!isLoggedIn}" style="width: 10%;height: 12%;"  value="Log In" reRender="message"/><br /><br/>
+       <apex:commandButton action="{!LogOutUser}" style="width: 10%;height: 12%;"   disabled="{! !isLoggedIn}" value="Log Out" reRender="message"/>
+        
+      </Center>
+            </apex:outputPanel>
+      
+           
+   </apex:form>   
+
+</apex:page>

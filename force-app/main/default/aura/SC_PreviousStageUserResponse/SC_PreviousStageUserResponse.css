@@ -1,0 +1,68 @@
+.THIS .theOutPutUsrClr{
+    color:black !important;
+}
+.THIS .theParent{
+    width : 100%;
+    height : 100% !important;
+    padding: 0; 
+    border-radius: 0.25rem; 
+    background-clip: padding-box; 
+    background-color: #f4f6f9;
+    border: 1px solid #d8dde6; 
+}
+.THIS .theSec{
+    background : grey;
+    height : 30px;
+    text-align: justify;
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    
+    padding-left: 31px;
+}
+.THIS .theItem2{
+    
+    font-family: 'Yanone Kaffeesatz',sans-serif;
+    font-weight: normal!important;
+    font-size: 18px!important;
+}
+.THIS .theSubSection{
+    font-family: 'Yanone Kaffeesatz',sans-serif;
+    font-weight: normal;
+    font-size: 18px;
+    color: #175e9d;
+}
+.THIS .horzentolRowBGClr1{
+    background-color: #175e9d;
+}
+.THIS .horzentolRowBGClr2{
+    background-color: WHITE;
+    height: 2px;
+    margin-top: 8px;
+    margin-right: 18px;
+}
+.THIS .horzentolRow{
+    height: 2px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    
+}
+.THIS .theField{
+    margin-top: 5px;
+}
+.THIS .theField{
+    margin-left: 31px;
+}
+
+.THIS .theCheck{
+    margin-right: 30%;
+    float : right;
+}
+.THIS .theClass{
+    float:right;
+    margin-right: 1%;
+    height : 100%;
+}
+.THIS .toggle {
+    display: none;
+}

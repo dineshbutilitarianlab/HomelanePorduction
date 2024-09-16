@@ -1,0 +1,2 @@
+<apex:page controller="CallApiDownload" action="{!CallApiDownloadAction}">
+</apex:page>

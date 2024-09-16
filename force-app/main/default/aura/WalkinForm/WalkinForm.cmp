@@ -1,0 +1,757 @@
+<aura:component controller="WalkinLeadController" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,flexipage:availableForAllPageTypes" access="global" >
+    <ltng:require scripts="/resource/1499922034000/jquery321" />        
+    <ltng:require styles="/resource/1501061910000/SLDS232"/>
+    
+    <aura:attribute name="selectedLookUpRecord" type="sObject" default="{}"/>
+    <aura:attribute name="selectedLookUpProperty" type="sObject" default="{}"/>
+    <aura:attribute name="selectedLookUpAppointmentvenue" type="sObject" default="{}"/>
+    <aura:attribute name="selectedLookUpReferalname" type="sObject" default="{}"/>
+    <aura:attribute name="errorMsg" type="String" default=""/>
+    <aura:attribute name="selectedLookUpempReferalname" type="sObject" default="{}"/>
+    <aura:attribute name="selectedLookUpDP" type="sObject" default="{}"/>
+    <aura:attribute name="referralPhoneNumber" type="String" default="{}"/>
+    <aura:attribute name="whatsapp" type="boolean"/>
+    <aura:attribute name="today" type="DateTime" />
+    <aura:attribute name="existingLead" type="Lead" />
+    <aura:attribute name="insertBoolean" type="Boolean" />
+    <aura:attribute name="btnn" type="String" default="Customer Details"/>
+    <aura:attribute name="Likedisable" type="Boolean" default="true" />
+    <aura:attribute name="newLead" type="Lead"
+                    default="{ 'sobjectType': 'Lead',
+                               'Appointment_Type__c':'Square Showroom Visit',
+                             }"/>
+    
+    <aura:handler name="change" value="{!v.newLead.City}" action="{!c.expenseNameChanged}"/> 
+    <article class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container slds-icon-standard-contact" title="description of icon when needed">
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <h2>
+                        <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="[object Object]">
+                            <span class="slds-text-heading_small">Walk-In Lead</span>
+                        </a>
+                    </h2>
+                </div>
+            </header>
+            <div class="slds-no-flex">
+                <button class="slds-button slds-button_neutral" onclick='{!c.openmodal}' >New</button>
+            </div>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">Click On New To Create Walk-in Lead</div>
+        <footer class="slds-card__footer">Lead</footer>
+    </article>
+    
+    <!-- For non serious customers -->
+    <article class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container slds-icon-standard-contact" title="description of icon when needed">
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <h2>
+                        <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="[object Object]">
+                            <span class="slds-text-heading_small">Non-serious customers</span>
+                        </a>
+                    </h2>
+                </div>
+            </header>
+            <div class="slds-no-flex">
+                <button class="slds-button slds-button_neutral" onclick='{!c.openmodal2}' >Walk-in lead for WT</button>
+            </div>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">Click On New To Create Non-serious customers</div>
+        <footer class="slds-card__footer">Lead</footer>
+    </article>
+    
+    <!-- For non-customers pop-up -->
+    <section id='mainmodalnc' role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-close slds-modal_large">
+	<div class="slds-modal__container maindivcls">
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick='{!c.closemodal2}'>
+                    X
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create Walk-In Lead</h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+			 <div class="slds-path-coach"> 
+                    
+ <!-- alert -->         
+        <div id='pgalert2' class="alrt showdiv2 slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+            <span class="slds-assistive-text">error</span>
+            <span class="slds-icon_container slds-icon-utility-ban slds-m-right_x-small" title="Description of icon when needed">
+               
+            </span>
+            <h4>Please Fill All The Fields Of This Section.</h4>
+            <button onclick="{!c.closealert2}" class="slds-button slds-button_icon slds-notify__close slds-button_icon-inverse" title="Close">
+               X
+                <span class="slds-assistive-text">Close</span>
+            </button>
+        </div>
+              
+         <div id='pgDupalert' class="alrt showdiv slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+            <span class="slds-assistive-text">error</span>
+            <span class="slds-icon_container slds-icon-utility-ban slds-m-right_x-small" title="Description of icon when needed">
+               
+            </span>
+            <h4>{!v.errorMsg}</h4>
+            
+        </div>           
+    
+  <!-- alert -->
+                    
+                </div>
+				<div class="demo-only fromdiv innerdiv" id='path-10Div' style="width: 440px;">
+                    <div class="slds-form slds-form_compound">
+                        <fieldset class="slds-form-element">
+                        <legend class="slds-form-element__label slds-text-title_caps"> </legend>
+                        <div class="slds-form-element__group">
+                            <div id='inputFname22' class="slds-form-element__row">
+                                <div id='inputFname2' class="slds-form-element slds-size_1-of-2">
+                                    <label class="slds-form-element__label" for="input-01">First Name</label>
+                                    <ui:inputText aura:id="FirstName"
+                                                  class="slds-input"
+                                                  value="{!v.newLead.FirstName}"
+                                                  required="true"
+                                                  placeholder="First Name"/>
+                    
+                                </div>
+                                <div id='inputLname2' class="slds-form-element slds-size_1-of-2">
+                                    <label class="slds-form-element__label" for="input-01">Last Name</label>
+                                    <ui:inputText aura:id="LeadName"
+                                                  class="slds-input"
+                                                  value="{!v.newLead.LastName}"
+                                                  required="true"
+                                                  placeholder="Last Name"/>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="slds-form-element">
+                        <legend class="slds-form-element__label slds-text-title_caps"></legend>
+                        <div class="slds-form-element__group">
+                            <div id='inputFname2' class="slds-form-element__row">
+                                <div id='inputphone2' class="slds-form-element slds-size_1-of-2">
+                                      <label class="slds-form-element__label" for="input-02">Phone No</label>
+                                    <ui:inputText aura:id="Leadphone" class="slds-input" value="{!v.newLead.Phone}" required="true" placeholder="Phone No"/>
+                                </div>
+                                <div class="slds-form-element slds-size_1-of-1">
+                                    <c:customLookup objectAPIName="Master__c" getPicklistValue ="Showroom" IconName="standard:user" selectedRecord="{!v.selectedLookUpAppointmentvenue}" label="Appointment Venue"/>
+                                </div>
+                            </div>                                
+                        </div>
+                            
+                            <div id='inputemail2' class="slds-form-element slds-size_1-of-2">
+                                <label class="slds-form-element__label" for="input-03">Email</label>
+                                <ui:inputText aura:id="Leademail" class="slds-input" value="{!v.newLead.Email}" required="true" placeholder="Email"/>
+                            </div>
+                                
+                            <div class="slds-form-element__row" id="discussid">
+                                <div class="slds-form-element slds-size_1-of-2">
+                                    <label class="slds-form-element__label" for="input-04">Why we didn't offer design discussion?</label>
+                                    <ui:inputSelect  value="{!v.newLead.Why_we_didn_t_offer_design_discussion__c}" >
+                                        <ui:inputSelectOption text="None" label="None" value="true"/>
+                                        <ui:inputSelectOption text="Budget less than Rs. 1.5Lakh" label="Budget less than Rs. 1.5Lakh" />
+                                        <ui:inputSelectOption text="Possession > 4 months" label="Possession > 4 months"/>
+                                        <ui:inputSelectOption text="Move-in > 6 months" label="Move-in > 6 months"/>
+                                        <ui:inputSelectOption text="Requirements not in HL Scope" label="Requirements not in HL Scope"/>
+                    <ui:inputSelectOption text="Not within city limits" label="Not within city limits"/>
+                    <ui:inputSelectOption text="Customer didn't have enough time" label="Customer didn't have enough time"/>
+                    <ui:inputSelectOption text="Designer not available" label="Designer not available"/>
+                                    </ui:inputSelect>
+                                </div>
+                            </div>                            
+                        </fieldset>
+                    </div>
+                </div>
+        	</div>
+        	<footer class="slds-modal__footer">
+                <button class="slds-button slds-button_brand" id="leadbutton" onclick='{!c.createLead2}'>Create</button>
+                <button class="slds-button slds-button_neutral" onclick='{!c.closemodal2}'>Cancel</button>
+            </footer>
+			</div>
+		</section>
+    
+    <!-- Pop up for walk-in customers -->
+    <section id='mainmodal' role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-close slds-modal_large">
+        <div class="slds-modal__container maindivcls">
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick='{!c.closemodal}'>
+                    X
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create Walk-In Lead</h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <!-- opp path -->
+                
+                <div class="slds-path-coach">
+                    
+ <!-- alert -->
+    	<div id='ChannelPartnerAlert' class="alrt showdiv2 slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+            <span class="slds-assistive-text">error</span>
+            <span class="slds-icon_container slds-icon-utility-ban slds-m-right_x-small" title="Description of icon when needed">
+               
+            </span>
+            <h4>Please select the Channel Partner when it is Broker/Channel Partner referral.</h4>
+            <button onclick="{!c.closealert3}" class="slds-button slds-button_icon slds-notify__close slds-button_icon-inverse" title="Close">
+               X
+                <span class="slds-assistive-text">Close</span>
+            </button>
+        </div>
+        <div id='pgalert' class="alrt showdiv slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+            <span class="slds-assistive-text">error</span>
+            <span class="slds-icon_container slds-icon-utility-ban slds-m-right_x-small" title="Description of icon when needed">
+               
+            </span>
+            <h4>Please Fill All The Fields Of This Section.</h4>
+            <button onclick="{!c.closealert}" class="slds-button slds-button_icon slds-notify__close slds-button_icon-inverse" title="Close">
+               X
+                <span class="slds-assistive-text">Close</span>
+            </button>
+        </div>
+                             
+        <div id='phonealert' class="alrt showdiv2 slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+            <span class="slds-assistive-text">error</span>
+            <span class="slds-icon_container slds-icon-utility-ban slds-m-right_x-small" title="Description of icon when needed">
+               
+            </span>
+            <h4>Please enter a valid referrer phone number</h4>
+            <button onclick="{!c.closealert2}" class="slds-button slds-button_icon slds-notify__close slds-button_icon-inverse" title="Close">
+               X
+                <span class="slds-assistive-text">Close</span>
+            </button>
+        </div>
+        
+        <div id='phonealert2' class="alrt showdiv slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+            <span class="slds-assistive-text">error</span>
+            <span class="slds-icon_container slds-icon-utility-ban slds-m-right_x-small" title="Description of icon when needed">
+               
+            </span>
+            <h4>Lead already exists with same email or phone.</h4>
+            <button onclick="{!c.closealert2}" class="slds-button slds-button_icon slds-notify__close slds-button_icon-inverse" title="Close">
+               X
+                <span class="slds-assistive-text">Close</span>
+            </button>
+        </div>
+                    
+        <div id='timeCheck' class="alrt showdiv slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+            <span class="slds-assistive-text">error</span>
+            <span class="slds-icon_container slds-icon-utility-ban slds-m-right_x-small" title="Description of icon when needed">
+               
+            </span>
+            <h4>Time Of Actual Appointment Start Cannot Be Greater Than Today.</h4>
+            <button onclick="{!c.closealert2}" class="slds-button slds-button_icon slds-notify__close slds-button_icon-inverse" title="Close">
+               X
+                <span class="slds-assistive-text">Close</span>
+            </button>
+        </div>
+                    
+        <!-- <div id='pgDupalert' class="showdiv slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+            <span class="slds-assistive-text">error</span>
+            <span class="slds-icon_container slds-icon-utility-ban slds-m-right_x-small" title="Description of icon when needed">
+               
+            </span>
+            <h4>{!v.errorMsg}</h4>
+            
+        </div>     -->       
+    
+  <!-- alert -->
+                    <div class="slds-grid">
+                        <div class="slds-tabs_path" role="application">
+                            <ul class="slds-tabs_path__nav" role="listbox" aria-orientation="horizontal">
+                                <li class="slds-tabs_path__item  slds-is-current" id='customdetails' onclick='{!c.changepathform}' role="presentation">
+                                    <a aria-selected="false" class="slds-tabs_path__link" href="javascript:void(0);" id="path-1" role="option" tabindex="-1">
+                                        <span class="slds-tabs_path__stage">
+                                            .
+                                            <span class="slds-assistive-text">Stage Complete</span>
+                                        </span>
+                                        <span class="slds-tabs_path__title" id="path-1">Customer Details</span>
+                                    </a>
+                                </li>
+                                <li class="slds-tabs_path__item  slds-is-incomplete " id='propdetails' onclick='{!c.changepathform}'  role="presentation">
+                                    <a aria-selected="false" class="slds-tabs_path__link" href="javascript:void(0);" id="path-2" role="option" tabindex="-1">
+                                        <span class="slds-tabs_path__stage">
+                                            .
+                                            <span class="slds-assistive-text">Stage Complete</span>
+                                        </span>
+                                        <span class="slds-tabs_path__title" id="path-2">Property Details</span>
+                                    </a>
+                                </li>
+                                <li class="slds-tabs_path__item slds-is-incomplete" id='reqdetails' onclick='{!c.changepathform}' role="presentation">
+                                    <a aria-selected="true" class="slds-tabs_path__link" href="javascript:void(0);" id="path-3" role="option" tabindex="0">
+                                        <span class="slds-tabs_path__stage">
+                                            .
+                                            <span class="slds-assistive-text">Current Stage:</span>
+                                        </span>
+                                        <span class="slds-tabs_path__title" id="path-3">Requirement Details</span>
+                                    </a>
+                                </li>
+                                <li class="slds-tabs_path__item slds-is-incomplete" id='appointdetails' onclick='{!c.changepathform}' role="presentation">
+                                    <a aria-selected="false" class="slds-tabs_path__link" href="javascript:void(0);" id="path-4" role="option" tabindex="-1">
+                                        <span class="slds-tabs_path__stage">
+                                            .
+                                        </span>
+                                        <span class="slds-tabs_path__title" id="path-4">Appointment Details</span>
+                                    </a>
+                                </li>
+                                <li class="slds-tabs_path__item slds-is-incomplete" onclick='{!c.changepathform}' id='awairdetails' role="presentation">
+                                    <a aria-selected="false" class="slds-tabs_path__link" href="javascript:void(0);" id="path-5" role="option" tabindex="-1">
+                                        <span class="slds-tabs_path__stage">
+                                            .
+                                        </span>
+                                        <span class="slds-tabs_path__title" id="path-5">HL Awareness Section</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <button onclick='{!c.createLead}' class="slds-button slds-button_brand slds-path__mark-complete slds-no-flex slds-m-horizontal_small">
+                            Mark Status as Successful</button>
+                    </div>
+                </div>
+                
+                <!-- opp path -->
+                
+                <!--cm det --> 
+                <div class="demo-only fromdiv innerdiv" id='path-1Div' style="width: 440px;">
+                    <div class="slds-form slds-form_compound">
+                        <fieldset class="slds-form-element">
+                            <legend class="slds-form-element__label slds-text-title_caps"> </legend>
+                            <div class="slds-form-element__group">
+                                <div id='inputFname' class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <label class="slds-form-element__label" for="input-01">First Name</label>
+                                        <ui:inputText aura:id="FirstName"
+                                                      class="slds-input"
+                                                      value="{!v.newLead.FirstName}"
+                                                      required="true"
+                                                      placeholder="First Name"/>
+
+                                    </div>
+                                    <div id='inputLname' class="slds-form-element slds-size_1-of-2">
+                                        <label class="slds-form-element__label" for="input-01">Last Name</label>
+                                        <ui:inputText aura:id="LeadName"
+                                                      class="slds-input"
+                                                      value="{!v.newLead.LastName}"
+                                                      required="true"
+                                                      placeholder="Last Name"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="slds-form-element">
+                           <!-- <legend class="slds-form-element__label slds-text-title_caps">Address</legend>-->
+                            <div class="slds-form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div id='inputphone' class="slds-form-element slds-size_1-of-1">
+                                          <label class="slds-form-element__label" for="input-02">Phone No</label>
+                                        <ui:inputText aura:id="Leadphone" class="slds-input" value="{!v.newLead.Phone}" required="true" placeholder="Phone No" maxlength="10"/>
+                                    </div>
+                              
+                                    <div class="slds-form-element slds-size_2-of-2">
+                                        <label class="slds-form-element__label" for="input-07">Whatsapp Opt in?</label>
+                                        <ui:inputSelect value="{!v.whatsapp}" required="true" >
+                                            <ui:inputSelectOption text="None" label="None" value="true"/>
+                                            <ui:inputSelectOption text="Yes" label="Yes" />
+                                            <ui:inputSelectOption text="No" label="No"/>
+                                        </ui:inputSelect>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="slds-form-element">
+                            <div class="slds-form-element__row">
+                                <div id='inputemail' class="slds-form-element slds-size_1-of-2">
+                                    <label class="slds-form-element__label" for="input-03">Email</label>
+                                    <ui:inputText aura:id="Leademail" class="slds-input" value="{!v.newLead.Email}" required="true" placeholder="Email"/>
+                                </div>
+                            </div>
+                            <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size_1-of-2">
+                                    <label class="slds-form-element__label" for="input-04">City</label>
+                                    <ui:inputSelect value="{!v.newLead.City}"  >
+                                        <ui:inputSelectOption text="None" label="None" value="true"/>
+                                        <ui:inputSelectOption text="Bengaluru" label="Bengaluru" />
+                                        <ui:inputSelectOption text="Mumbai" label="Mumbai"/>
+                                        <ui:inputSelectOption text="Chennai" label="Chennai"/>
+                                        <ui:inputSelectOption text="Hyderabad" label="Hyderabad"/>
+                                        <ui:inputSelectOption text="New Delhi" label="New Delhi"/>
+                                        <ui:inputSelectOption text="Gurgaon" label="Gurgaon"/>
+                                        <ui:inputSelectOption text="Ghaziabad " label="Ghaziabad "/>
+                                        <ui:inputSelectOption text="Noida" label="Noida"/>
+                                        <ui:inputSelectOption text="Pune" label="Pune"/>
+                                        <ui:inputSelectOption text="Kolkata" label="Kolkata"/>
+                                    </ui:inputSelect>
+                                </div>
+                            </div>
+                            <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size_1-of-2">
+                                    <label class="slds-form-element__label" for="input-06">Lead Source</label>
+                                   <!-- <ui:inputText aura:id="Leadsource" class="slds-input" value="Walk-In" required="true" disabled='true'/>-->
+                                    <ui:inputSelect value="{!v.newLead.LeadSource}" required="true" >
+                                        <ui:inputSelectOption text="None" label="None" value="true"/>
+                                        <ui:inputSelectOption text="Walk-In" label="Walk-In" />
+                                        <ui:inputSelectOption text="City Initiative" label="City Initiative"/>
+                                    </ui:inputSelect>
+                                </div>
+                            </div>                                 
+                        </fieldset>
+                    </div>
+                </div>
+                <!--cm det -->    
+                <!--pr det -->
+                <div class="demo-only fromdiv showdiv innerdiv" id='path-2Div' style="width: 440px;">
+                    <div class="slds-form slds-form_compound">
+                        <fieldset class="slds-form-element">
+                            <legend class="slds-form-element__label slds-text-title_caps"> </legend>
+                            <div class="slds-form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <c:customLookup objectAPIName="Master__c" getPicklistValue ="Builder" IconName="standard:account" selectedRecord="{!v.selectedLookUpRecord}" label="Builder Name"/>
+                                    </div>
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <c:customLookup objectAPIName="Master__c" getPicklistValue ="Property" IconName="standard:account" selectedRecord="{!v.selectedLookUpProperty}" label="Property Name"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        
+                        <fieldset class="slds-form-element">
+                            <div class="slds-form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size_1-of-1">
+                                        <label class="slds-form-element__label" for="input-03">Property Type</label>
+                                        <ui:inputSelect value="{!v.newLead.Property_Type__c}" change='{!c.changepropertytype}' >
+                                            <ui:inputSelectOption text="None" label="None" value="true"/>
+                                            <ui:inputSelectOption text="Apartment" label="Apartment" />
+                                            <ui:inputSelectOption text="Villa" label="Villa"/>
+                                            <ui:inputSelectOption text="Independent House" label="Independent House"/>
+                                            <ui:inputSelectOption text="Others" label="Others"/>
+                                        </ui:inputSelect>
+                                    </div>
+                                </div>
+                                <div id='independentdiv' class="showdiv slds-form-element slds-size_1-of-2">
+                                        <label class="slds-form-element__label" for="input-01">Independent House Address</label>
+                                        <ui:inputTextArea aura:id="IndependentHouseAddress" class="slds-input" value="{!v.newLead.Independent_House_Address__c}" required="true" rows="2"/>
+                                    </div>
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size_1-of-3">
+                                        <label class="slds-form-element__label" for="input-04">Property Configuration</label>
+                                        <ui:inputSelect value="{!v.newLead.Property_Config__c}" >
+                                            <ui:inputSelectOption text="None" label="None" value="true"/>
+                                            <ui:inputSelectOption text="1 BHK" label="1 BHK" />
+                                            <ui:inputSelectOption text="2 BHK" label="2 BHK"/>
+                                            <ui:inputSelectOption text="3 BHK" label="3 BHK"/>
+                                            <ui:inputSelectOption text="4 BHK" label="4 BHK"/>
+                                            <ui:inputSelectOption text="No Data" label="No Data"/>
+                                            <ui:inputSelectOption text="5 BHK" label="5 BHK"/>
+                                            <ui:inputSelectOption text="> 5 BHK" label="> 5 BHK"/>
+                                            <ui:inputSelectOption text="2.5 BHK" label="2.5 BHK"/>
+                                            <ui:inputSelectOption text="3.5 BHK" label="3.5 BHK"/>
+                                        </ui:inputSelect>
+                                    </div>
+                                </div>
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size_1-of-4">
+                                        <label class="slds-form-element__label" for="input-06">Property Status</label>
+                                        <ui:inputSelect value="{!v.newLead.Property_Status__c}" >
+                                            <ui:inputSelectOption text="None" label="None" value="true"/>
+                                            <ui:inputSelectOption text="New" label="New" />
+                                            <ui:inputSelectOption text="Renovation" label="Renovation"/>
+                                            <ui:inputSelectOption text="Occupied" label="Occupied"/>
+                                            <ui:inputSelectOption text="Re-Sell" label="Re-Sell"/>
+                                        </ui:inputSelect>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        
+                        <fieldset class="slds-form-element">
+                            <div class="slds-form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size_1-of-5">
+                                        <label class="slds-form-element__label" for="input-01">Interior Start Date</label>
+                                        <ui:inputDate aura:id="dateField" value="{!v.newLead.Interior_Start_Date__c}" displayDatePicker="true"/>
+                                    </div>
+                                    <div class="slds-form-element slds-size_1-of-6">
+                                        <label class="slds-form-element__label" for="input-02">Property Move-In Date</label>
+                                        <ui:inputDate aura:id="dateField"  value="{!v.newLead.Property_Move_In_Date__c}" displayDatePicker="true"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <!--pr det -->
+                <!--rq det -->
+                <div class="demo-only fromdiv showdiv innerdiv" id='path-3Div' style="width: 440px;">
+                    <div class="slds-form slds-form_compound">
+                        <fieldset class="slds-form-element">
+                            <legend class="slds-form-element__label slds-text-title_caps"> </legend>
+                            <div class="slds-form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <label class="slds-form-element__label" for="input-01">Kitchen</label>
+                                        <ui:inputSelect value="{!v.newLead.Kitchen__c}"  >
+                                            <ui:inputSelectOption text="None" label="None" value="true"/>
+                                            <ui:inputSelectOption text="Yes" label="Yes" />
+                                            <ui:inputSelectOption text="No" label="No"/>
+                                        </ui:inputSelect>                              
+                                    </div>
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <label class="slds-form-element__label" for="input-01">Crockery Unit</label>
+                                        <ui:inputSelect value="{!v.newLead.Crockery_Unit__c}" >
+                                            <ui:inputSelectOption text="None" label="None" value="true"/>
+                                            <ui:inputSelectOption text="Yes" label="Yes" />
+                                            <ui:inputSelectOption text="No" label="No"/>
+                                        </ui:inputSelect> 
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="slds-form-element">
+                            <legend class="slds-form-element__label slds-text-title_caps"> </legend>
+                            <div class="slds-form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <label class="slds-form-element__label" for="input-01">Vanity Unit</label>
+                                        <ui:inputSelect value="{!v.newLead.Vanity_Unit__c}">
+                                            <ui:inputSelectOption text="None" label="None" value="true"/>
+                                            <ui:inputSelectOption text="Yes" label="Yes" />
+                                            <ui:inputSelectOption text="No" label="No"/>
+                                        </ui:inputSelect>                               
+                                    </div>
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <label class="slds-form-element__label" for="input-01">Study Table / Book Shelf</label>
+                                        <ui:inputSelect value="{!v.newLead.Study_Table_Book_Shelf__c}">
+                                            <ui:inputSelectOption text="None" label="None" value="true"/>
+                                            <ui:inputSelectOption text="Yes" label="Yes" />
+                                            <ui:inputSelectOption text="No" label="No"/>
+                                        </ui:inputSelect>                               
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="slds-form-element">
+                            <legend class="slds-form-element__label slds-text-title_caps"> </legend>
+                            <div class="slds-form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <label class="slds-form-element__label" for="input-01">Wardrobes</label>
+                                        <ui:inputSelect value="{!v.newLead.Wardrobes__c}">
+                                            <ui:inputSelectOption text="0" label="0" value="true"/>
+                                            <ui:inputSelectOption text="1" label="1" />
+                                            <ui:inputSelectOption text="2" label="2"/>
+                                            <ui:inputSelectOption text="3" label="3"/>
+                                            <ui:inputSelectOption text="4" label="4"/>
+                                            <ui:inputSelectOption text="5" label="5"/>
+                                            <ui:inputSelectOption text=">5" label=">5"/>
+                                        </ui:inputSelect>                              
+                                    </div>
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <label class="slds-form-element__label" for="input-01">Utility Unit</label>
+                                        <ui:inputSelect value="{!v.newLead.Utility_Unit__c}">
+                                            <ui:inputSelectOption text="None" label="None" value="true"/>
+                                            <ui:inputSelectOption text="Yes" label="Yes" />
+                                            <ui:inputSelectOption text="No" label="No"/>
+                                        </ui:inputSelect>                               
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="slds-form-element">
+                            <legend class="slds-form-element__label slds-text-title_caps"> </legend>
+                            <div class="slds-form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <label class="slds-form-element__label" for="input-01">Entertainment Unit</label>
+                                        <ui:inputSelect value="{!v.newLead.Entertainment_Unit__c}">
+                                            <ui:inputSelectOption text="None" label="None" value="true"/>
+                                            <ui:inputSelectOption text="Yes" label="Yes" />
+                                            <ui:inputSelectOption text="No" label="No"/>
+                                        </ui:inputSelect>                               
+                                    </div>
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <label class="slds-form-element__label" for="input-01">Foyer / Shoe Rack</label>
+                                        <ui:inputSelect value="{!v.newLead.Foyer_Shoe_Rack__c}">
+                                            <ui:inputSelectOption text="None" label="None" value="true"/>
+                                            <ui:inputSelectOption text="Yes" label="Yes" />
+                                            <ui:inputSelectOption text="No" label="No"/>
+                                        </ui:inputSelect>                               
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="slds-form-element">
+                            <div class="slds-form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <label class="slds-form-element__label" for="input-01">Pooja Unit</label>
+                                        <ui:inputSelect value="{!v.newLead.Pooja__c}">
+                                            <ui:inputSelectOption text="None" label="None" value="true"/>
+                                            <ui:inputSelectOption text="Yes" label="Yes" />
+                                            <ui:inputSelectOption text="No" label="No"/>
+                                        </ui:inputSelect> 
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <!--rq det -->
+                <!--app det -->
+                <div class="demo-only fromdiv showdiv innerdiv" id='path-4Div' style="width: 440px;">
+                    <div class="slds-form slds-form_compound">
+                        <fieldset class="slds-form-element">
+                            <legend class="slds-form-element__label slds-text-title_caps"> </legend>
+                            <div class="slds-form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <ui:inputDateTime label='Appointment Time' aura:id="apptime" class="form-control" value="{!v.newLead.Appointment_Time__c}" displayDatePicker="true" />
+                                    </div>
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <label class="slds-form-element__label" for="input-01">Appointment Type</label>
+                                        <ui:inputSelect value="{!v.newLead.Appointment_Type__c}" disabled='true'>
+                                            <ui:inputSelectOption text="None" label="None" value="true"/>
+                                            <ui:inputSelectOption text="Square Showroom Visit" label="Square Showroom Visit" />
+                                            <ui:inputSelectOption text="Site Visit" label="Site Visit"/>
+                                            <ui:inputSelectOption text="Residence Visit" label="Residence Visit"/>
+                                            <ui:inputSelectOption text="Virtual Meeting" label="Virtual Meeting"/>
+                                            <ui:inputSelectOption text="Mobile Showroom Visit" label="Mobile Showroom Visit"/>
+                                            <ui:inputSelectOption text="Completed Project Visit" label="Completed Project Visit"/>
+                                            <ui:inputSelectOption text="Model Apartment" label="Model Apartment"/>
+                                            <ui:inputSelectOption text="Others" label="Others"/>
+                                        </ui:inputSelect> 
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        
+                        <fieldset class="slds-form-element">
+                            <div class="slds-form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size_1-of-1">
+                                        <c:customLookup objectAPIName="Master__c" getPicklistValue ="Showroom" IconName="standard:user" selectedRecord="{!v.selectedLookUpAppointmentvenue}" label="Appointment Venue"/>
+                                    </div>
+                                </div>
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <c:customLookup objectAPIName="Interior_Designer__c" getPicklistValue ="" IconName="standard:user" selectedRecord="{!v.selectedLookUpDP}" label="Design Partner"/>
+                                    </div>
+                                </div>
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <label class="slds-form-element__label" for="input-06">Time of Actual Appointment Start</label>
+                                        <ui:inputDateTime aura:id="timeofapp"  class="form-control" value="{!v.newLead.Time_of_Actual_Appointment_Start__c}" displayDatePicker="true" />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <!--app det -->
+                <!--app det -->
+                <div class="demo-only fromdiv showdiv innerdiv" id='path-5Div' style="width: 440px;">
+                    <div class="slds-form slds-form_compound">
+                        
+                        
+                        <fieldset class="slds-form-element">
+                            <div class="slds-form-element__group">
+                                
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <label class="slds-form-element__label" for="input-06">How did you hear about us?</label>
+                                        <ui:inputSelect value="{!v.newLead.How_did_you_hear_about_us__c}" change='{!c.changeotherreason}'>
+                                            <ui:inputSelectOption text="None" label="None" value="true"/>
+                                            <ui:inputSelectOption text="Refered by a friend who has used HL" label="Refered by a friend who has used HL" />
+                                            <ui:inputSelectOption text="Refered by a friend who knows about HL" label="Refered by a friend who knows about HL"/>
+                                            <ui:inputSelectOption text="Paid Ads" label="Paid Ads"/>
+                                            <ui:inputSelectOption text="Press" label="Press"/>
+                                            <ui:inputSelectOption text="Hoardings (Fixed)" label="Hoardings (Fixed)"/>
+                                            <ui:inputSelectOption text="Mini Truck Hoardings (Moving)" label="Mini Truck Hoardings (Moving)"/>
+                                            <ui:inputSelectOption text="Flyers" label="Flyers"/>
+                                            <ui:inputSelectOption text="Email" label="Email"/>
+                                            <ui:inputSelectOption text="Telephone Pole hoarding" label="Telephone Pole hoarding"/>
+                                            <ui:inputSelectOption text="SMS" label="SMS"/>
+                                            <ui:inputSelectOption text="Newspaper Insert" label="Newspaper Insert"/>
+                                            <ui:inputSelectOption text="Google Search" label="Google Search"/>
+                                            <ui:inputSelectOption text="Web Ad" label="Web Ad"/>
+                                            <ui:inputSelectOption text="Brochure" label="Brochure"/>
+                                            <ui:inputSelectOption text="Whatsapp" label="Whatsapp"/>
+                                            <ui:inputSelectOption text="Broker/Channel Partner" label="Broker/Channel Partner"/>
+                                            <ui:inputSelectOption text="Others" label="Others"/>
+                                        </ui:inputSelect>                               
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="slds-form-element">
+                            <div class="slds-form-element__group">
+                                
+                                <div class="slds-form-element__row">
+                                     <div id='otherdiv' class="showdiv slds-form-element slds-size_1-of-2">
+                                        <label class="slds-form-element__label" for="input-01">Other Reason</label>
+                                        <ui:inputText aura:id="otherreason" class="slds-input" value="{!v.newLead.Other_Source__c }" required="true" placeholder="Reason for others"/>
+                                    </div>
+                                    
+                                 <!--   <div id='referalnamediv' class="showdiv slds-form-element__row slds-size_1-of-3">
+                                        <div class="slds-form-element slds-size_1-of-1">
+                                            <c:customLookup objectAPIName="Account" IconName="standard:account" selectedRecord="{!v.selectedLookUpReferalname}" label="Referrer Name"/>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                     <div id='empreferalnamediv' class="showdiv slds-form-element__row slds-size_2-of-3">
+                                        <div class="slds-form-element slds-size_1-of-1">
+                                            <c:customLookup objectAPIName="User" IconName="standard:user" selectedRecord="{!v.selectedLookUpempReferalname}" label="Employee Referrer Name"/>
+                                        </div>
+                                    </div>  -->
+                                    
+                                    <div id='referrerphone' class="showdiv slds-form-element slds-size_3-of-3">
+                                        <label class="slds-form-element__label" for="input-01">Referrer phone</label>
+                                        <ui:inputText aura:id="referrerphone2" class="slds-input" value="{!v.newLead.HL_Referrer_Phone__c}" required="true" placeholder="Referrer phone" maxlength="10"/>
+                                    </div>
+                                    
+                                    <div id='BrokerLookup' class="showdiv slds-form-element slds-size_3-of-3">
+                                        <label class="slds-form-element__label" for="input-01">Broker/Channel Partner Name</label>
+                                        <div class="slds-form-element__control" style = "display: block;">
+                                            <force:inputField value="{!v.newLead.Channel_Partner__c}"/>       
+                                        </div>
+                                       <!-- <ui:inputText aura:id="BrokerLookup" class="slds-input" value="{!v.newLead.DeliveryManager__c}" required="true" placeholder="Broker Name" />-->
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <!--app det -->
+                <!-- opp form -->
+                
+            </div>
+            <footer class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" onclick='{!c.closemodal}'>Cancel</button>
+            </footer>
+        </div>
+    </section>
+    <div id='fadediv' class="slds-backdrop slds-backdrop_close"></div>
+    
+    
+    <div id ='spnr' class="showspr demo-only demo--inverse" style="height: 6rem;">
+        <div class="slds-spinner_container slds-is-fixed">
+            <div role="status" class="slds-spinner slds-spinner_medium  slds-spinner_brand slds-spinner_large">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </div>
+    
+</aura:component>

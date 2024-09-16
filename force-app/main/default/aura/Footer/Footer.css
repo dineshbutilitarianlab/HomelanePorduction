@@ -1,0 +1,29 @@
+.THIS body {
+    margin: 0;
+    padding: 0;
+}
+.THIS.footer-container{ 
+    background-color: #333;
+    min-height: 175px;
+}
+.THIS .footer-menu {
+  margin: 0 auto;
+  width: 1000px;
+}
+.THIS .fm_block {
+  float: left;
+  padding:15px 50px 0 50px;
+}
+.THIS .fm_block li {
+  list-style: outside none none;
+}
+.THIS .fm_block li b{	
+color:#104E7B;
+	}
+.THIS .fm_block a {
+  color: #fff;
+  display: block;
+  padding: 2px 0;
+  text-decoration: none;
+}
+.THIS .fm_block a:hover{color:#104E7B;}

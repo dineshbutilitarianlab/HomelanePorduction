@@ -1,0 +1,67 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    
+    <ltng:require styles="/resource/1492814202000/helpcss"/>
+    
+    
+    <div class="mariam"><p class="questionP">0 To 10%</p></div>
+    <div id="container">
+        <a href='https://youtu.be/d8I6NV_Vibo' target="_blank"><div class="belhead">Find Opportunities</div> 
+        </a>
+        
+        <a href='https://youtu.be/3THbvdfMeo4' target="_blank"><div class="belhead">Send IQ</div> 
+        </a>
+        
+        <a href='https://youtu.be/96OiyIB9oqM' target="_blank"><div class="belhead">Follow Up with Customers</div> 
+        </a>
+        
+        <a href='https://youtu.be/cCixMuF4gQY' target="_blank"><div class="belhead">Quote Approval and 10% Payment Creation</div> 
+        </a>    
+        <span></span>
+    </div>
+    
+    
+    
+    <div class="mariam"><p class="questionP">50 To 100%</p></div>  
+    
+    
+    <div id="container">
+        
+        <a href='https://youtu.be/O6-T-KdAiq8' target="_blank"><div class="belhead">Proposing D1, D2 and D3 Meeting Requests</div> 
+        </a>
+        
+        <a href='https://youtu.be/da41X_r06NU' target="_blank"><div class="belhead">D1, D2 and D3 Confirmation and Checklist Flow </div> 
+        </a>
+        
+        <a href='https://youtu.be/fWwl8zQLWNI' target="_blank"><div class="belhead">Measurements and File Uploads D1, D2 and D3</div> 
+        </a>
+        
+        <a href='https://www.youtube.com/watch?v=E80BgAIppv4' target="_blank"><div class="belhead">Completing D1</div> 
+        </a>
+        
+        <a href='https://www.youtube.com/watch?v=XhPCUBAMKTg' target="_blank"><div class="belhead">Completing D2</div> 
+        </a>
+        
+        <a href='https://www.youtube.com/watch?v=mdNaaFkSb40' target="_blank"><div class="belhead">Getting Production Drawings Reviewed</div> 
+        </a>
+        
+        <a href='https://www.youtube.com/watch?v=9k5BlopYS_s' target="_blank"><div class="belhead">Completing D3 Pt 1</div> 
+        </a>
+        
+        <a href='https://www.youtube.com/watch?v=oKFcx83zwws' target="_blank"><div class="belhead">Completing D3 Pt 2</div> 
+        </a>
+        
+        <a href='https://www.youtube.com/watch?v=aaEwHQTsfeA' target="_blank"><div class="belhead">Sending Out Works Contract</div> 
+        </a>
+        
+        <a href='https://www.youtube.com/watch?v=uQIjYM1eEY0' target="_blank"><div class="belhead">Creating 40% Payment and Moving to Production</div> 
+        </a>
+        
+        <span></span>
+        
+    </div>
+    
+    
+    
+    
+    
+</aura:component>

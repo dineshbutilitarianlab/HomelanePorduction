@@ -1,0 +1,27 @@
+.THIS .showdiv {
+    display:None;
+}
+
+.THIS .abd {
+    display:None;
+}
+.THIS.showspr {
+    display:none;
+}
+.THIS .fromdiv{
+    margin-top: 35px;
+}
+.THIS .maindivcls{
+        width: 70% !important;
+}
+.THIS .innerdiv{
+   /* margin: 35px -255px 0px 222px;*/
+   width: 500px;
+   margin-top: 35px;
+}
+.THIS .slds-tabs_path__item + .slds-is-complete:before,.THIS .slds-tabs_path__item + .slds-is-current:before, .THIS .slds-tabs--path__item + .slds-is-complete:before, .THIS .slds-tabs--path__item + .slds-is-current:before {
+    background-color: #0070d2 !important;
+}
+.THIS .alrt{
+    margin-bottom: 10px;
+}

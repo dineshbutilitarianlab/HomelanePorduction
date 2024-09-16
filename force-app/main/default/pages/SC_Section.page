@@ -1,0 +1,24 @@
+<!--
+    * Description  : To override Standard edit mode of SC_Section__c Object.
+    * Created By   : Naveen Kumar B H
+    * Created Date : 19/02/2016
+-->
+<apex:page StandardController="SC_Section__c" extensions="SC_Section">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!save}"/>
+                <apex:commandButton value="Cancel" action="{!cancel}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection title="Section" >
+                <apex:inputField value="{!SC_Section__c.Section__c}" Style="width:46%"/>
+                <apex:inputField value="{!SC_Section__c.Parent_Section__c}"/>                       
+                <apex:inputField value="{!SC_Section__c.Order__c}"/>
+                <apex:selectList size="1" value="{!SC_Section__c.Opportunity_Sub_Status__c}">
+                    <apex:selectOptions value="{!listStage}"/>     
+                </apex:selectList>  
+                <apex:inputField value="{!SC_Section__c.Record_Type__c}"/>                                 
+            </apex:pageBlockSection>
+        </apex:pageBlock> 
+    </apex:form>
+</apex:page>

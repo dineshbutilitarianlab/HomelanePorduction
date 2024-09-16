@@ -1,0 +1,192 @@
+<apex:page standardController="Opportunity" recordSetVar="unused" extensions="MassEditGlobalController" showHeader="false"  >
+    <style>
+    .dateFormat {
+                display: none;
+            }
+    .send-whatsapp{
+         display:block;
+         width:150px;
+    }
+    .send-email{
+        display:block;
+        width:70px;
+    }
+    .opportunity-name{
+        display:block;
+        width:180px;
+     }
+    .bPageBlock .detailList .labelCol{
+    width:9%;
+    border:none;
+    }
+    .bPageBlock .detailList .dataCol{
+    width: 19%;
+    border:none;
+    }
+    .detailList tr:last-child{
+    display:none;
+    }
+    </style>
+    <script>
+    function callActfun()
+    {
+                           if(confirm("Please make sure the records Updated have their respective checkboxes selected before proceeding to save")) 
+                           {
+                               callSavemethod();
+                           }
+    }
+    </script>
+    <apex:form id="frmid">
+        <apex:actionFunction name="callSavemethod" action="{!saveRec}" reRender="frmid" status="actStatusId" />
+        <apex:pageBlock id="thePb" title="Opportunity Details To Search">
+            <apex:pageblockButtons location="top">
+                <apex:commandButton value="Save" onclick="callActfun();" />
+            </apex:pageblockButtons>
+            <apex:pageblockSection id="thepbs" columns="4">
+                <apex:pageBlockSectionItem >
+                    <apex:outputText >Opportunity Name</apex:outputText>
+                    <apex:inputtext value="{!OppName}" required="false" id="accName"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputText >Customer Number</apex:outputText>
+                    <apex:inputtext value="{!OppNumber}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputText >Appointment Venue (Showroom)</apex:outputText>
+                    <apex:inputfield value="{!Opp.Appointment_Venue_Square__c}"/>
+                </apex:pageBlockSectionItem>
+            
+                <apex:commandButton value="Search" action="{!searchAcc}" reRender="frmid" status="actStatusId" />
+                <apex:actionStatus id="actStatusId" >
+                    <apex:facet name="start">
+                        <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
+                            &nbsp;
+                        </div>
+                        <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+                            <div style="display: inline-block; padding: 2px; background-color: #fff; width: 125px;">
+                                <img src="/img/loading.gif" style="float: left; margin: 8px;" />
+                                <span style="display: inline-block; padding: 10px 0px;">Please Wait...</span>
+                            </div>
+                        </div>
+                    </apex:facet>
+                </apex:actionStatus>
+            </apex:pageblockSection> 
+        </apex:pageBlock>
+        
+        <apex:pageBlock title="Account Details" id="noRec" rendered="{! IF( OpportunityList != null && OpportunityList.size ==0 , true, false)}" >
+            <apex:outputPanel >
+                <h1>No Records Found </h1>
+            </apex:outputPanel>
+        </apex:pageBlock>
+        
+        
+        <apex:pageBlock title="Opportunity Details" id="details" rendered="{! IF( OpportunityList != null && OpportunityList.size >0, true, false)}" >
+            
+            <apex:pageBlockTable value="{!OpportunityList}" var="a">
+                <apex:column >
+                    <apex:facet name="header" >Select<br/> Update</apex:facet>
+                    <apex:inputCheckbox value="{!a.Select_Update__c}" />
+                </apex:column>
+                <!-- <apex:column headerValue="Opportunity Name">
+                    <apex:outputLink target="_blank" value="/{!a.id}" styleClass="opportunity-name">{!a.Name}</apex:outputLink> 
+                </apex:column>   -->
+                <!--  If you want facet style you can add like this.
+<apex:column >
+<apex:facet name="header">Link Name</apex:facet>
+<apex:outputLink target="_blank" value="/{!a.id}">{!a.Name}</apex:outputLink> 
+</apex:column>
+-->
+                <apex:column headerValue="Opportunity Name">
+                    <apex:inputField value="{!a.Name}" style="width:110px;"/>
+                </apex:column>  
+                <apex:column >
+                    <apex:facet name="header" >Phone Number</apex:facet>
+                    <apex:inputField value="{!a.Customer_Phone_Number__c}" />
+                </apex:column>  
+                <apex:column headerValue="Email">
+                    <apex:inputField value="{!a.Customer_Email__c}" />
+                </apex:column>  
+                <apex:column headerValue="Lead Source">
+                    <apex:inputField value="{!a.LeadSource}" styleClass="send-whatsapp" />
+                </apex:column>   
+                <apex:column headerValue="Property Name">
+                    <apex:inputField value="{!a.Property_Name__c}" />
+                </apex:column>
+                <apex:column >
+                <apex:facet name="header">Property <br/>Configuration</apex:facet>
+                    <apex:inputField value="{!a.Property_Config__c}" />
+                </apex:column>
+                <apex:column >
+                <apex:facet name="header" >Appointment Start Time</apex:facet>
+                    <apex:inputField value="{!a.Time_of_Actual_Appointment_Start__c}" style="width:110px;"/>
+                </apex:column>
+                <apex:column headerValue="Customer ID">
+                    <apex:inputField value="{!a.Customer_ID__c}" styleClass="send-whatsapp"/>
+                </apex:column>
+                <apex:column headerValue="Appointment Venue - Square">
+                    <apex:inputField value="{!a.Appointment_Venue_Square__c}" />
+                </apex:column>
+                <apex:column headerValue="Appointment Type">
+                    <apex:inputField value="{!a.Appointment_Type__c}" />
+                </apex:column>
+                <apex:column headerValue="Design Partner">
+                    <apex:inputField value="{!a.Interior_Design_Partner__c}" />
+                </apex:column>
+                <apex:column >
+                <apex:facet name="header" >Property Move-In<br/> Date</apex:facet>
+                    <apex:inputField value="{!a.Property_Move_In_Date__c}" />
+                </apex:column>
+                <apex:column headerValue="Quote Link">
+                    <apex:inputField value="{!a.Quote_Link__c}" />
+                </apex:column>
+                <apex:column headerValue="Quote Sent Time">
+                    <apex:inputField value="{!a.Quote_Sent_Time__c}" style="width:110px;"/>
+                </apex:column>
+                <apex:column headerValue="Last Open Time">
+                    <apex:inputField value="{!a.Last_Open_Time__c}" style="width:110px;"/>
+                </apex:column>
+                <apex:column headerValue="Amount">
+                    <apex:inputField value="{!a.Amount}" style="width:76px;"/>
+                </apex:column>
+                <apex:column >
+                <apex:facet name="header" >Total <br/> Quote<br/>Views</apex:facet>
+                    <apex:inputField value="{!a.Total_Quote_Views__c}"/>
+                </apex:column>
+                <apex:column >
+                <apex:facet name="header" >Count of<br/> Quotes <br/>Sent </apex:facet>
+                    <apex:inputField value="{!a.Count_of_Quotes_Sent__c}"/>
+                </apex:column>
+                <apex:column headerValue="Description">
+                    <apex:inputtextarea label="RichText" styleClass="slds-input slds-truncate widthClass" richtext="false" value="{!a.DescriptionCopy__c}" id="Body" cols="10" rows="1" style="width:160px;"/>
+                </apex:column>
+                <apex:column headerValue="Send Email">
+                    <apex:outputlink value="https://homelane-hds.typeform.com/to/tB1Iq1?to_email={!a.Customer_Email__c}" id="theLink1" target="_blank" styleClass="send-email">Send Email</apex:outputlink>
+                </apex:column>
+                <apex:column >
+                <apex:facet name="header" >No. of<br/> Meetings Done</apex:facet>
+                    <apex:inputField value="{!a.No_of_Meetings_Done__c}" />
+                </apex:column>
+                <apex:column headerValue="Meeting Stage">
+                    <apex:inputField value="{!a.Meeting_Stage__c}" style="width:102px;"/>
+                </apex:column>
+                <apex:column headerValue="Order Book Date">
+                    <apex:inputField value="{!a.Order_Book_Date__c}" />
+                </apex:column>
+                <apex:column headerValue="Second Meeting Time">
+                    <apex:inputField value="{!a.Second_Meeting_Time__c}" style="width:110px;"/>
+                </apex:column>
+                <apex:column headerValue="Send WhatsApp">
+                    <apex:outputlink value="https://api.whatsapp.com/send?phone={!a.Customer_Phone_Number__c}" id="theLink" target="_blank" styleClass="send-whatsapp">Send WhatsApp Message</apex:outputlink>
+                </apex:column>
+            </apex:pageBlockTable>
+            
+            <apex:pageblockButtons >
+                <apex:commandButton value="First Page" rerender="details" action="{!FirstPage}" disabled="{!prev}"/>
+                <apex:commandButton value="Previous" rerender="details" action="{!previous}" disabled="{!prev}"/>
+                <apex:commandButton value="Next" rerender="details" action="{!next}" disabled="{!nxt}"/>
+                <apex:commandButton value="Last Page" rerender="details" action="{!LastPage}" disabled="{!nxt}"/>
+            </apex:pageblockButtons>
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

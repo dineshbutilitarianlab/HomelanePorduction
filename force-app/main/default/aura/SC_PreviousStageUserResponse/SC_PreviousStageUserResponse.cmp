@@ -1,0 +1,130 @@
+<!--
+ * Created By  : Sanjeev Shukla.
+ * Modified By : Naveen Kumar B H.
+ * Description : To display Sales Coach Information or to get user response from the user about particular Opportunity.
+         * Using in SC_MISalesProcessPreviousStageInfo.cmp .
+      
+-->
+<aura:component controller="SC_MISalesProcess"> 
+    <!--Calling doInit function to get all Sections,Subsections,Items,Responses from Database -->  
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!-- listWrapSec attribute will hold all Sections,Subsections,Items,Responses-->
+    <aura:attribute name="listWrapSec" type="Sections[]" />
+    <!-- stageName,oppId,recordTypeId values will be passed from VF page-->
+    <aura:attribute name="stageName" type="String" default=""/>
+    <aura:attribute name="oppId" type="Id" default=""/>
+    <aura:attribute name="recordTypeId" type="String" default=""/>
+    <div>
+        <!--Start : Spinner Code -->
+        <div aura:id="spinnerId" class="slds-backdrop slds-backdrop--close">
+            <div aura:id="spinnerIdChild" class="slds-modal slds-fade-in-close" aria-hidden="false" role="dialog">
+                <div class="slds-modal__container">      
+                    <div>
+                        <center>
+                            <div class="slds-spinner slds-spinner--medium" aura:id="spinner">
+                                <img src="/resource/SLDS0203/assets/images/spinners/slds_spinner_inverse.gif" alt="Loading..." />
+                            </div>
+                        </center>            
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End:Spinner Code -->
+        
+        <!--Start : Iteration to display all Sections, Items , Responesems , Respones-->     
+        <aura:if isTrue="{!v.listWrapSec.length > 0}" >
+            <aura:iteration items="{!v.listWrapSec}" var="sec">
+                <div>
+                    <aura:if isTrue="{!sec.section.length > 0}" >
+                        <aura:iteration items="{!sec.section}" var="subSec">
+                            <div class="theItem">
+                                <div class="theSubSection">{!subSec.sectionName}
+                                    <div class="theClass theSubSecPad" onclick="{!c.toggleSubSec}" >
+                                        <i class="fa togleIcon fa-2 fa-sort-asc" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="horzentolRow horzentolRowBGClr1"></div>
+                                <aura:if isTrue="{!subSec.item.length > 0}" >
+                                    <div class="theItem2">
+                                        <aura:iteration items="{!subSec.item}" var="itm">
+                                            
+                                            <aura:if isTrue="{!itm.required}">  <div style="color:red;float: left;">* &nbsp;</div></aura:if>
+                                            {!itm.itemName}
+                                            <aura:if isTrue="{!itm.responseType == 'Check Box'}" >
+                                                <ui:outputCheckbox class="theCheck" value="{!itm.checkValue}" />
+                                            </aura:if>
+                                            <aura:if isTrue="{!itm.responseType == 'Check Box'}" >
+                                                <div class="horzentolRowBGClr2"></div>
+                                            </aura:if>
+                                            <aura:if isTrue="{!itm.responseType == 'Open Text'}" >
+                                                <div class="slds-form-element__control slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                                                    <ui:outputText class="slds-input"  value="{!itm.value}"/>
+                                                </div>
+                                            </aura:if>
+                                            
+                                            <!--Start : code to display a input Date -->
+                                            <aura:if isTrue="{!itm.responseType == 'Date'}" >
+                                                <div class=" slds-form-element__control slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                                                    <ui:outputDate aura:id="dateField" class="slds-input" value="{!itm.value}" />
+                                                </div>
+                                            </aura:if>
+                                            <!--End : code to display a input Date -->
+                                            
+                                            <aura:if isTrue="{!itm.responseType == 'PickList'}" >
+                                                <div class="slds-form-element__control slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                                                    <ui:inputSelect class="slds-input theOutPutUsrClr"  value="{!itm.value}" disabled="true">
+                                                        <ui:inputSelectOption text="{!itm.value}"/>
+                                                    </ui:inputSelect> 
+                                                </div>
+                                            </aura:if>
+                                            
+                                        </aura:iteration>
+                                    </div>
+                                </aura:if>
+                            </div>
+                        </aura:iteration>
+                    </aura:if>
+                    <aura:if isTrue="{!sec.item.length > 0}" >
+                        <aura:iteration items="{!sec.item}" var="itm">
+                            <div class="theItem">
+                                <div class="theField">
+                                    <aura:if isTrue="{!itm.required}">  <div style="color:red;float: left;">* &nbsp;</div></aura:if>
+                                    {!itm.itemName}
+                                    <aura:if isTrue="{!itm.responseType == 'Check Box'}" >
+                                        
+                                        <ui:outputCheckbox class="theCheck" value="{!itm.checkValue}" />
+                                    </aura:if>
+                                    <aura:if isTrue="{!itm.responseType == 'Check Box'}" >
+                                        <div class="horzentolRowBGClr2"></div>
+                                    </aura:if>
+                                    <aura:if isTrue="{!itm.responseType == 'Open Text'}" >
+                                        <div class=" slds-form-element__control slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                                            <ui:outputText class="slds-input"  value="{!itm.value}"/>
+                                        </div>
+                                    </aura:if>
+                                    
+                                    <!--Start : code to display a input Date -->
+                                    <aura:if isTrue="{!itm.responseType == 'Date'}" >
+                                        <div class=" slds-form-element__control slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                                            <ui:outputDate aura:id="dateField" class="slds-input" value="{!itm.value}" />
+                                        </div>
+                                    </aura:if>
+                                    <!--End : code to display a input Date -->
+                                    
+                                    <aura:if isTrue="{!itm.responseType == 'PickList'}" >
+                                        <div class="slds-form-element__control slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                                            <ui:inputSelect class="slds-input theOutPutUsrClr"  value="{!itm.value}" disabled="true">
+                                                <ui:inputSelectOption text="{!itm.value}"/>
+                                            </ui:inputSelect> 
+                                        </div>
+                                    </aura:if>
+                                </div>
+                            </div>
+                        </aura:iteration>
+                    </aura:if>
+                </div>
+            </aura:iteration>
+        </aura:if>
+        <!--End : Iteration to display all Sections, Items , Responesems , Respones-->
+    </div>
+</aura:component>

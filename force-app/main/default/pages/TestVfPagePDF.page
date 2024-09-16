@@ -1,0 +1,1090 @@
+<apex:page controller="WorksContractController" showHeader="false" cache="false" sidebar="false" id="pageId" action="{!checkNps}" renderAs="pdf" >
+ <head>
+ <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+ <style>
+  .apexp{
+    display:none;
+  }
+  .buttongray{
+     background: #EDEDED !important;
+     color : #888 !important;
+     pointer-events: none !important;
+     border: 1px solid #CECECE !important;
+  }
+  .buttonBlue{
+    background: #365899 !important;
+    color: white !important;
+    pointer-events: all !important;
+  }
+  .mobile_show{
+      display:none !important;
+  }
+  .mobile_hide{
+      display:block !important;
+  }
+  .workcontract{
+      margin:35px;
+      FONT-SIZE: 16px;
+  }
+  fieldset{margin-left:95px;}
+  .input_last{width: 20px;height: 20px;position: relative;top: 4px;}
+  .buttongray{color:#999 !important;}
+  .buttonBlue{color:#fff;}
+ @media (max-width:480px){
+  .mobileDesplay{
+    display:none;
+  }
+  .mobile_show{
+      display:block !important;
+  }
+  .mobile_hide{
+      display:none !important;
+  }
+  .workcontract {
+    margin: 0px;
+   
+}
+  
+  fieldset{text-align:center; margin-left:0px;}
+ }
+ @media (max-width:801px){
+  .mobile_show{
+      display:block !important;
+  }
+  .mobile_hide{
+      display:none !important;
+  }
+ }
+
+  
+   fieldset1{margin-left:85px;}
+ textarea {
+    width: 100%;
+    /* height: 108%; */
+}
+
+xnugget info 
+
+-------------------------------- */
+.cd-nugget-info {
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  bottom: 0;
+  left: 0;
+}
+.cd-nugget-info a {
+  position: relative;
+  font-size: 14px;
+  color: #5e6e8d;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  transition: all 0.2s;
+}
+.no-touch .cd-nugget-info a:hover {
+  opacity: .8;
+}
+.cd-nugget-info span {
+  vertical-align: middle;
+  display: inline-block;
+}
+.cd-nugget-info span svg {
+  display: block;
+}
+.cd-nugget-info .cd-nugget-info-arrow {
+  fill: #5e6e8d;
+}
+
+/* -------------------------------- 
+
+Main components 
+
+-------------------------------- */
+
+
+.cd-popup-trigger {
+  display: block;
+  width: 170px;
+  height: 50px;
+  line-height: 50px;
+  margin: 3em auto;
+  text-align: center;
+  color: #FFF;
+  font-size: 14px;
+  font-size: 0.875rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 50em;
+  background: #35a785;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.07);
+}
+@media only screen and (min-width: 1170px) {
+  .cd-popup-trigger {
+    margin: 6em auto;
+  }
+  
+  
+ 
+}
+
+/* -------------------------------- 
+
+xpopup 
+
+-------------------------------- */
+.cd-popup { 
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index:9999;
+  background-color: rgba(94, 110, 141, 0.9);
+  opacity: 1;
+  visibility: visible;
+  -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
+  -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
+  transition: opacity 0.3s 0s, visibility 0s 0s;
+}
+.cd-popup.not-visible {
+  opacity: 0;
+  visibility: hidden;
+   -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+  -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+  transition: opacity 0.3s 0s, visibility 0s 0.3s;
+ 
+}
+.cd-popup.is-visible {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
+  -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
+  transition: opacity 0.3s 0s, visibility 0s 0s;
+ 
+}
+
+.cd-popup-container {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  margin: 4em auto;
+  background: #FFF;
+  border-radius: .25em .25em .4em .4em;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  -webkit-transform: translateY(-40px);
+  -moz-transform: translateY(-40px);
+  -ms-transform: translateY(-40px);
+  -o-transform: translateY(-40px);
+  transform: translateY(-40px);
+  /* Force Hardware Acceleration in WebKit */
+  -webkit-backface-visibility: hidden;
+  -webkit-transition-property: -webkit-transform;
+  -moz-transition-property: -moz-transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+.cd-popup-container p {
+  padding: 3em 1em;
+  font-size: 160%;
+  font-family: "Lato", sans-serif;
+  color: #8f9cb5;
+ 
+}
+.cd-popup-container .cd-buttons:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.cd-popup-container .cd-buttons li {
+  width: 100%;
+  list-style: none;
+  margin-left: 0;
+}
+.cd-popup-container .cd-buttons a {
+  display: block;
+  height: 45px;
+  width: 25%;
+  font-size: 160%;
+  font-color:#fffff;
+  line-height: 50px;
+  text-transform: uppercase;
+  //color: #FFF;
+  -webkit-transition: background-color 0.2s;
+  -moz-transition: background-color 0.2s;
+  transition: background-color 0.2s;
+  cursor: default;
+}
+.cd-popup-container .cd-buttons li:first-child a {
+  background: #fc7169;
+  border-radius: 25px;
+}
+.no-touch .cd-popup-container .cd-buttons li:first-child a:hover {
+  background-color: #fc8982;
+}
+.cd-popup-container .cd-buttons li:last-child a {
+  background: #029BD7;
+  border-radius: 25px;
+}
+.no-touch .cd-popup-container .cd-buttons li:last-child a:hover {
+  background-color: #c5ccd8;
+}
+.cd-popup-container .cd-popup-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+}
+.cd-popup-container .cd-popup-close::before, .cd-popup-container .cd-popup-close::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  width: 14px;
+  height: 3px;
+  background-color: #8f9cb5;
+}
+.cd-popup-container .cd-popup-close::before {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+  left: 8px;
+}
+.cd-popup-container .cd-popup-close::after {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  right: 8px;
+}
+.is-visible .cd-popup-container {
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -ms-transform: translateY(0);
+  -o-transform: translateY(0);
+  transform: translateY(0);
+}
+.extremcls{
+   FONT-SIZE: 14px; margin-left: 373px;padding-top: 11px;position: absolute
+  }
+@media only screen and (min-width: 1170px) {
+  .cd-popup-container {
+    margin: 8em auto;
+  }
+  .extremcls{
+   FONT-SIZE: 14px; margin-left: 570px;padding-top: 11px;position: absolute
+  }
+}
+.dot {
+    height: 10px;
+    width: 10px;
+    background-color: black;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.ul_list{
+    margin-left: -2.5em;
+    margin-right: 12px;
+    font-family:  'Raleway', sans-serif;
+    font-weight: 600;
+    list-style: none;
+    font-size: 14px;
+}
+.ul_list > li {
+    margin-bottom: 11px;
+}
+.ul_list > li::before {
+  content: "• ";
+  color: #808081; 
+}
+.first_columns {
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+}
+.table_div_main li {
+margin-left : 0.5em;
+text-align:left;
+}
+ #crumbs div {
+    display: block;
+    float: left;
+    height: 42px;
+    background: #3498db;
+    text-align: center;
+    padding: 20px 70px 0 27px;
+    position: relative;
+    margin: 0 10px 0 0;    
+    font-size: 20px;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 10px;
+}
+    </style>
+    <script>
+      function closePopup(){
+        var popupDom = document.getElementById('popupId');
+         popupDom.classList.add("not-visible");
+      }
+     
+    </script>
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-50002231-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-50002231-1',{
+      'page_title' : 'SF WorkContract',
+      'page_path': '/WorksContractVFPage'
+    });
+    </script>
+ </head>
+ <body style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+    box-sizing: border-box;padding: 10px;">
+    <apex:outputPanel id="errorPopup">
+    <apex:outputPanel rendered="{!redirectError}">
+              <div class="cd-popup" id="popupId" role="alert">
+    <div class="cd-popup-container">
+        <p>{!strErrorMsg}</p>
+        <ul class="cd-buttons" style="padding: 0px 0px 9px 0px;">
+            <li><center><a href="" onclick="closePopup();">OK</a></center></li>
+            
+        </ul>
+        
+    </div> <!-- cd-popup-container -->
+</div> <!-- cd-popup -->
+            </apex:outputPanel>
+    </apex:outputPanel>
+<apex:outputPanel rendered="{!(!contractSigned)}">    
+  <div class="workcontract" >
+    <!--    <apex:outputpanel ><br/>
+             <b> <apex:outputText style="text-align:center;display: block;" escape="true" value="{!$Label.Works_contract_header}"></apex:outputText> </b>
+        </apex:outputPanel>  
+      <p style="text-align:center">  <apex:image url="{!$Resource.HLImage}" width="560" height="100" /> </p>
+      
+    <b> <apex:outputText style="FONT-SIZE: 24px;text-align:center;display: block;" escape="true" value="{!$Label.TERMS_AND_CONDITIONS_OF_WORKS_CONTRACT}"></apex:outputText> </b>
+    <hr/>
+    <apex:outputPanel>
+     <apex:outputText escape="false"  value="{!$Label.Acceptance}"></apex:outputText> <br/><br/>
+     <b> <apex:outputText escape="false"  value="{!$Label.SCOPE_MANNER_OF_SERVICES}"></apex:outputText> </b><br/><br/>
+     <apex:outputText escape="false"  value="{!$Label.Scope_services_text}"></apex:outputText>
+     <apex:outputText escape="false"  value="{!$Label.SCOPE_MANNER_OF_SERVICES_footer}"></apex:outputText><br/><br/>
+     
+   <b> <apex:outputText escape="false"  value="{!$Label.PAYMENT_FOR_SERVICES_RENDERED}"></apex:outputText> </b> <br/><br/>
+      <apex:outputText escape="false"  value="{!$Label.PAYMENT_FOR_SERVICES_TEXT}"></apex:outputText>
+      <apex:outputText escape="false"  value="{!$Label.PAYMENT_FOR_SERVICES_RENDERED_footer}"></apex:outputText><br/><br/>
+
+   <b> <apex:outputText escape="false"  value="{!$Label.WARRANTY_DISCLAIMER_OF_WARRANTY}"></apex:outputText> </b> <br/><br/>
+        <apex:outputText escape="false"  value="{!$Label.WARRANTY_DISCLAIMER_OF_WARRANTY_TEXT}"></apex:outputText> <br/><br/>
+
+   <b> <apex:outputText escape="false"  value="{!$Label.EXCLUSIONS}"></apex:outputText> </b> <br/><br/>
+       <apex:outputText escape="false"  value="{!$Label.EXCLUSIONS_TEXT}"></apex:outputText> <br/><br/>
+       
+   <b> <apex:outputText escape="false"  value="{!$Label.Hardware_Accessories_Appliances}"></apex:outputText> </b> <br/><br/>
+       <apex:outputText escape="false"  value="{!$Label.Hardware_Accessories_Appliances_Text}"></apex:outputText> <br/><br/>
+       
+   <b> <apex:outputText escape="false"  value="{!$Label.CLAIMS_AND_REPAIRS}"></apex:outputText> </b> <br/><br/>
+       <apex:outputText escape="false"  value="{!$Label.CLAIMS_AND_REPAIRS_Text}"></apex:outputText> <br/><br/>
+       
+       
+   <b> <apex:outputText escape="false"  value="{!$Label.DISCLAIMER_OF_WARRANTY}"></apex:outputText> </b> <br/><br/>
+       <apex:outputText escape="false"  value="{!$Label.DISCLAIMER_OF_WARRANTY_text}"></apex:outputText> <br/><br/>
+ 
+ 
+   <b> <apex:outputText escape="false"  value="{!$Label.LIMITATION_OF_LIABILITY}"></apex:outputText> </b> <br/><br/>
+       <apex:outputText escape="false"  value="{!$Label.LIMITATION_OF_LIABILITY_Text}"></apex:outputText> <br/><br/>
+
+   <b> <apex:outputText escape="false"  value="{!$Label.FORCE_MAJEURE}"></apex:outputText> </b> <br/><br/>
+       <apex:outputText escape="false"  value="{!$Label.FORCE_MAJEURE_Text}"></apex:outputText> <br/><br/>
+       <apex:outputText escape="false"  value="{!$Label.FORCE_MAJEURE_footer}"></apex:outputText> <br/><br/>
+
+    <b> <apex:outputText escape="false"  value="{!$Label.GOVERNING_LAW_JURISDICTION}"></apex:outputText> </b> <br/><br/>
+        <apex:outputText escape="false"  value="{!$Label.GOVERNING_LAW_JURISDICTION_Text}"></apex:outputText> <br/><br/> -->
+        
+        
+        
+        
+         <div class="headerMessage" style="text-align: center;">
+        <i><h3>Please ensure you read the applicable terms and conditions carefully before signifying your assent here to.</h3></i>
+    </div>
+    <div class="subHeader" style="width: 95%;
+            margin: auto;
+            text-align: justify;">
+        <div class="header" style="text-align: center;">
+            <img style="max-width: 100%;" src="https://s3-ap-southeast-1.amazonaws.com/hlmicrosite/homelaneLogo.png" alt="HomeLane Logo" />
+        </div>
+        <div class="header" style="text-align: center;">
+            <h3>TERMS AND CONDITIONS</h3>
+        </div>
+        <hr></hr>
+        <!--<div id="crumbs" class="mobile_hide">
+            <div style="padding: 20px 50px 0 27px;background: #EF4626;"> <span style="margin-left: 20px;">Step 1 - Accept Terms &#38; Conditions</span></div>
+            <div style="padding: 20px 50px 0 292px;background: #F99F1C;"><span style="margin-left: -220px;">Step 2 - Feedback</span></div>
+            <div style="padding: 20px 50px 0 85px;background: #2196f3;"><span style="margin-left: 16px;">Step 3 - Submit Works Contract &#38; Feedback </span></div>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        </div>!-->
+        
+        <div id="content">
+            <p>By clicking ‘I Accept’ below, you consent to the following terms and conditions of Services from HomeLane.
+            </p>
+            <ol style="padding-left: 20px;">
+                <li style="text-align: justify;margin: 12px 0px;">
+                    <strong>SCOPE OF SERVICES: </strong>The scope of the services (“Services”) provided by HomeLane are as follows:
+                    <ol style="padding-left: 20px;"> 
+                        <li style="text-align: justify;margin: 12px 0px;">Designing of home interiors</li>
+                        <li style="text-align: justify;margin: 12px 0px;">Provision and supply of customized home furniture</li>
+                        <li style="text-align: justify;margin: 12px 0px;">Installation of the customised home furniture at your site - apartment, villa, house etc.</li>
+                        <li style="text-align: justify;margin: 12px 0px;">Facilitate delivery of select products and services by third-party partners, as part of the overall interior design solution</li>
+                    </ol>
+                </li>
+                <li style="text-align: justify;margin: 12px 0px;">
+                    <strong>EXECUTION TIMELINES: </strong>HomeLane will deliver and install your customized home furniture on or before the <b>Delivery Date</b> committed. The Delivery Date will be calculated from the date of completion of <b>all the following requirements</b> (referred to as the <b>All-Set-Go</b> milestone)
+                    <ol style="padding-left: 20px;">
+                        <li style="text-align: justify;margin: 12px 0px;">Both you and HomeLane signing off on the design and specifications for the Services;</li>
+                        <li style="text-align: justify;margin: 12px 0px;">Payment of the Price (as defined hereafter) in accordance with the the timelines set out below; and</li>
+                        <li style="text-align: justify;margin: 12px 0px;">Your preparation of the site in accordance with the ‘Site Readiness Checklist’ (see Annexure 1) provided to you by HomeLane.</li>
+                    </ol>
+                </li>
+                <li style="text-align: justify;margin: 12px 0px;">
+                    <strong>DELIVERY GUARANTEE </strong>
+                    <ol style="padding-left: 20px;">
+                        <li style="text-align: justify;margin: 12px 0px;"><b>45-Days Delivery Guarantee:</b> The HomeLane 45-Days Delivery Guarantee will be applicable <b>only</b> if all the conditions above (2.1.1, 2.1.2 and 2.1.3) are met in full and your overall scope of services contains only items from the following “<b>Type A</b>” categories:
+                            <ol style="padding-left: 20px;" Start="1">
+                                <li style="text-align: justify;margin: 12px 0px;">Modular / Fit-out Furniture (incl. installation)</li>
+                                <li style="text-align: justify;margin: 12px 0px;">False Ceiling</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Standard Electrical Works (creation of new points, shifting of existing points)</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Countertop services (granite removal, chipping and installation)</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Appliances (incl. installation)</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Lighting (incl. installation)</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Cleaning Services</li>
+                            </ol>
+                        </li>
+                        <li style="text-align: justify;margin: 12px 0px;"><b>45+10 Days Delivery Guarantee:</b> If your order contains services &amp; products from the following “<b>Type B</b>” categories, a 45+10 Days Delivery Guarantee will be applicable for your full order, instead of the standard 45-Days Delivery Guarantee
+                            <ol style="padding-left: 20px;" Start="1">
+                                <li style="text-align: justify;margin: 12px 0px;">Wallpaper (incl. Installation)</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Wooden Flooring</li>
+                            </ol>
+                        </li>
+                        <li style="text-align: justify;margin: 12px 0px;"><b>Services &amp; products with No Delivery Guarantee:</b> If your order contains services &amp; products from the following “<b>Type C</b>” categories, which are partner-managed, no delivery guarantee will apply for these specific items:
+                            <ol style="padding-left: 20px;" Start="1">
+                                <li style="text-align: justify;margin: 12px 0px;">Loose Furniture (Urban Ladder, Flipkart, Latitude etc.)</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Mattress (Wakefit, Sunday, Duroflex)</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Wall Art (Artezone)</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Home Automation (Schneider, Smitch)</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Texture Painting (Incl. final coat of paint)</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Painting: Phase 2 (typically final coat of paint)</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Non-texture Painting</li>
+                            </ol>
+                        </li>
+                        <li style="text-align: justify;margin: 12px 0px;"><b>Conditions that will make the Delivery Guarantee for your entire order NULL &amp; VOID:</b> No Delivery Guarantee will be applicable if:
+                            <ol style="padding-left: 20px;">
+                                <li style="text-align: justify;margin: 12px 0px;">HomeLane scope of work contains
+                                    <ol type="i">
+                                        <li style="text-align: justify;margin: 12px 0px;">Non-standard electrical works</li>
+                                        <li style="text-align: justify;margin: 12px 0px;">Civil / renovation activities</li>
+                                    </ol>
+                                </li>
+                                <li style="text-align: justify;margin: 12px 0px;">The following items are in your scope or the builder’s scope of work
+                                    <ol type="i">
+                                        <li style="text-align: justify;margin: 12px 0px;">Granite supply or installation</li>
+                                        <li style="text-align: justify;margin: 12px 0px;">Hob and / or chimney supply or installation</li>
+                                        <li style="text-align: justify;margin: 12px 0px;">Electrical point shifting</li>
+                                    </ol>
+                                </li>
+                                <li style="text-align: justify;margin: 12px 0px;">You are not in full possession of the site and only temporary possession has been allowed by the builder</li>
+                                <li style="text-align: justify;margin: 12px 0px;">The site has restrictions on work timings in the afternoon</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Concurrent work is being done at the site by any other 3rd party contractor not deployed by HomeLane, like Painting, Wallpaper, Wooden Flooring or Carpentry Work during installation</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Concurrent work is being executed by the builder such as civil work, core-cutting, painting etc</li>
+                                <li style="text-align: justify;margin: 12px 0px;">There are any changes to designs after All-Set-Go</li>
+                                <li style="text-align: justify;margin: 12px 0px;">The scope includes accommodation of changes, after works contract sign-off</li>
+                                <li style="text-align: justify;margin: 12px 0px;">You are living at the site at the time of installation;</li>
+                                <li style="text-align: justify;margin: 12px 0px;">There are abnormal hindrances in execution like Continuous Lack of Power, Non-Working Lifts, No Permission from society / Builder, etc</li>
+                                <li style="text-align: justify;margin: 12px 0px;">A force majeure event occurs.</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Due to COVID-19 pandemic, the following event occurs:
+                                    <ul style="list-style-type:disc">
+                                        <li style="text-align: justify;margin: 12px 0px;">State government imposes any restrictions and regulations on production, logistics and movement across states.</li>
+                                        <li style="text-align: justify;margin: 12px 0px;">Your site falls under any containment zone at any time of the order</li>
+                                        <li style="text-align: justify;margin: 12px 0px;">Any of HomeLane’s factory, warehouse, offices, partner/vendor’s factory, agents/ installers residences falls under any containment zone at any time of order installation</li>
+                                        <li style="text-align: justify;margin: 12px 0px;">You do not provide necessary permissions from the RWA / Facility Management agency of your apartment / residential complex / building and ensure unrestricted access to the premises.</li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </li>
+                        <li style="text-align: justify;margin: 12px 0px;"><b>The following will not be part of the 45 Day Delivery Guarantee promise</b>
+                            <ol style="padding-left: 20px;" Start="1">
+                                <li style="text-align: justify;margin: 12px 0px;">OEM replacements due to functional defects found at the time of handover will fall outside the delivery date guarantee. The replacements will be done free of cost based on OEM timeline and HomeLane will facilitate the replacements. Eg - Hardware, appliances like hob and chimney, accessories,colour mismatch or scratches in handles etc.</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Deep scratches found on shutters after peeling off of protective liners will be replaced by HomeLane if they are not removable with polishing agents. However, these will fall outside of any Delivery day handover guarantee.</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Shade variation for the same colour of shutter finish will be replaced based on OEM (like Merino, Associate, ActionTesa etc.) timeline, free of cost, but the same will fall outside of any Delivery  day handover guarantee. HomeLane will facilitate the replacements through OEMs.</li>
+                                <li style="text-align: justify;margin: 12px 0px;">If the woodwork component of the quote is greater than or equal to Rs. 15 Lacs, the Delivery Guarantee will not apply due to the volume of work involved.</li>
+                                <li style="text-align: justify;margin: 12px 0px;">For any delivery guarantee where HomeLane is in material breach of the same, HomeLane will pay you a compensation at the rate of Rs. 1,000 (Rupees one thousand) for every day of delay, subject to a maximum of the value of the Price.</li>
+                                <li style="text-align: justify;margin: 12px 0px;">All products and components mentioned in clause 3.1 - 3.5 are designed, supplied, and installed by HomeLane in a manner where the materials are fixed to the walls and superstructure. Such fitments once installed, cannot be removed without causing significant breakage or damage to the materials.</li>
+                            </ol>
+                        </li>
+                    </ol>
+                </li>
+                <li style="text-align: justify;margin: 12px 0px;">
+                    <strong>PAYMENT FOR SERVICES RENDERED </strong>
+                    <ol style="padding-left: 20px;" Start="1">
+                        <li style="text-align: justify;margin: 12px 0px;">The total price payable by you for the Services (<b>“Price”</b>) shall be as per the quotation sent to you by HomeLane and accepted by you.</li>
+                        <li style="text-align: justify;margin: 12px 0px;">The Price shall be payable in installments, upon reaching the following milestones:
+                            <ol style="padding-left: 20px;" Start="1">
+                                <li style="text-align: justify;margin: 12px 0px;">10% (ten percent) of the Price shall be payable when you book the work order;</li>
+                                <li style="text-align: justify;margin: 12px 0px;">40% (forty percent) of the Price shall be payable within 2 Working Days from the time of design finalization and prior to the commencement of manufacturing by HomeLane; and</li>
+                                <li style="text-align: justify;margin: 12px 0px;">50% (fifty percent) of the Price shall be payable within 2 Working Days from HomeLane’s ready-to-dispatch intimation to you. Such intimation will be sent by HomeLane after completion of manufacturing and before dispatch of materials, which is typically 15 (fifteen) days from the start of manufacturing. Delay in payment beyond 48 (forty eight) hours from HomeLane’s ready-to-dispatch intimation can lead to delay in dispatch of materials and consequently affect installation and execution timelines.</li>
+                                <li style="text-align: justify;margin: 12px 0px;">In case you delay payment beyond 2 Working Days from HomeLane’s ready-to-dispatch intimation then any Delivery Guarantee shall cease to be applicable due to delay payment. Further, in case you delay payment by 10 (ten) days or more, you will be liable to pay a penalty charge at the rate of Rs. 500/ - (Five Hundred) for every day of delay from the date of ready-to-dispatch intimation by HomeLane.</li>
+                            </ol>
+                        </li>
+                        <li style="text-align: justify;margin: 12px 0px;">The Price is inclusive of all applicable duties and taxes.</li>
+                        <li style="text-align: justify;margin: 12px 0px;">Except for payments below Rs. 10,000 (Rupees ten thousand) which can be made in cash, all payments shall be made via cheque/demand draft/bank transfer (NEFT/RTGS) only.</li>
+                    </ol>
+                </li>
+                <li style="text-align: justify;margin: 12px 0px;">
+                    <strong>WARRANTY AND DISCLAIMER OF WARRANTY</strong>
+                    <ol style="padding-left: 20px;">
+                        <li style="text-align: justify;margin: 12px 0px;">Scope of Warranty: In the event of there being any manufacturing defect in any of the products (“Products”) enumerated below, within the specified warranty periods following the date of delivery/installation, HomeLane shall, at its discretion, repair or replace such Product(s) at its cost. This certificate of warranty covers the following Products:
+                            <ol style="padding-left: 20px;">
+                                <li style="text-align: justify;margin: 12px 0px;">Cabinets made of laminated 16mm BWP, 17mm Prelam BWR, 17mm Prelam Commercial plywood – 5 (five) years;</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Cabinets made of laminated 18mm MDF – 5 (five) years;</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Cabinets made of pre-laminated 18mm particle board – 5 (five) years;</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Shutters of all finishes and all materials – 5 (five) years; and</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Accessories, Hardware and Appliances as per the Manufacturer’s Warranty</li>
+                            </ol>
+                        </li>
+                        <li style="text-align: justify;margin: 12px 0px;">Warranty Terms:
+                            <ol style="padding-left: 20px;">
+                                <li style="text-align: justify;margin: 12px 0px;">HomeLane warrants to you that all Products will be free from any manufacturing defect and defect in installation workmanship.</li>
+                                <li style="text-align: justify;margin: 12px 0px;">The warranty only applies if the Products are properly maintained, and used for normal domestic use.</li>
+                                <li style="text-align: justify;margin: 12px 0px;">The warranty will not be applicable in case of resale of the Products or transfer/sale of the apartment to another party.</li>
+                                <li style="text-align: justify;margin: 12px 0px;">The warranty period for (i) hardware; (ii) accessories and (iii) appliances that are used in all our Products will be the same as that offered by the original equipment manufacturer.</li>
+                                <li style="text-align: justify;margin: 12px 0px;">If a defect is observed within the respective warranty period(as per Annexure 2 A &amp; B), you must notify HomeLane in writing within a period of 7 (seven) days therefrom and, upon confirmation of the defect by an authorized HomeLane representative, HomeLane’s sole responsibility shall be, at its option to either:
+                                    <ol style="padding-left: 20px;" type="i">
+                                        <li style="text-align: justify;margin: 12px 0px;">arrange for repair of defective Product; or</li>
+                                        <li style="text-align: justify;margin: 12px 0px;">arrange a replacement of defective Product.</li>
+                                    </ol>
+                                </li>
+                                <li style="text-align: justify;margin: 12px 0px;">If HomeLane chooses to replace a Product proved to be defective, HomeLane shall, depending on availability, provide a replacement that is as close as possible in dimension, function and colour to the defective Product. HomeLane will not guarantee that the replacement will be exactly the same in all aspects when compared to the Product being replaced.</li>
+                                <li style="text-align: justify;margin: 12px 0px;">This warranty is null and void if any person other than HomeLane’s authorized representative installs, repairs or alters the Products without the prior consent of HomeLane.</li>
+                            </ol>
+                        </li>
+                        <li style="text-align: justify;margin: 12px 0px;">Warranty Disclaimer:
+                            <ol style="padding-left: 20px;">
+                                <li style="text-align: justify;margin: 12px 0px;">The warranty certificate sets forth HomeLane’s sole warranty obligation with respect to the Products and is in lieu of all other warranties oral or written, express or implied. HomeLane makes no warranty of merchantability or fitness for a particular purpose with respect to the Products and HomeLane shall not be liable for incidental, special, consequential or other similar damages arising out of any breach of the warranty.</li>
+                                <li style="text-align: justify;margin: 12px 0px;">HomeLane does not warrant against and is not responsible for: (a) any condition of the Product attributable to; or (b) any damage to Products caused by any of the following:
+                                    <ol style="padding-left: 20px;" type="i">
+                                        <li style="text-align: justify;margin: 12px 0px;">Wear and tear suffered through normal use (including scratches, dents and cuts) or damage caused by impacts or accidents;</li>
+                                        <li style="text-align: justify;margin: 12px 0px;">Rusting of channels, hinges and other metallic parts. These could be damaged due to household chemicals and sprays and hence care to be taken while using such products around hardware and accessories.</li>
+                                        <li style="text-align: justify;margin: 12px 0px;">Water leakage and seepage within the building structure and continuous dampness of the surface beyond:
+                                            <ul type="none">
+                                                <li style="text-align: justify;margin: 12px 0px;">-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(seventy two) hours for BWP grade plywood (IS710);</li>
+                                                <li style="text-align: justify;margin: 12px 0px;">-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(forty eight) hours for BWR grade plywood (IS303); and</li>
+                                                <li style="text-align: justify;margin: 12px 0px;">-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;twenty four hours for exterior grade PB and MDF materials.</li>
+                                            </ul>
+                                        </li>
+                                        <li style="text-align: justify;margin: 12px 0px;">Degradation, discolouration, damage, fading etc. in colour, grain, or texture of natural wood materials, laminates and other covering materials due to exposure to intensive or excessive light, sunlight, moisture or heat or other environmental factors;</li>
+                                        <li style="text-align: justify;margin: 12px 0px;">Use of inappropriate chemicals, detergents, abrasives or other inappropriate cleaning agents that can damage the wooden surface of the Products or rust accessories;</li>
+                                        <li style="text-align: justify;margin: 12px 0px;">Mistreatment, negligent use, misuse, insufficient or improper care (including but not limited to exposure to harsh weather conditions);</li>
+                                        <li style="text-align: justify;margin: 12px 0px;">Alterations, modifications or use of Products which is beyond or inconsistent with supplied Product instructions and / or not been authorized by HomeLane;</li>
+                                        <li style="text-align: justify;margin: 12px 0px;">Damage or stains due to water leakage and/or seepage; or</li>
+                                        <li style="text-align: justify;margin: 12px 0px;">Damage caused by any force majeure event (such as flooding, hurricane, earthquake, lightning, etc.), environmental condition (such as air pollution, solvent exposure, mold, mildew etc.), or staining from foreign substances (such as dirt, grease, oils, sprays etc).</li>
+                                    </ol>
+                                </li>
+                                <li style="text-align: justify;margin: 12px 0px;">HomeLane’s liability will reduce over the warranty period according to the following scale:
+                                    <ol style="padding-left: 20px;" type="i">
+                                        <li style="text-align: justify;margin: 12px 0px;">In the first 12 (twelve) months after the date of delivery/installation– 100% (hundred percent) of replacement cost; and</li>
+                                        <li style="text-align: justify;margin: 12px 0px;">From month 13 (thirteen) to month 60 (sixty) after the date of delivery/installation – 80% (eighty percent) of replacement cost.</li>
+                                    </ol>
+                                </li>
+                                <li style="text-align: justify;margin: 12px 0px;">The products installed by Homelane should not be removed, as removal of goods will cause damage to the installed products. Failure to adhere to this condition shall void the warranty provided by Homelane and Homelane shall not be responsible for any such damage.</li>
+                                <li style="text-align: justify;margin: 12px 0px;">Homelane specifically disclaims all warranties and indemnities, express, implied or statutory, including without limitation, any warranty of merchantability, fitness for a particular purpose, or any warranty arising from the course of performance or course of dealing.</li>
+                            </ol>
+                        </li>
+                    </ol>
+                </li>
+                <li style="text-align: justify;margin: 12px 0px;">
+                    <strong>SERVICE AND MAINTENANCE CALLS </strong>
+                    <ol style="padding-left: 20px;"> 
+                        <li style="text-align: justify;margin: 12px 0px;">Homelane will provide one free service visit to the site to address routine services which cover moving parts like hinges, channels etc. This service will address issues like minor alignment, loose parts etc.</li>
+                        <li style="text-align: justify;margin: 12px 0px;">This free service is applicable and should be availed of during the first 6 (six) months after the date of delivery/installation. Please call HomeLane care to schedule a visit. Any service and maintenance calls thereafter will be done on a chargeable basis (HomeLane’s current assessment / inspection fees is a sum of Rs. 750 (Rupees Seven hundred and fifty) per visit).</li>
+                        <li style="text-align: justify;margin: 12px 0px;">If the work includes re-alignment of units and/or replacement of items not covered under warranty(due to physical damage, continuous water leakage, rusting, etc), the cost of replacement will be over and above Rs.750, and a bill for the same will be shared after the visit.</li>
+                        <li style="text-align: justify;margin: 12px 0px;">HomeLane’s assessment/inspection fees does not include the cost of materials or labour used for addressing such service and maintenance calls.</li>
+                    </ol>
+                </li>
+                <li style="text-align: justify;margin: 12px 0px;">
+                    <strong>LIMITATION OF LIABILITY</strong>
+                    <ol style="padding-left: 20px;"> 
+                        <li style="text-align: justify;margin: 12px 0px;">IN NO EVENT WILL HOMELANE OR ITS AFFILIATES, VENDORS OR SUBCONTRACTORS BE LIABLE TO YOU FOR ANY INDIRECT, INCIDENTAL, SPECIAL OR CONSEQUENTIAL LOSSES, HOWSOEVER ARISING, WHETHER UNDER CONTRACT, TORT (INCLUDING NEGLIGENCE), BREACH OF STATUTORY DUTY OR OTHERWISE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH LOSSES.</li>
+                        <li style="text-align: justify;margin: 12px 0px;">HOMELANE’S MAXIMUM LIABILITY IN RESPECT OF THE PRODUCTS / SERVICES SHALL BE LIMITED TO AND SHALL NOT EXCEED THE PRICE ACTUALLY PAID BY YOU TO HOMELANE FOR THE RELEVANT PRODUCTS / SERVICES WHICH GAVE RISE TO THE CLAIM.</li>
+                    </ol>
+                </li>
+                <li style="text-align: justify;margin: 12px 0px;">
+                    <strong>FORCE MAJEURE</strong>
+                    <ol style="padding-left: 20px;"> 
+                        <li style="text-align: justify;margin: 12px 0px;">HomeLane shall not be liable for any failure or delay in performing its obligations hereunder due to force majeure conditions affecting HomeLane, including but not limited to, break down or damage of HomeLane’s machinery, shortage or non-availability of raw material components or consumables, strikes, lock-outs, war, riot, civil commotion, acts of God, or other causes beyond HomeLane’s reasonable control, provided that it notifies you of such conditions as soon as reasonably practicable and uses its best efforts to resume performance. Should such conditions subsist for a continuous period of 15 (fifteen) days, HomeLane may set up a discussion with you to discuss measures to mitigate the consequences of such conditions and agree upon alternative modes of effectuating the terms set forth herein.</li>
+                        <li style="text-align: justify;margin: 12px 0px;">In the event of there being no suitable alternative mode of effectuating the terms hereof, this engagement may be terminated upon mutually acceptable terms.</li>
+                    </ol>
+                </li>
+                <li style="text-align: justify;margin: 12px 0px;">
+                    <strong>CANCELLATION POLICY</strong>
+                    <ol style="padding-left: 20px;"> 
+                        <li style="text-align: justify;margin: 12px 0px;">Neither of us may terminate this engagement. However, HomeLane may delay or cease to provide the Services in case the Price payable remains unpaid or is delayed; in which case, HomeLane shall have no obligation to refund the amounts already paid by you.</li>
+                        <li style="text-align: justify;margin: 12px 0px;">After agreeing to these Terms and Conditions, in case you seek to not avail of the Services, you will forfeit all the amounts already paid by you to HomeLane and also be liable to pay the balance of the Price agreed to be paid to HomeLane, as due compensation for the losses that will be suffered by HomeLane in such an eventuality and not as penalty.</li>
+                        <li style="text-align: justify;margin: 12px 0px;">If there is a change in a HomeLane Policy that you don't agree with, you have the option of getting a full refund of your 10% advance. If you would like to cancel for any other reason, you can do so before site measurement is done or within 48 hours of booking your order, whichever is earlier. We will refund your complete advance amount.</li>
+                    </ol>
+                </li>
+                <li style="text-align: justify;margin: 12px 0px;">
+                    <strong>GOVERNING LAW AND JURISDICTION </strong>
+                    <ol style="padding-left: 20px;"> 
+                        <li style="text-align: justify;margin: 12px 0px;">The terms and conditions contained herein regarding the provision of Services, shall be governed and interpreted in accordance with the laws of India, and any dispute arising therefrom shall be submitted to the exclusive jurisdiction of the courts at Bangalore, India.</li>
+                    </ol>
+                </li>
+            </ol>
+            <p>
+              <b>Annexure 1:  Site Readiness Checklist Ver 10_ 2016</b>
+            </p>
+            <div class="subcontet" style="padding-left: 1.6em;">                
+              <p style="margin:0px">&#x2714;Has your apartment been completed in all major aspects from the builder and handed over to you? If Not, Please ensure that your apartment/home is ready for us to commence our work.</p>
+              <p style="margin:0px">&#x2714; Please confirm that there is NO civil work pending from the Builders Side. Civil Work can include Tile Laying, Painting, Plastering, Core Cutting etc. Homelane Crew will not work at the site if Civil work is being carried out.</p>
+              <p style="margin:0px">&#x2714; Has Core Cutting for Chimney Duct been completed ? If it is not, Please ensure that the Core Cutting is done before Material is dispatched as there is a chance of Dust being Generated.</p>
+              <p style="margin:0px">&#x2714; Please ensure that one coat of paint is done. The final Coat of paint should be done after Interiors has been completed.</p>
+              <p style="margin:0px">&#x2714; If the builder requires a Secuirty Deposit, Please ensure that this paid to the Builder Maintenance Team.</p>
+              <p style="margin:0px">&#x2714; If you are having False Ceiling / Painting / Plumbing done by another vendor or Builder, Please ensure that this is completed and only then HomeLane Crew will arrive at site. It is not possible for HomeLane Team to work in a site where the above works are concurrently being done.</p>
+              <p style="margin:0px">&#x2714; One Set of Keys to the apartment have to be handed over to Homelane Representative prior to execution. We need access between 8.30 AM to 7.00 PM Mon to Saturday. If we do not get clear 8 - 9 hours , We will not be able to complete the project within the Guranteed Time.</p>
+              <p style="margin:0px">&#x2714; If the set of keys are with the builder representative, Please ensure that you have communicated about your Interiors Contract with Homelane and to hand over a set of Keys or provided clear access to the Homelane Team.</p>
+              <p style="margin:0px">&#x2714; If  a Permission Letter / Email is required from you to Homelane and the Builder authorising HomeLane Team to be allowed accessed, Please enusre that this is completed.</p>
+              <p style="margin:0px">&#x2714; Please ensure that the apartment has secure access and that there are no valuables/ appliances etc in any of the rooms. We will not be responible for any damages / loose missing items from the site.</p> 
+              <p style="margin:0px">&#x2714; Clean Power should be available in all the rooms. If Permanent Power is not available, Please request the Building Engineer to provide Temporary Power to each of the Rooms.</p>
+              <p style="margin:0px">&#x2714; Please ensure that we have permission to move our materials through the Service or Passenger Lifts. If there is no lift available, there could be delay in moving materials and any movement of materials by stairs above 2nd floor will attract an additional charge.</p>
+                <p style="margin:0px">&#x2714; Please ensure that we have permission to move our materials through the Service or Passenger Lifts. If there is no lift available, there could be a delay in moving materials and any movement of materials by stairs above 2nd floor will attract the following additional charges:<br/>
+                  - An unloading charge of Rs 5000 shall be charged from 3rd floor or above where the service lift is unavailable and; <br/>
+                                             - Additional Rs 1000 per floor shall be charged for each floor from 9th floor onwards, In case the site is above the 8th floor.
+              </p>
+            </div>
+                <br></br>
+                <br></br>
+            <p>
+              <b>Annexure 2 (A)</b>
+            </p>
+        <div style="overflow-x:auto;" class="mobile_hide">
+          <table style="border-collapse: collapse;">
+            <tr>
+              <th height="50" style="background:#EF4F5A;text-align: center;border: 1px solid black;"><span style="color:white;"><strong>PRODUCTS</strong></span></th>
+              <th height="50" style="background:#F9A020;text-align: center;border: 1px solid black;"><span style="color:white"><strong>WARRANTY</strong></span></th>
+              <th height="50" style="background:#90CACB;text-align: center;border: 1px solid black;"><span style="color:white"><strong>REMARKS</strong></span></th>
+              <th height="50" style="background:#1E837F;text-align: center;border: 1px solid black;"><span style="color:white"><strong>EXCEPTIONS</strong></span></th>
+            </tr>
+            <tr style="background:#D9D9D9">
+              <td align="center" style="padding-left:10px;padding-right:10px;border: 1px solid black;"><span class="first_columns">CABINETS, CARCASS </span></td>
+              <td align="center" style="padding-left:10px;padding-right:10px;border: 1px solid black;"><span class="first_columns" style="color:red">5 Years </span></td>
+              <td style="padding-right:5px;border: 1px solid black;"><ul class="ul_list"><li> Plywood, Particle Board, MDF and all core materials </li><li> Warranty covers against delamination, edge band peeling </li></ul></td>
+              <td style="padding-right:5px;border: 1px solid black;"><ul class="ul_list"><li> Damage to woodwork due to continuous seepage of water/dampness, etc, beyond 3 days </li><li> Damage due to misuse, negligence, normal wear and tear, etc </li></ul> </td>
+            </tr>
+            <tr style="background:#F5F6F8">
+              <td align="center" style="padding-left:10px;padding-right:10px;border: 1px solid black;"><span class="first_columns">SHUTTERS </span></td>
+              <td align="center" style="padding-left:10px;padding-right:10px;border: 1px solid black;"><span class="first_columns" style="color:red">5 Years </span></td>
+              <td style="padding-right:5px;border: 1px solid black;"><ul class="ul_list"><li> Plywood, Particle Board, MDF and all core materials </li><li> Warranty covers against delamination, edge band peeling </li></ul></td>
+              <td style="padding-right:5px;border: 1px solid black;"><ul class="ul_list"><li> Damage to woodwork due to continuous seepage of water/dampness, etc, beyond 3 days </li><li> Damage due to misuse, negligence, normal wear and tear, etc </li><li> Only bends that are more than 3mm wide will be attended to by HomeLane.</li></ul></td>
+            </tr>
+            <tr style="background:#D9D9D9">
+              <td align="center" style="padding-left:10px;padding-right:10px;border: 1px solid black;"><span class="first_columns"> COUNTERTOPS</span></td>
+              <td align="center" style="padding-left:10px;padding-right:10px;border: 1px solid black;"><span class="first_columns"> <strong>No Warranty</strong></span></td>
+              <td style="padding-right:5px;border: 1px solid black;"><ul class="ul_list"><li> Silicone sealant warranty for 1 year</li></ul></td>
+              <td style="padding-right:5px;border: 1px solid black;"><ul class="ul_list"><li> Any leakage due to sealant in 1st year will be attended to by HomeLane </li><li> Granite and quartz are stones which are made of natural materials. They are susceptible to staining </li></ul></td>
+            </tr>
+            <tr style="background:#F5F6F8">
+              <td align="center" style="padding-left:10px;padding-right:10px;border: 1px solid black;"><span class="first_columns">ELECTRICAL APPLIANCES</span></td>
+              <td align="center" style="padding-left:10px;padding-right:10px;border: 1px solid black;"><span class="first_columns"> Manufacturer’s Warranty</span></td>
+              <td style="padding-right:5px;border: 1px solid black;"><ul class="ul_list"><li> Faber gives a 1-year warranty against manufacturing defects</li></ul></td>
+              <td style="padding-right:5px;border: 1px solid black;"><ul class="ul_list"><li> Labour, Cleaning of Chimney will be charged extra </li></ul></td>
+            </tr>
+            <tr style="background:#D9D9D9">
+              <td align="center" style="padding-left:10px;padding-right:10px;border: 1px solid black;"><span class="first_columns"> GAS PIPING, TILING, CIVIL WORK</span></td>
+              <td align="center" style="padding-left:10px;padding-right:10px;border: 1px solid black;"><span class="first_columns"><strong>No Warranty</strong></span></td>
+              <td></td>
+              <td style="padding-right:5px;border: 1px solid black;"><ul class="ul_list"><li> Inspection will be done by customer during handover and issues, if any, will be rectified </li></ul></td>
+            </tr>
+            <tr style="background:#F5F6F8">
+              <td align="center" style="padding-left:10px;padding-right:10px;border: 1px solid black;"><span class="first_columns"> SINKS, TAPS (Any plumbing installation)</span></td>
+              <td align="center" style="padding-left:10px;padding-right:10px;border: 1px solid black;"><span class="first_columns"> Manufacturer’s Warranty</span></td>
+              <td style="padding-right:5px;border: 1px solid black;"><ul class="ul_list"><li> No warranty for installation of tap and drain pipe for leakage after handover</li></ul></td>
+              <td style="padding-right:5px;border: 1px solid black;"><ul class="ul_list"><li> Inspection will be done by customer during handover and issues, if any, will be rectified </li></ul></td>
+            </tr>
+            <tr style="background:#D9D9D9">
+              <td align="center" style="padding-left:10px;padding-right:10px;border: 1px solid black;"><span class="first_columns"> ELECTRICAL SWITCHES, LED LIGHTS</span></td>
+              <td align="center" style="padding-left:10px;padding-right:10px;border: 1px solid black;"><span class="first_columns"> Manufacturer’s Warranty (1 Year)</span></td>
+              <td style="padding-left:5px;padding-right:10px;border: 1px solid black;"><ul class="ul_list"><li> Labour Charges of ₹500 will be charged for Electrical Parts/ Lights replacement</li></ul></td>
+              <td style="padding-right:5px;border: 1px solid black;"><ul class="ul_list"><li> Wiring inspection will be done by customer during handover and issues, if any, will be rectified </li></ul></td>
+            </tr>
+            <tr style="background:#F5F6F8">
+              <td align="center" style="padding-left:10px;padding-right:10px;border: 1px solid black;"><span class="first_columns"> HETTICH HARDWARE, ACCESSORIES</span></td>
+              <td align="center" style="padding-left:10px;padding-right:10px;border: 1px solid black;"><span class="first_columns"> 5-Year warranty against manufacturing defects</span></td>
+              <td></td>
+              <td style="padding-right:5px;border: 1px solid black;"><ul class="ul_list"><li> Rusting of hinges and channels is NOT covered under warranty. Customers are advised to not use household cleaning agents, chemical sprays, etc, on the hinges </li></ul></td>
+            </tr>
+            <tr style="background:#D9D9D9">
+              <td align="center" style="padding-left:10px;padding-right:10px;border: 1px solid black;"><span class="first_columns"> SPITZE, EVERYDAY ACCESSORIES</span></td>
+              <td align="center" style="padding-left:10px;padding-right:10px;border: 1px solid black;"><span class="first_columns"> 5-Year Warranty against manufacturing defects</span></td>
+              <td style="padding-right:5px;border: 1px solid black;"><ul class="ul_list"><li> Warranty covers rusting of SS parts</li></ul></td>
+              <td style="padding-right:5px;border: 1px solid black;"><ul class="ul_list"><li> Does NOT cover damage caused by misuse, normal wear and tear </li></ul></td>
+            </tr>
+            <tr style="background:#F5F6F8">
+              <td align="center" style="padding-left:10px;padding-right:10px;border: 1px solid black;"><span class="first_columns"> MIRRORS, GLASS, OTHER FRAGILE ITEMS</span></td>
+              <td align="center" style="padding-left:10px;padding-right:10px;border: 1px solid black;"><span class="first_columns"> No Warranty</span></td>
+              <td style="border: 1px solid black;"></td>
+              <td style="border: 1px solid black;"></td>
+            </tr>
+          </table>
+        </div>
+        <div class="mobile_show">
+        <hr style="margin: 30px 0px;"/>
+          <div class="table_div_main" style="padding:15px;">
+              <div style="text-align: left;"><span><strong style="color:#EF4F5A;">PRODUCT</strong></span> -
+              <span class="first_columns">CABINETS, CARCASS </span>
+               </div>
+               <div class="sub_sections" style="padding-left:4%;">
+              <div align="center" style="padding-left:10px;padding-right:10px;text-align:left;margin-bottom:10px;"></div>
+              <strong style="color:#F9A020;font-size:14px;">WARRANTY</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> 5 Years </li></ul></div>
+              <strong style="color:#90CACB;font-size:14px;">REMARKS</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> Plywood, Particle Board, MDF and all core materials </li><li> Warranty covers against delamination, edge band peeling </li></ul></div>
+              <strong style="color:#1E837F;font-size:14px;">EXCEPTIONS</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> Damage to woodwork due to continuous seepage of water/dampness, etc, beyond 3 days </li><li> Damage due to misuse, negligence, normal wear and tear, etc </li></ul> </div>
+              </div>
+              <hr style="margin: 30px 0px;"/>
+              
+              <div style="text-align: left;"><span><strong style="color:#EF4F5A;">PRODUCT</strong></span> -
+              <span class="first_columns">SHUTTERS </span>
+               </div>
+               <div class="sub_sections" style="padding-left:4%;">
+              <div align="center" style="padding-left:10px;padding-right:10px;text-align:left;margin-bottom:10px;"></div>
+              <strong style="color:#F9A020;font-size:14px;">WARRANTY</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> 5 Years </li></ul></div>
+              <strong style="color:#90CACB;font-size:14px;">REMARKS</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> Plywood, Particle Board, MDF and all core materials </li><li> Warranty covers against delamination, edge band peeling </li></ul></div>
+              <strong style="color:#1E837F;font-size:14px;">EXCEPTIONS</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> Damage to woodwork due to continuous seepage of water/dampness, etc, beyond 3 days </li><li> Damage due to misuse, negligence, normal wear and tear, etc </li><li> Only bends that are more than 3mm wide will be attended to by HomeLane.</li></ul> </div>
+              </div>
+              <hr style="margin: 30px 0px;"/>
+              
+              <div style="text-align: left;"><span><strong style="color:#EF4F5A;">PRODUCT</strong></span> -
+              <span class="first_columns">COUNTERTOPS</span>
+               </div>
+               <div class="sub_sections" style="padding-left:4%;">
+              <div align="center" style="padding-left:10px;padding-right:10px;text-align:left;margin-bottom:10px;"></div>
+              <strong style="color:#F9A020;font-size:14px;">WARRANTY</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> No Warranty </li></ul></div>
+              <strong style="color:#90CACB;font-size:14px;">REMARKS</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> Silicone sealant warranty for 1 year </li></ul></div>
+              <strong style="color:#1E837F;font-size:14px;">EXCEPTIONS</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> Any leakage due to sealant in 1st year will be attended to by HomeLane </li><li> Granite and quartz are stones which are made of natural materials. They are susceptible to staining </li></ul> </div>
+              </div>
+              <hr style="margin: 30px 0px;"/>
+              
+              <div style="text-align: left;"><span><strong style="color:#EF4F5A;">PRODUCT</strong></span> -
+              <span class="first_columns">ELECTRICAL APPLIANCES</span>
+               </div>
+               <div class="sub_sections" style="padding-left:4%;">
+              <div align="center" style="padding-left:10px;padding-right:10px;text-align:left;margin-bottom:10px;"></div>
+              <strong style="color:#F9A020;font-size:14px;">WARRANTY</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> Manufacturer’s Warranty </li></ul></div>
+              <strong style="color:#90CACB;font-size:14px;">REMARKS</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> Faber gives a 1-year warranty against manufacturing defects</li><li>Faber gives a 1-year warranty against manufacturing defects </li></ul></div>
+              <strong style="color:#1E837F;font-size:14px;">EXCEPTIONS</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li>Labour, Cleaning of Chimney will be charged extra</li></ul> </div>
+              </div>
+              <hr style="margin: 30px 0px;"/>
+              
+              <div style="text-align: left;"><span><strong style="color:#EF4F5A;">PRODUCT</strong></span> -
+              <span class="first_columns">GAS PIPING, TILING, CIVIL WORK</span>
+               </div>
+               <div class="sub_sections" style="padding-left:4%;">
+              <div align="center" style="padding-left:10px;padding-right:10px;text-align:left;margin-bottom:10px;"></div>
+              <strong style="color:#F9A020;font-size:14px;">WARRANTY</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> No Warranty </li></ul></div>
+              <strong style="color:#90CACB;font-size:14px;">REMARKS</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"></div>
+              <strong style="color:#1E837F;font-size:14px;">EXCEPTIONS</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li>Inspection will be done by customer during handover and issues, if any, will be rectified </li></ul> </div>
+              </div>
+              <hr style="margin: 30px 0px;"/>
+              
+              <div style="text-align: left;"><span><strong style="color:#EF4F5A;">PRODUCT</strong></span> -
+              <span class="first_columns">SINKS, TAPS (Any plumbing installation)</span>
+               </div>
+               <div class="sub_sections" style="padding-left:4%;">
+              <div align="center" style="padding-left:10px;padding-right:10px;text-align:left;margin-bottom:10px;"></div>
+              <strong style="color:#F9A020;font-size:14px;">WARRANTY</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> Manufacturer’s Warranty </li></ul></div>
+              <strong style="color:#90CACB;font-size:14px;">REMARKS</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> No warranty for installation of tap and drain pipe for leakage after handover</li></ul></div>
+              <strong style="color:#1E837F;font-size:14px;">EXCEPTIONS</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> Inspection will be done by customer during handover and issues, if any, will be rectified </li></ul> </div>
+              </div>
+              <hr style="margin: 30px 0px;"/>
+              
+              <div style="text-align: left;"><span><strong style="color:#EF4F5A;">PRODUCT</strong></span> -
+              <span class="first_columns">ELECTRICAL SWITCHES, LED LIGHTS</span>
+               </div>
+               <div class="sub_sections" style="padding-left:4%;">
+              <div align="center" style="padding-left:10px;padding-right:10px;text-align:left;margin-bottom:10px;"></div>
+              <strong style="color:#F9A020;font-size:14px;">WARRANTY</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> Manufacturer’s Warranty (1 Year) </li></ul></div>
+              <strong style="color:#90CACB;font-size:14px;">REMARKS</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> Labour Charges of ₹500 will be charged for Electrical Parts/ Lights replacement</li></ul></div>
+              <strong style="color:#1E837F;font-size:14px;">EXCEPTIONS</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> Wiring inspection will be done by customer during handover and issues, if any, will be rectified</li></ul> </div>
+              </div>
+              <hr style="margin: 30px 0px;"/>
+              
+              <div style="text-align: left;"><span><strong style="color:#EF4F5A;">PRODUCT</strong></span> -
+              <span class="first_columns">HETTICH HARDWARE, ACCESSORIES</span>
+               </div>
+               <div class="sub_sections" style="padding-left:4%;">
+              <div align="center" style="padding-left:10px;padding-right:10px;text-align:left;margin-bottom:10px;"></div>
+              <strong style="color:#F9A020;font-size:14px;">WARRANTY</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> 5-Year warranty against manufacturing defects </li></ul></div>
+              <strong style="color:#90CACB;font-size:14px;">REMARKS</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"></div>
+              <strong style="color:#1E837F;font-size:14px;">EXCEPTIONS</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> Rusting of hinges and channels is NOT covered under warranty. Customers are advised to not use household cleaning agents, chemical sprays, etc, on the hinges</li></ul> </div>
+              </div>
+              <hr style="margin: 30px 0px;"/>
+              
+              <div style="text-align: left;"><span><strong style="color:#EF4F5A;">PRODUCT</strong></span> -
+              <span class="first_columns">SPITZE, EVERYDAY ACCESSORIES</span>
+               </div>
+               <div class="sub_sections" style="padding-left:4%;">
+              <div align="center" style="padding-left:10px;padding-right:10px;text-align:left;margin-bottom:10px;"></div>
+              <strong style="color:#F9A020;font-size:14px;">WARRANTY</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> 5-Year Warranty against manufacturing defects</li></ul></div>
+              <strong style="color:#90CACB;font-size:14px;">REMARKS</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> Warranty covers rusting of SS parts</li></ul></div>
+              <strong style="color:#1E837F;font-size:14px;">EXCEPTIONS</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> Does NOT cover damage caused by misuse, normal wear and tear</li></ul> </div>
+              </div>
+              <hr style="margin: 30px 0px;"/>
+              
+              <div style="text-align: left;"><span><strong style="color:#EF4F5A;">PRODUCT</strong></span> -
+              <span class="first_columns">MIRRORS, GLASS, OTHER FRAGILE ITEMS </span>
+               </div>
+               <div class="sub_sections" style="padding-left:4%;">
+              <div align="center" style="padding-left:10px;padding-right:10px;text-align:left;margin-bottom:10px;"></div>
+              <strong style="color:#F9A020;font-size:14px;">WARRANTY</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"><ul class="ul_list"><li> No Warranty</li></ul></div>
+              <strong style="color:#90CACB;font-size:14px;">REMARKS</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"></div>
+              <strong style="color:#1E837F;font-size:14px;">EXCEPTIONS</strong>
+              <div style="padding-right:5px;margin-bottom:10px;"></div>
+              </div>
+              <hr style="margin: 30px 0px;"/>
+           </div>
+        </div>
+        <p>
+          <b>Annexure 2 (B)</b>
+        </p>
+        <div style="overflow-x:auto;" class="bend_table mobile_hide">
+          <table style="border-collapse: collapse;">
+            <tr style="background:#F5F6F8;">
+              <td colspan="2" height="100" style="text-align: center;border: 1px solid black;padding: 15px;"><span style="color:#F1592A;font-size: 34px;"><strong>Things you should know about Shutter Bends</strong></span><br></br><span><p align="justify" style="padding-right: 22px;padding-left: 22px;">Bend is a natural process which occurs due to weather conditions, moisture levels in the atmosphere and usage. As an industry practice, HomeLane permits a tolerance of 3mm for shutter bend. Any bend that is more than 3mm will be corrected by either adjustment of hinges, using magnetic catchers, dismantling of shutters and/or fixing of straighteners at the back of the shutter (at customer location or taking it back to factory).</p></span></td>
+            </tr>
+            <tr style="background:#F04C57">
+              <td colspan="2" style="width:100%;text-align: center;border: 1px solid black;padding: 15px;"><span style="color:white;">The following types of bends can be observed on the shutters:</span></td>
+            </tr>
+            <tr>
+              <td style="text-align: center;border-left: 1px solid black;padding: 15px;"><img src="/resource/ShutterBends1" alt="" height="300" width="150" style="margin-left: 108px;float:left"></img><Strong style="float: left;margin-top: 132px;">Type 1- Bend in the Center</strong></td>
+              <td style="text-align: center;border-right: 1px solid black;padding: 15px;"><img src="/resource/ShutterBends2" alt="" height="300" width="150" style="margin-left: 58px;float:left"></img><Strong style="float: left;margin-top: 58px;">Type 2 - Bend at Top End</strong></td>
+            </tr>
+            <tr>
+              <td style="text-align: center;border-left: 1px solid black;padding: 15px;"><img src="/resource/ShutterBends3" alt="" height="300" width="150" style="margin-left: 108px;float:left"></img><Strong style="float: left;margin-top: 132px;">Type 3 - Bend at Both Ends</strong></td>
+              <td style="text-align: center;border-right: 1px solid black;padding: 15px;"><img src="/resource/ShutterBends4" alt="" height="300" width="150" style="margin-left: 58px;float:left"></img><Strong style="float: left;margin-top: 212px;">Type 4 - Bend at Bottom End</strong></td>
+            </tr>
+            <tr style="background:#F9A020">
+              <td colspan="2" style="text-align: center;border: 1px solid black;padding: 15px;"><span style="color:white;">Correction will be done as per following scenarios:</span></td>
+            </tr>
+            <tr style="background:#F5F6F8">
+              <td colspan="2" style="text-align: left;border: 1px solid black;padding: 15px;"><p align='justify' style="padding-left: 22px;padding-right: 22px;LINE-HEIGHT: 24px;">a) If the Bend &lt;=3mm,  no action needed there will not be any functional issue in the product <br></br>b) If the Bend >3mm, then following steps will be taken to correct the same <br><strong>Step 1:</strong> Adjust hinges to see if bend can be brought to within the tolerance limit of 3mm.If deemed necessary, fix magnetic catchers to tighten the ends.</br> <strong>Step 2:</strong> If STEP 1 doesn’t bring the bend within 3mm, then remove shutter and bring it to the factory to correct the bend.<br><strong>Step 3:</strong> If necessary, apply 2 straighteners at the backside of the shutter (only for PB, PLPB, MDF boards. Straighteners cannot be applied on Block Boards).</br></p></td>
+            </tr>
+          </table>
+        </div>
+        <div class="bend_table mobile_show" style="width:100%;">
+              <div style="text-align: center;padding: 15px 0;"><span style="color:#F1592A;font-size: 34px;"><strong>Things you should know about Shutter Bends</strong></span><br></br><span><p align="justify">Bend is a natural process which occurs due to weather conditions, moisture levels in the atmosphere and usage. As an industry practice, HomeLane permits a tolerance of 3mm for shutter bend. Any bend that is more than 3mm will be corrected by either adjustment of hinges, using magnetic catchers, dismantling of shutters and/or fixing of straighteners at the back of the shutter (at customer location or taking it back to factory).</p></span></div>
+            <div style="background:#F04C57;clear:both;">
+              <div style="width:100%;padding: 15px; 0;text-align:center;width:94%;"><span style="color:white;">The following types of bends can be observed on the shutters:</span>
+              </div>
+            </div>
+
+            <div>
+              <div style="padding: 15px;padding-left:0%;position:relative;"><img style="position: relative;left: 15px;width:140px;height:auto;" src="/resource/ShutterBends1" alt="" height="300" width="150"></img><Strong style="position: absolute;top: 42%;">Type 1- Bend in the Center</strong>
+              </div>
+              <div style="padding: 15px;padding-left:0%;position:relative;"><img style="width:140px;height:auto;" src="/resource/ShutterBends2" alt="" height="300" width="150"></img><strong style="position: absolute;top: 21%">Type 2 - Bend at Top End</strong>
+              </div>
+              <div style="padding: 15px;padding-left:0%;position:relative;"><img style="position: relative;left: 15px;width:140px;height:auto;" src="/resource/ShutterBends3" alt="" height="300" width="150"></img><strong style="position: absolute;top: 37%;">Type 3 - Bend at Both Ends</strong>
+              </div>
+              <div style="padding: 15px;padding-left:0%;position:relative;"><img style="width:135px;height:auto;" src="/resource/ShutterBends4" alt="" height="300" width="150"></img><strong style="position: absolute;top: 65%;">Type 4 - Bend at Bottom End</strong>
+              </div>
+
+            <div style="background:#F9A020">
+              <div colspan="2" style="text-align: center;border: 1px solid black;padding: 15px;"><span style="color:white;">Correction will be done as per following scenarios:</span>
+            </div>
+            </div>
+
+            <div style="background:#F5F6F8">
+              <div colspan="2" style="text-align: left;border: 1px solid black;padding: 15px;"><p align='justify' style="padding-left: 22px;padding-right: 22px;LINE-HEIGHT: 24px;">a) If the Bend &lt;=3mm,  no action needed there will not be any functional issue in the product <br></br>b) If the Bend >3mm, then following steps will be taken to correct the same <br><strong>Step 1:</strong> Adjust hinges to see if bend can be brought to within the tolerance limit of 3mm.If deemed necessary, fix magnetic catchers to tighten the ends.</br> <strong>Step 2:</strong> If STEP 1 doesn’t bring the bend within 3mm, then remove shutter and bring it to the factory to correct the bend.<br><strong>Step 3:</strong> If necessary, apply 2 straighteners at the backside of the shutter (only for PB, PLPB, MDF boards. Straighteners cannot be applied on Block Boards).</br></p></div>
+            </div>
+        </div>
+        </div>
+        <p>
+        <b>"This document is an electronic record in terms of the Information Technology Act, 2000 ("IT Act") and rules thereunder, and is published in accordance with the provisions of Rule 3 (1) of the Information Technology (Intermediaries Guidelines) Rules 2011, which mandates for publishing of rules and regulations, privacy policy and terms of use for access or usage of the Website. This electronic record is generated by a computer system and does not require any physical or digital signatures.</b>
+        </p>
+        <p>
+        <b>These Terms and Conditions, disclaimers, rules of
+ Homevista Décor and Furnishings Private Limited as may be posted on this Website, having domain name www.homelane.com, shall govern the terms​ ​of the contract between you and Homevista Decor and Furnishings Private Limited.​ ​By impliedly or expressly accepting these Terms, privacy policy, you also accept and agree to be bound by rules, policies, and Terms of Homevista Décor and Furnishings Private Limited.​ ​"</b>
+
+        </p>
+                <div style="page-break-before:always;"></div>
+        </div>
+
+    </div>
+       
+        
+ <apex:form id="formId">
+ 
+ <hr></hr> 
+    
+    <div class="" style="text-align: center;">
+  <apex:outputPanel rendered="{!NOT(hideButtonsActions)}">
+  <apex:inputCheckbox styleClass="required input_last" value="{!customerAggrement}" id="checkboxId" onclick="changeButton();"/>
+  <b> <apex:outputText style="FONT-SIZE: 17px; margin-left: 5px;background-color: yellow;" escape="true" value=" I agree to the terms and conditions. "></apex:outputText>
+  <!--span id="checkerror" class="err_tandc" style="background-color: #F5F5F5;
+    color: #F90000;"></span-->
+   </b><br/>
+   </apex:outputPanel>
+  </div>
+   
+    <!--b> <apex:outputText style="FONT-SIZE: 24px;text-align:center;display: block;" escape="true" value="{!$Label.Works_contract_Footer}"></apex:outputText> </b> <br/>
+     <apex:outputText style="FONT-SIZE: 16px;text-align:center;display: block;" escape="true" value="{!$Label.Works_contract_Footer1}"></apex:outputText> <br/><br/>
+
+  
+ <!--apex:outputpanel >
+  <b> <apex:outputText value=" How likely are you to recommend your designer to a friend or colleague? "/> </b><br/><br/>
+   <apex:selectradio value="{!customerInput}">
+       <apex:outputText style="FONT-SIZE: 14px;padding-top: 13px;position: absolute" escape="true" styleClass="mobileDesplay" value="{!$Label.Not_Likely}"></apex:outputText>
+          <apex:selectOptions id="fieldSet" value="{!customernumber}">
+       <apex:outputText styleclass="extremcls mobileDesplay" escape="true" value="{!$Label.Extremely_Likely}"></apex:outputText></apex:selectOptions>
+   </apex:selectradio> 
+ </apex:outputPanel> <br/>
+   
+   <apex:outputpanel >
+        <b> <apex:outputText value=" Why did you choose the above? "/> </b> <br/><br/>
+       <apex:inputTextarea value="{!customerpicklistInput}" rows="5"/>
+       
+       <!--<apex:selectList value="{!customerpicklistInput}" multiselect="false" size="1" >
+             <apex:selectOptions id="fieldSet1" value="{!customerpicklistresponse}"/>
+        </apex:selectList> >
+
+   </apex:outputPanel--> <br/><br/>
+  
+  <apex:pageBlock > 
+    <apex:pageMessages /> 
+  </apex:pageBlock>
+   <apex:outputPanel rendered="{!NOT(hideButtonsActions)}">
+   <b> <center><apex:commandButton style="padding: 5px 80px;font-size: 25px;display: inline-block;border-radius: 25px;" action="{!AcceptedEdited}" value="Next" styleClass="buttongray next-works" id="theButton" rerender="errorPopup" onclick="submitClass(event);"/></center> </b>
+   </apex:outputPanel>
+   <!--<b> <apex:commandButton style="margin-left: 200x;" action="{!Rejected}" value="I Reject" id="
+   1"/> </b>-->
+
+ </apex:form>
+ 
+    </div>
+       </apex:outputPanel>
+   <apex:outputPanel rendered="{!contractSigned}">
+   <apex:Form >
+   <div class="workcontract" >
+    <div class="header" style="text-align: center;">
+        <img style="max-width: 100%;" src="https://s3-ap-southeast-1.amazonaws.com/hlmicrosite/homelaneLogo.png" alt="HomeLane Logo" />
+    </div>
+    <br/>
+    <div class="headerMessage" style="text-align: center;">
+        <i><h3>You have already signed the work contract. Please click on the button to rate our designer</h3></i>
+    </div>
+    <br/>
+       <apex:outputPanel rendered="{!NOT(hideButtonsActions)}">
+   <b> <center><apex:commandButton style="padding: 5px 80px;font-size: 25px;display: inline-block;border-radius: 25px;" action="{!reDirectToNPS}" value="Next"  id="theButton" rerender="errorPopup" onclick="gtag('event', 'WCRatedesigner', {
+  'event_category': 'Work contract Flow','event_label': '{!strCustomerEmail }'});" /></center> </b>
+    </apex:outputPanel>
+   </div>
+   </apex:Form>
+   </apex:outputPanel>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   </body>
+
+   <script>
+     function changeButton(){
+       //alert('called');
+       var checkboxDOC = document.getElementById("pageId:formId:checkboxId");
+       var buttonDoc = document.getElementById("pageId:formId:theButton");
+       if(checkboxDOC.checked){
+          buttonDoc.classList.add('buttonBlue');
+          buttonDoc.classList.remove('buttongray');
+       }else{
+         buttonDoc.classList.add('buttongray');
+          buttonDoc.classList.remove('buttonBlue');
+       }
+       gtag('event', 'WCAcceptTC', {
+          'event_category': 'Work contract Flow',
+          'event_label': '{!strCustomerEmail }'});
+     }
+     function submitClass(e){
+         var buttonDoc = document.getElementById("pageId:formId:theButton");
+         buttonDoc.setAttribute('disabled', 'disabled');
+         buttonDoc.classList.add('buttongray');
+          buttonDoc.classList.remove('buttonBlue');
+          gtag('event', 'WCVFPage1Next', {
+                  'event_category': 'Work contract Flow',
+                  'event_label': '{!strCustomerEmail }'
+                  });
+     }    
+     document.getElementById('pageId:formId:checkboxId').checked = false;
+     
+     /*function showADialog(e){
+        console.log('inside showADialog');
+            var confirmationMessage = 'Your message here';
+            console.log('!!!!! '+confirmationMessage);
+            //some of the older browsers require you to set the return value of the event
+            (e || window.event).returnValue = confirmationMessage;     // Gecko and Trident
+            //return confirmationMessage;                                // Gecko and WebKit
+            return (e || window.event).returnValue; 
+        }
+    window.addEventListener("beforeunload", function (e) {
+    console.log('inside add event listtener');
+        // to do something (Remember, redirects or alerts are blocked here by most browsers):
+        //doSomething();    
+        // to show a dialog (uncomment to test):
+        return showADialog(e);  
+    });*/
+          var el = document.querySelector('.next-works');
+          if (el){
+  el.addEventListener("click", function(e){
+    window.btn_clicked = true;
+});
+}
+window.onbeforeunload = function(){console.log('on unload');
+    if(!window.btn_clicked){
+        return 'Sure?';
+    }
+};
+</script>
+   
+</apex:page>

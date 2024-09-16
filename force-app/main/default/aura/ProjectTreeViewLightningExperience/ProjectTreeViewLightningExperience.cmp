@@ -1,0 +1,669 @@
+<aura:component controller="GetprojectdetailController" implements="flexipage:availableForAllPageTypes" access="global" >
+    <ltng:require styles="/resource/SLDS0203/assets/styles/salesforce-lightning-design-system.css"/>
+    <aura:dependency resource="force:navigateToSObject" type="EVENT"/>
+    
+    <ltng:require scripts="/resource/jquery" afterScriptsLoaded="{!c.clickjs}"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.loadstatus}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.loadstatustsk}"/>
+    
+    <aura:attribute name="statusval" type="String" />
+    <aura:attribute name="milestatusval" type="String" />
+    <aura:attribute name="submilestatusval" type="String" />
+    <aura:attribute name="today" type="DateTime" />
+    <aura:attribute name="statusvaltsk" type="String" />
+    <aura:attribute name="taskstatusval" type="String" />
+    
+    
+    
+    <aura:attribute name="isEdit" type="Boolean" Default="false" />
+    
+    
+    <aura:attribute name="productid" type="String" />
+    
+    
+    <aura:attribute name="editallproductid" type="String" />
+    
+    
+    
+    
+    
+    
+    <aura:attribute name="projectrec" type="Milestone__c[]" />
+    <aura:attribute name="submilestone" type="Milestone__c[]" />
+    <aura:attribute name="tasks" type="Task__c[]" />
+    <aura:attribute name="subtasks" type="Task__c[]" />
+    <aura:attribute name="parentid" type="String" />
+    <aura:attribute name="submileparentid" type="String" />
+    <aura:attribute name="count" type="Integer" />
+    
+    <aura:attribute name="editrecord" type="Milestone__c[]" />
+    <aura:attribute name="edittskrecord" type="Task__c[]" />
+    
+    <aura:attribute name="truthy" type="Boolean" />
+    
+    <aura:attribute name="editsubmilerecord" type="Milestone__c[]" />
+    
+    <aura:attribute name="editrecordObj" default="{ 'sobjectType': 
+                                                  'Milestone__c',
+                                                  'Title__c': '',
+                                                  'Id':'' ,
+                                                  'Lead_Time__c':'',
+                                                  'Status__c':'',
+                                                  'Actual_End_Date__c':'',
+                                                  'Actual_Start_Date__c':'',
+                                                  'Expected_End_Date__c':'',
+                                                  'Expected_Start_Date__c':'',
+                                                  'Completion__c':'',
+                                                  'Comments__c':'',
+                                                  'Resource_Name__c':''
+                                                  }"
+                    type="Milestone__c" />
+    
+    <aura:attribute name="editsubmilerecordObj" default="{ 'sobjectType': 
+                                                         'Milestone__c',
+                                                         'Title__c': '',
+                                                         'Id':'' ,
+                                                         'Lead_Time__c':'',
+                                                         'Status__c':'',
+                                                         'Actual_End_Date__c':'',
+                                                         'Actual_Start_Date__c':'',
+                                                         'Expected_End_Date__c':'',
+                                                         'Expected_Start_Date__c':'',
+                                                         'Completion__c':'',
+                                                         'Comments__c':'',
+                                                         'Resource_Name__c':''
+                                                         }"
+                    type="Milestone__c" />
+    
+    <aura:attribute name="tskeditrecordObj" default="{ 'sobjectType': 
+                                                     'Task__c',
+                                                     'Title__c': '',
+                                                     'Id':'' ,
+                                                     'Lead_Time__c':'',
+                                                     'Status__c':'',
+                                                     'Actual_End_Date__c':'',
+                                                     'Actual_Start_Date__c':'',
+                                                     'Expected_End_Date__c':'',
+                                                     'Expected_Start_Date__c':'',
+                                                     'Completion__c':'',
+                                                     'Comments__c':'',
+                                                     'Resource_Name__c':''
+                                                     }"
+                    type="Task__c" />
+    
+    <aura:if isTrue="{!!v.isEdit}">
+        <div aura:id ="maincomponent" >
+            <article class="slds-card">
+                <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media--center slds-has-flexi-truncate">
+                        <div class="slds-media__body slds-truncate">
+                            <h2>
+                                <a href="javascript:void(0);" class="slds-text-link--reset">
+                                    <span class="slds-text-heading--small">
+                                        <button class="slds-button slds-button--neutral"  onclick="{!c.editall}">Edit All</button>
+                                    </span>
+                                </a>
+                            </h2>
+                        </div> 
+                    </header>            
+                </div>
+            </article>
+            
+            <table   class="slds-table slds-table--bordered slds-tree slds-table--tree" role="treegrid" aria-owns="tree0-node0 tree0-node1 tree0-node2 tree0-node3" aria-readonly="true">
+                
+                <thead>
+                    <tr class="slds-text-heading--label">
+                        <th class="slds-cell-buffer--left" scope="col">
+                            <div class="slds-grid slds-grid--vertical-align-center">
+                                
+                                <div class="slds-truncate" title="Name">Name</div>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Lead Time">Lead Time</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Expected Start Date">Expected Start Date</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Expected End Date">Expected End Date</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Actual Start Date">Actual Start Date</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Actual End Date">Actual End Date</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Status">Status</div>
+                        </th>
+                        <th class="slds-cell-shrink" scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--Milestone -->
+                    <aura:iteration items="{!v.projectrec}" var="proj" indexVar="ind">
+                        <tr class="slds-hint-parent"   id="{!proj.Id+ '-' +ind}" role="row" aria-level="1"  aria-expanded="true">
+                            <th data-label="Account Name" scope="row" class="slds-tree__item">
+                                
+                                <aura:if isTrue="{!proj.Number_Of_Sub_MileStone_Records__c != 0}">
+                                    <button title="Click To Expand"   onclick="{!c.getsubmilestone}" class="slds-button btn" aria-controls="{!proj.Id+ '-' +ind}" >
+                                        <img id='{!proj.Id}' src="/resource/1473756478000/Downloadclick" alt="downclick"/>
+                                    </button>
+                                </aura:if>
+                                <div class="slds-truncate" title="Rewis Inc">{!proj.Title__c}</div>
+                            </th>
+                            <td data-label="Employees">
+                                <div class="slds-truncate" title="3,100">{!proj.Lead_Time__c}</div>
+                            </td>
+                            <td data-label="Phone Number">
+                                <ui:inputDate aura:id="dateField" format="MM/DD/YY" class="datepickr" disabled="true" value="{!proj.Actual_Start_Date__c}" displayDatePicker="false"/>
+                            </td>
+                            <td data-label="Account Owner">
+                                <ui:inputDate aura:id="dateField" format="MM/DD/YY" class="datepickr" disabled="true" value="{!proj.Actual_End_Date__c}" displayDatePicker="false"/>
+                            </td>
+                            
+                            <td data-label="Phone Number">
+                                <ui:inputDate format="MM/DD/YY" aura:id="dateField" class="datepickr" disabled="false" value="{!proj.Expected_Start_Date__c}" />
+                            </td>
+                            <td data-label="Account Owner">
+                                <ui:inputDate aura:id="dateField" format="MM/DD/YY" class="datepickr" disabled="true" value="{!proj.Expected_End_Date__c}" displayDatePicker="false"/>
+                            </td>
+                            
+                            <td data-label="Billing City">
+                                <div class="slds-truncate">{!proj.Status__c}</div>
+                            </td>
+                            <td class="slds-cell-shrink">
+                                <button onclick="{!c.editRecord}" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small">
+                                    <img id='{!proj.Id}' src="/resource/1473769969000/editbutton" alt="edit"/>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                        <!--submilestone -->
+                        <aura:iteration items="{!v.submilestone}" var="submile" indexVar="inde">
+                            
+                            
+                            
+                            
+                            <tr class="errorcorrect">error</tr>
+                            
+                            <aura:if aura:id="subif"  isTrue="{! proj.Id == submile.Milestone__c }">
+                                <tr class="slds-hint-parent"  id="{!proj.Id+ '-' +ind+ '-' +inde}"  role="row" aria-level="2" aria-expanded="true">
+                                    <th data-label="Account Name" scope="row" class="slds-tree__item">
+                                        <aura:if isTrue="{!submile.Total_No_Of_Tasks_Under_Sub_Milestone__c != 0}">
+                                            <button title="Click To Expand" onclick="{!c.gettasks}" class="btn slds-button slds-button--icon-bare slds-m-right--x-small" aria-controls="tree0-node2">
+                                                <img id='{!submile.Id}' src="/resource/1473769764000/rightarrow" alt="downclick"/>
+                                            </button>
+                                        </aura:if>
+                                        <div class="slds-truncate" title="Acme Corporation (Oakland)">{!submile.Title__c}</div>
+                                    </th>
+                                    <td data-label="Employees">
+                                        <div class="slds-truncate" title="745">{!submile.Lead_Time__c}</div>
+                                    </td>
+                                    <td data-label="Phone Number">
+                                        
+                                        
+                                        <ui:inputDate aura:id="dateField" format="MM/DD/YY" class="datepickr" disabled="true" value="{!submile.Actual_Start_Date__c}" displayDatePicker="false"/>
+                                    </td>
+                                    <td data-label="Account Owner">
+                                        <ui:inputDate aura:id="dateField" format="MM/DD/YY" class="datepickr" disabled="true" value="{!submile.Actual_End_Date__c}" displayDatePicker="false"/>
+                                    </td>
+                                    
+                                    
+                                    
+                                    <td data-label="Phone Number">
+                                        
+                                        <ui:inputDate aura:id="dateField" format="MM/DD/YY" class="datepickr" disabled="true" value="{!submile.Expected_Start_Date__c}" displayDatePicker="false"/>
+                                    </td>
+                                    <td data-label="Account Owner">
+                                        <ui:inputDate aura:id="dateField" format="MM/DD/YY" class="datepickr" disabled="true" value="{!submile.Expected_End_Date__c}" displayDatePicker="false"/>
+                                    </td>
+                                    
+                                    
+                                    <td data-label="Billing City">
+                                        <div class="slds-truncate" title="New York, NY">{!submile.Status__c}</div>
+                                    </td>
+                                    <td class="slds-cell-shrink">
+                                        <button onclick="{!c.editRecordsubmile}" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small">
+                                            <img id='{!submile.Id}' src="/resource/1473769969000/editbutton" alt="edit"/>
+                                        </button>
+                                    </td>
+                                </tr>
+                                
+                                
+                            </aura:if> 
+                            
+                            
+                            
+                            <!--task -->
+                            <aura:iteration items="{!v.tasks}" var="tsks" indexVar="index">
+                                <tr class="errorcorrect">error</tr>  
+                                <aura:if isTrue="{! proj.Id == submile.Milestone__c }"> 
+                                    <aura:if isTrue="{! submile.Id == tsks.Milestone__c }">
+                                        <tr class="slds-hint-parent" id="{!proj.Id+ '-' +ind+ '-' +inde+ '-' +index}"  role="row" aria-level="3" aria-expanded="true">
+                                            <th data-label="Account Name"  scope="row" class="slds-tree__item">
+                                                <aura:if isTrue="{!tsks.Total_No_Of_Task_Records__c != 0}">
+                                                    <button title="Click To Expand" class="slds-button slds-button--icon-bare slds-m-right--x-small" aria-controls="tree0-node3" >
+                                                        <img id='{!tsks.Id}' src="/resource/1473756478000/Downloadclick" alt="downclick"/>
+                                                    </button>
+                                                </aura:if>
+                                                <div class="slds-truncate" title="Acme Corporation (Oakland)">{!tsks.Title__c}</div>
+                                            </th>
+                                            <td data-label="Employees">
+                                                <div class="slds-truncate" title="745">{!tsks.Lead_Time__c}</div>
+                                            </td>
+                                            <td data-label="Phone Number">
+                                                <ui:inputDate aura:id="dateField" format="MM/DD/YY" class="datepickr" disabled="true" value="{!tsks.Actual_Start_Date__c}" displayDatePicker="false"/>
+                                            </td>
+                                            <td data-label="Account Owner">
+                                                <ui:inputDate aura:id="dateField" format="MM/DD/YY" class="datepickr" disabled="true" value="{!tsks.Actual_End_Date__c}" displayDatePicker="false"/>
+                                            </td>
+                                            
+                                            
+                                            <td data-label="Phone Number">
+                                                <ui:inputDate aura:id="dateField" format="MM/DD/YY" class="datepickr" disabled="true" value="{!tsks.Expected_Start_Date__c}" displayDatePicker="false"/>
+                                            </td>
+                                            <td data-label="Account Owner">
+                                                <ui:inputDate aura:id="dateField" format="MM/DD/YY" class="datepickr" disabled="true" value="{!tsks.Expected_End_Date__c}" displayDatePicker="false"/>
+                                            </td>
+                                            
+                                            
+                                            
+                                            
+                                            <td data-label="Billing City">
+                                                <div class="slds-truncate" title="New York, NY">{!tsks.Status__c}</div>
+                                            </td>
+                                            <td class="slds-cell-shrink">
+                                                <button onclick="{!c.edittaskseRec}" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small">
+                                                    <img id='{!tsks.Id}' src="/resource/1473769969000/editbutton" alt="edit"/>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </aura:if>
+                                </aura:if> 
+                                <!--Subtasks -->
+                                <aura:iteration items="{!v.subtasks}" var="subtsks" indexVar="index"> 
+                                    <tr class="errorcorrect">error</tr>  
+                                    <aura:if isTrue="{! proj.Id == submile.Milestone__c }"> 
+                                        <aura:if isTrue="{! submile.Id == tsks.Milestone__c }">
+                                            <aura:if isTrue="{! tsks.Id == subtsks.Task__c }">
+                                                <tr class="slds-hint-parent" id="{!proj.Id+ '-' +index+ '-' +index+ '-' +index+ '-' +index}"  role="row" aria-level="4">
+                                                    <th data-label="Account Name" scope="row" class="slds-tree__item">
+                                                        <div class="slds-truncate" title="Acme Corporation (Oakland)">{!subtsks.Title__c}</div>
+                                                    </th>
+                                                    <td data-label="Employees">
+                                                        <div class="slds-truncate" title="745">{!subtsks.Lead_Time__c}</div>
+                                                    </td>
+                                                    <td data-label="Phone Number">
+                                                        <ui:inputDate aura:id="dateField" format="MM/DD/YY" class="datepickr" disabled="true" value="{!subtsks.Actual_Start_Date__c}" displayDatePicker="false"/>
+                                                    </td>
+                                                    <td data-label="Account Owner">
+                                                        <ui:inputDate aura:id="dateField" format="MM/DD/YY" class="datepickr" disabled="true" value="{!subtsks.Actual_End_Date__c}" displayDatePicker="false"/>
+                                                    </td>
+                                                    
+                                                    
+                                                    
+                                                    <td data-label="Phone Number">
+                                                        <ui:inputDate aura:id="dateField" format="MM/DD/YY" class="datepickr" disabled="true" value="{!subtsks.Expected_Start_Date__c}" displayDatePicker="false"/>
+                                                    </td>
+                                                    <td data-label="Account Owner">
+                                                        <ui:inputDate aura:id="dateField" format="MM/DD/YY" class="datepickr" disabled="true" value="{!subtsks.Expected_End_Date__c}" displayDatePicker="false"/>
+                                                    </td>
+                                                    
+                                                    
+                                                    
+                                                    <td data-label="Billing City">
+                                                        <div class="slds-truncate" title="New York, NY">{!subtsks.Status__c}</div>
+                                                    </td>
+                                                    <td class="slds-cell-shrink">
+                                                        <button onclick="{!c.editsubtaskrec}" class="slds-button slds-button--icon-border-filled slds-button--icon-x-small">
+                                                            <img id='{!subtsks.Id}' src="/resource/1473769969000/editbutton" alt="edit"/>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </aura:if>
+                                        </aura:if>
+                                    </aura:if>
+                                </aura:iteration>     
+                                <!-- Subtasks -->
+                            </aura:iteration>   
+                            <!--task -->
+                        </aura:iteration> 
+                        <!--submilestone -->
+                    </aura:iteration>
+                    <!--Milestone -->                 
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- edit form for milestone -->
+        
+        <div aura:id="form1" aria-hidden="false" role="dialog" class="slds-modal slds-modal--form slds-fade-in-close">
+            <div class="slds-modal__container slds-modal--form" role="document" tabindex="0">
+                <div class="slds-modal__header">
+                    <button onclick="{!c.Popup}" class="slds-button slds-button--neutral">Cancel</button>
+                    <button onclick="{!c.savemile}" id="{!v.editrecord[0].Id}"  class="slds-button slds-button--neutral slds-button--brand">Save</button>
+                    <h2 class="slds-text-heading--medium slds-truncate">Edit Project</h2>
+                </div>
+                <div class="slds-modal__content">
+                    <h3 class="slds-section-title--divider">Section Information</h3>
+                    <fieldset class="slds-form--compound">
+                        <div class="form-element__group">
+                            <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size--1-of-2">
+                                    <ui:inputText aura:id="expname" label="Project Name" class="slds-input" labelClass="slds-form-element__label" value="{!v.editrecord[0].Title__c}" />
+                                </div>
+                                <div class="slds-form-element slds-size--1-of-2">
+                                    <ui:inputText aura:id="leadtime" label="Lead Time" class="slds-input" labelClass="slds-form-element__label" value="{!v.editrecord[0].Lead_Time__c}" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                    <fieldset class="slds-form--compound">
+                        <div class="form-element__group">
+                            <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size--1-of-2">
+                                    <ui:inputDate aura:id="actualstrtdate" label="Expected Start Date" class="slds-input" value="{!v.editrecord[0].Actual_Start_Date__c}" required="true" displayDatePicker="true" />
+                                    
+                                </div>
+                                <div class="slds-form-element slds-size--1-of-2">
+                                    <ui:inputDate aura:id="actualenddate" label="Expected End Date" class="slds-input" value="{!v.editrecord[0].Actual_End_Date__c}" required="true" displayDatePicker="true" />
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                    <fieldset class="slds-form--compound">
+                        <div class="form-element__group">
+                            <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size--1-of-2">
+                                    <ui:inputDate aura:id="expectstrtdate" label="Actual Start Date" class="slds-input" labelClass="slds-form-element__label" value="{!v.editrecord[0].Expected_Start_Date__c}" displayDatePicker="true"/>
+                                    
+                                </div>
+                                <div class="slds-form-element slds-size--1-of-2">
+                                    <ui:inputDate aura:id="expectenddate" label="Actual End Date" class="slds-input" labelClass="slds-form-element__label" value="{!v.editrecord[0].Expected_End_Date__c}" displayDatePicker="true" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                    <fieldset class="slds-form--compound">
+                        <div class="form-element__group">
+                            <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size--1-of-2">
+                                    <label class="slds-form-element__label" for="select-01">Status</label>
+                                    <ui:inputSelect aura:id="selected-status" class="slds-select"  >
+                                        <ui:inputSelectOption text="{!v.editrecord[0].Status__c}" label="{!v.editrecord[0].Status__c}" value="true"/>
+                                        <!--<option>{!v.editrecord[0].Status__c}</option>-->
+                                        <aura:iteration items="{!v.milestatusval}" var="sval" >
+                                            <!--<option>{!sval}</option>-->
+                                            <ui:inputSelectOption text="{!sval}" label="{!sval}"/>
+                                        </aura:iteration>
+                                    </ui:inputSelect>
+                                </div>
+                                <div class="slds-form-element slds-size--1-of-2">
+                                    <ui:inputText aura:id="completion" label="Completion %" class="slds-input" labelClass="slds-form-element__label" value="{!v.editrecord[0].Completion__c}" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                    <fieldset class="slds-form--compound">
+                        <div class="form-element__group">
+                            <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size--1-of-2">
+                                    <ui:inputText aura:id="successor" label="Resource Name" class="slds-input" labelClass="slds-form-element__label" value="{!v.editrecord[0].Resource_Name__c}" />
+                                </div>
+                                <div class="slds-form-element slds-size--1-of-2">
+                                    <ui:inputText aura:id="pedecessor" label="Comments" class="slds-input" labelClass="slds-form-element__label" value="{!v.editrecord[0].Comments__c}" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                </div>
+            </div>
+        </div>
+        <div aura:id="form2" class="slds-backdrop slds-backdrop--close"></div>
+        
+        
+        
+        
+        <!-- edit form for milestone -->
+        
+        
+        <!-- edit form for submilestone -->
+        <div>
+            <div aura:id="submileform1" aria-hidden="false" role="dialog" class="slds-modal slds-modal--form slds-fade-in-close">
+                <div class="slds-modal__container slds-modal--form" role="document" tabindex="0">
+                    <div class="slds-modal__header">
+                        <button onclick="{!c.submilePopup}" class="slds-button slds-button--neutral">Cancel</button>
+                        <button onclick="{!c.savesubmile}" id="{!v.editsubmilerecord[0].Id}"  class="slds-button slds-button--neutral slds-button--brand">Save</button>
+                        <h2 class="slds-text-heading--medium slds-truncate">Edit Project</h2>
+                    </div>
+                    <div class="slds-modal__content">
+                        <h3 class="slds-section-title--divider">Section Information</h3>
+                        
+                        
+                        <fieldset class="slds-form--compound">
+                            <div class="form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size--1-of-2">
+                                        <ui:inputText aura:id="submileexpname" label="Project Name" class="slds-input" labelClass="slds-form-element__label" value="{!v.editsubmilerecord[0].Title__c}" />
+                                    </div>
+                                    <div class="slds-form-element slds-size--1-of-2">
+                                        <ui:inputText aura:id="submileleadtime" label="Lead Time" class="slds-input" labelClass="slds-form-element__label" value="{!v.editsubmilerecord[0].Lead_Time__c}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="slds-form--compound">
+                            <div class="form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size--1-of-2">
+                                        <ui:inputDate aura:id="submileactualstrtdate" label="Expected Start Date" class="slds-input" value="{!v.editsubmilerecord[0].Actual_Start_Date__c}" required="true" displayDatePicker="true" />
+                                    </div>
+                                    <div class="slds-form-element slds-size--1-of-2">
+                                        <ui:inputDate aura:id="submileactualenddate" label="Expected End Date" class="slds-input" value="{!v.editsubmilerecord[0].Actual_End_Date__c}" required="true" displayDatePicker="true" />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="slds-form--compound">
+                            <div class="form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size--1-of-2">
+                                        <ui:inputDate aura:id="submileexpectstrtdate" label="Actual Start Date" class="slds-input" labelClass="slds-form-element__label" value="{!v.editsubmilerecord[0].Expected_Start_Date__c}" displayDatePicker="true"/>
+                                    </div>
+                                    <div class="slds-form-element slds-size--1-of-2">
+                                        <ui:inputDate aura:id="submileexpectenddate" label="Actual End Date" class="slds-input" labelClass="slds-form-element__label" value="{!v.editsubmilerecord[0].Expected_End_Date__c}" displayDatePicker="true"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="slds-form--compound">
+                            <div class="form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size--1-of-2">
+                                        <label class="slds-form-element__label" for="select-01">Status</label>
+                                        <ui:inputSelect aura:id="submileselected-status" class="slds-select">
+                                            <option>{!v.editsubmilerecord[0].Status__c}</option>
+                                            <aura:iteration items="{!v.submilestatusval}" var="subsval" >
+                                                <option>{!subsval}</option>
+                                            </aura:iteration>
+                                        </ui:inputSelect>
+                                    </div>
+                                    <div class="slds-form-element slds-size--1-of-2">
+                                        <ui:inputText aura:id="submilecompletion" label="Completion %" class="slds-input" labelClass="slds-form-element__label" value="{!v.editsubmilerecord[0].Completion__c}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="slds-form--compound">
+                            <div class="form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size--1-of-2">
+                                        <ui:inputText aura:id="submilesuccessor" label="Resource Name" class="slds-input" labelClass="slds-form-element__label" value="{!v.editsubmilerecord[0].Resource_Name__c}" />
+                                    </div>
+                                    <div class="slds-form-element slds-size--1-of-2">
+                                        <ui:inputText aura:id="submilepedecessor" label="Comments" class="slds-input" labelClass="slds-form-element__label" value="{!v.editsubmilerecord[0].Comments__c}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+            <div aura:id="submileform2" class="slds-backdrop slds-backdrop--close"></div>
+        </div>
+        
+        
+        <!-- edit form for submilestone -->
+        
+        
+        <!-- edit form for task -->
+        <div>
+            <div aura:id="taskform1" aria-hidden="false" role="dialog" class="slds-modal slds-modal--form slds-fade-in-close">
+                <div class="slds-modal__container slds-modal--form" role="document" tabindex="0">
+                    <div class="slds-modal__header">
+                        <button onclick="{!c.taskPopup}" class="slds-button slds-button--neutral">Cancel</button>
+                        <button onclick="{!c.savetask}" id="{!v.edittskrecord[0].Id}"  class="slds-button slds-button--neutral slds-button--brand">Save</button>
+                        <h2 class="slds-text-heading--medium slds-truncate">New Project</h2>
+                    </div>
+                    <div class="slds-modal__content">
+                        <h3 class="slds-section-title--divider">Section Information</h3>
+                        <fieldset class="slds-form--compound">
+                            <div class="form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size--1-of-2">
+                                        <ui:inputText aura:id="taskexpname" label="Project Name" class="slds-input" labelClass="slds-form-element__label" value="{!v.edittskrecord[0].Title__c}" />
+                                    </div>
+                                    <div class="slds-form-element slds-size--1-of-2">
+                                        <ui:inputText aura:id="taskleadtime" label="Lead Time" class="slds-input" labelClass="slds-form-element__label" value="{!v.edittskrecord[0].Lead_Time__c}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="slds-form--compound">
+                            <div class="form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size--1-of-2">
+                                        <ui:inputDate aura:id="taskactualstrtdate" label="Expected Start Date" class="slds-input" value="{!v.edittskrecord[0].Actual_Start_Date__c}" required="true" displayDatePicker="true" />
+                                    </div>
+                                    <div class="slds-form-element slds-size--1-of-2">
+                                        <ui:inputDate aura:id="taskactualenddate" label="Expected End Date" class="slds-input" value="{!v.edittskrecord[0].Actual_End_Date__c}" required="true" displayDatePicker="true" />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="slds-form--compound">
+                            <div class="form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size--1-of-2">
+                                        <ui:inputDate aura:id="taskexpectstrtdate" label="Actual Start Date" class="slds-input" labelClass="slds-form-element__label" value="{!v.edittskrecord[0].Expected_Start_Date__c}" displayDatePicker="true"/>
+                                    </div>
+                                    <div class="slds-form-element slds-size--1-of-2">
+                                        <ui:inputDate aura:id="taskexpectenddate" label="Actual End Date" class="slds-input" labelClass="slds-form-element__label" value="{!v.edittskrecord[0].Expected_End_Date__c}" displayDatePicker="true"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="slds-form--compound">
+                            <div class="form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size--1-of-2">
+                                        <label class="slds-form-element__label" for="select-01">Status</label>
+                                        <ui:inputSelect aura:id="taskselected-status" class="slds-select">
+                                            <option>{!v.edittskrecord[0].Status__c}</option>
+                                            <aura:iteration items="{!v.taskstatusval}" var="subsval" >
+                                                <option>{!subsval}</option>
+                                            </aura:iteration>
+                                        </ui:inputSelect>
+                                    </div>
+                                    <div class="slds-form-element slds-size--1-of-2">
+                                        <ui:inputText aura:id="taskcompletion" label="Completion %" class="slds-input" labelClass="slds-form-element__label" value="{!v.edittskrecord[0].Completion__c}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="slds-form--compound">
+                            <div class="form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size--1-of-2">
+                                        <ui:inputText aura:id="tasksuccessor" label="Resource Name" class="slds-input" labelClass="slds-form-element__label" value="{!v.edittskrecord[0].Resource_Name__c}" />
+                                    </div>
+                                    <div class="slds-form-element slds-size--1-of-2">
+                                        <ui:inputText aura:id="taskpedecessor" label="Comments" class="slds-input" labelClass="slds-form-element__label" value="{!v.edittskrecord[0].Comments__c}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+            <div aura:id="taskform2" class="slds-backdrop slds-backdrop--close"></div>
+        </div>
+        
+        
+        <!-- edit form for task -->
+        
+        
+        
+        <!-- Error Popup -->
+        <div>
+            <div aura:id="error1" aria-hidden="false" aria-labelledby="prompt-heading-id" aria-describedby="prompt-message-wrapper" role="alertdialog" class="slds-modal slds-modal--prompt slds-fade-in-close">
+                <div class="slds-modal__container slds-modal--prompt" role="document" id="prompt-message-wrapper" tabindex="0">
+                    <div class="slds-modal__header slds-theme--error slds-theme--alert-texture">
+                        <h2 class="slds-text-heading--medium" id="prompt-heading-id">Cannot Save Record</h2>
+                    </div>
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <div>
+                            <p>Status value should be started !! OR</p>
+                            <p>Date Should be valid !!</p>
+                        </div>
+                    </div>
+                    <div class="slds-modal__footer slds-theme--default">
+                        <button onclick="{!c.errorpopup}" class="slds-button slds-button--neutral">Okay</button>
+                    </div>
+                </div>
+            </div>
+            <div  aura:id="error2"  class="slds-backdrop slds-backdrop--close"></div>
+        </div>
+        <!-- Error Popup -->
+        
+        <!-- Spinner -->
+        <div aura:id="spinnerId" class="slds-backdrop slds-backdrop--close ">
+            <div aura:id="spinnerIdChild" class=" slds-modal slds-fade-in-close" aria-hidden="false" role="dialog">
+                <div class="  slds-modal__container">      
+                    <div >
+                        <center>  
+                            <div class="slds-spinner--brand slds-spinner slds-spinner--large" aria-hidden="false" role="alert">
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </center>            
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Spinner -->
+        <!-- Edit All Component -->
+        
+        <aura:set attribute="else">
+            <aura:if isTrue="{!v.editallproductid != undefined }">
+                <c:Editallproject projectid="{!v.editallproductid}" />
+                <aura:set attribute="else">
+                    Project Id was not set to the component
+                </aura:set>
+            </aura:if> 
+        </aura:set>
+        
+    </aura:if>
+    <!-- Edit All Component -->
+    
+    
+</aura:component>

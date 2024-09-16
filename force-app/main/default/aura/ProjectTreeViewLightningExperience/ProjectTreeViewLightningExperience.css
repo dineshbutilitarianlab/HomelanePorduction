@@ -1,0 +1,34 @@
+.THIS .displayNhide{
+    display: none;
+}
+.THIS tr.errorcorrect {
+    display: none;
+}
+.THIS .btn{
+    margin: -6px 0px 0px -28px !important;
+}
+.THIS .datepickr{
+    width: 135px;
+    margin-bottom: -8px;
+    border: 0px solid #f4f4f4 !important;
+    background-color: transparent !important ;
+    border-color: white !important;
+    min-height: 24px;
+    height:24px;
+}
+
+.THIS .datepicker__filter--month .assistiveText {
+    position: absolute !important;
+    clip: rect(1px,1px,1px,1px) !important;
+}
+.THIS .slds-modal__container.slds-modal--form {
+    margin: 0 auto !important;
+    margin-top: 16px !important;
+    height: 94% !important;
+}
+.THIS fieldset.slds-form--compound {
+    padding: 10px;
+}
+.THIS .invisible {
+    display : none !important;
+}

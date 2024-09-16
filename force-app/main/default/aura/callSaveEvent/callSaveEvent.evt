@@ -1,0 +1,6 @@
+<aura:event type="APPLICATION" description="This event will be called from SC_MISalesPath child component to call save controller method" >
+	<aura:attribute name="newStage" type="String"/>
+    <aura:attribute name="newStageOnComplete" type="String" default="none"/>
+    <aura:attribute name="selectedReasonWon" type="String" default="none"/>
+    <aura:attribute name="selectedReasonLost" type="String" default="none"/>
+</aura:event>

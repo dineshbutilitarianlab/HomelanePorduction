@@ -1,0 +1,361 @@
+<apex:page controller="Waterfallreportcontroller" showHeader="false"  >
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
+ <apex:stylesheet value="https://homelane--c.ap2.visual.force.com/resource/1499152115000/SLDS232"/>
+    <script>
+    $(document).ready(function() {
+  $("#btnExport").click(function(e) {
+    e.preventDefault();
+
+    //getting data from our table
+    var data_type = 'data:application/vnd.ms-excel';
+    var table_div = document.getElementById('table_wrapper');
+    var table_html = table_div.outerHTML.replace(/ /g, '%20');
+
+    var a = document.createElement('a');
+    a.href = data_type + ', ' + table_html;
+    a.download = 'exported_table_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
+    a.click();
+   });
+  });
+  $( document ).ready(function() {
+    
+            for(i=1;i<=12;i++){
+                var tcval1= parseFloat($('#Bengaluru-total-'+i)[0].innerHTML);
+                var tcval2 =parseFloat($('#Chennai-total-'+i)[0].innerHTML);
+                var tcval3 =parseFloat($('#Hyderabad-total-'+i)[0].innerHTML);
+                var tcval4 =parseFloat($('#Mumbai-total-'+i)[0].innerHTML);
+                var tcval5 =parseFloat($('#NCR-total-'+i)[0].innerHTML);
+                var tcval6 =parseFloat($('#Pune-total-'+i)[0].innerHTML);
+                var tcval7 =parseFloat($('#Kolkata-total-'+i)[0].innerHTML);
+                $('#totallead-'+i).text(tcval1+tcval2+tcval3+tcval4+tcval5+tcval6+tcval7);
+                
+                var tcvisit1=parseFloat($('#Bengaluru-totalvst-'+i)[0].innerHTML);
+                var tcvisit2=parseFloat($('#Chennai-totalvst-'+i)[0].innerHTML);
+                var tcvisit3=parseFloat($('#Hyderabad-totalvst-'+i)[0].innerHTML);
+                var tcvisit4=parseFloat($('#Mumbai-totalvst-'+i)[0].innerHTML);
+                var tcvisit5=parseFloat($('#NCR-totalvst-'+i)[0].innerHTML);
+                var tcvisit6=parseFloat($('#Pune-totalvst-'+i)[0].innerHTML);
+                var tcvisit7=parseFloat($('#Kolkata-totalvst-'+i)[0].innerHTML);
+                $('#totalvisit-'+i).text(tcvisit1+tcvisit2+tcvisit3+tcvisit4+tcvisit5+tcvisit6+tcvisit7);
+               
+                var tcorder1=parseFloat($('#Bengaluru-totalordr-'+i)[0].innerHTML);
+                var tcorder2=parseFloat($('#Chennai-totalordr-'+i)[0].innerHTML);
+                var tcorder3=parseFloat($('#Hyderabad-totalordr-'+i)[0].innerHTML);
+                var tcorder4=parseFloat($('#Mumbai-totalordr-'+i)[0].innerHTML);
+                var tcorder5=parseFloat($('#NCR-totalordr-'+i)[0].innerHTML);
+                var tcorder6=parseFloat($('#Pune-totalordr-'+i)[0].innerHTML);
+                var tcorder7=parseFloat($('#Kolkata-totalordr-'+i)[0].innerHTML);
+                $('#totalorder-'+i).text(tcorder1+tcorder2+tcorder3+tcorder4+tcorder5+tcorder6+tcorder7);
+                
+                var tcvalper1 = parseFloat($('#totallead-'+i)[0].innerHTML);
+                var tleadvisitper2 = parseFloat($('#totalvisit-'+i)[0].innerHTML);
+                var tordercloseper3 = parseFloat($('#totalorder-'+i)[0].innerHTML);  
+                
+                var totalper = ((tordercloseper3/tcvalper1)*100).toFixed(2);
+
+                    if(totalper =='NaN'){
+                        $('#totalleadper-'+i).text('0'+'%');
+                        
+                    }else{
+                        $('#totalleadper-'+i).text(((tordercloseper3/tcvalper1)*100).toFixed(2)+'%');
+                    }
+
+
+                var totalvisitper = ((tleadvisitper2/tcvalper1)*100).toFixed(2);
+                    if(totalvisitper =='NaN'){
+                        $('#totalvisitper-'+i).text('0'+'%');
+                    }else{
+                        $('#totalvisitper-'+i).text(((tleadvisitper2/tcvalper1)*100).toFixed(2)+'%');
+                    }
+                
+                var totalorderper = ((tordercloseper3/tleadvisitper2)*100).toFixed(2);
+                    if(totalorderper =='NaN'){
+                        $('#totalorderper-'+i).text('0'+'%');
+                    }else{
+                        $('#totalorderper-'+i).text(((tordercloseper3/tleadvisitper2)*100).toFixed(2)+'%');
+                    }
+                
+             
+                
+            }
+            
+            
+        });
+    </script>
+   
+   <style>
+       .thcolr{
+           background-color: cadetblue !important;
+       }
+       #actiondiv{
+        margin: 16px 0px 14px 0px;
+        }
+        .wrapper-dropdown {
+        position: relative; 
+        width: 200px;
+        padding: 10px;
+        margin: 0 auto;
+        background: #9bc7de;
+        color: #fff;
+        outline: none;
+        cursor: pointer;
+        font-weight: bold;
+        margin-left: 10px;
+        }
+        .runbtn{
+        margin: 0px 0px 3px 15px;
+        height: 36px;
+        }
+        .atag{
+        color: #333;
+    margin: 1px;
+    padding: 2px 3px;
+    border: 1px solid #b5b5b5;
+    border-bottom-color: #7f7f7f;
+    background: #e8e8e9 url(/img/alohaSkin/btn_sprite.png) repeat-x right top;
+    font-weight: bold;
+    font-size: .9em;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;}
+       
+      
+   </style>
+   <apex:form id="theForm">
+      <apex:pageBlock id="pgblockmain">
+      <div id ='actiondiv' align="center">
+         <apex:selectList styleClass="wrapper-dropdown" value="{!selectedYear}" size="1">
+         <!--<apex:actionSupport event="onchange" action="{!getReportdata}" reRender="pgblockmain"/>-->          
+            <apex:selectOptions value="{!Years}"/>
+         </apex:selectList>
+         <apex:commandButton title="Run Report" value="Run Report" action="{!getReportdata}"  />
+         </div>
+            <body>
+              <br />
+              <br />
+       <div id="table_wrapper">
+         <!-- reort body -->
+         <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"  id="pgbtable">
+            <thead>
+               <tr>
+                  <th id='cty6'>City/Metric</th>
+                  <th id ='1'>Jan - {!selectedyear - 2000}</th>
+                  <th id ='2'>Feb - {!selectedyear - 2000}</th>
+                  <th id ='3'>Mar - {!selectedyear - 2000}</th>
+                  <th id ='4'>Apr - {!selectedyear - 2000}</th>
+                  <th id ='5'>May - {!selectedyear - 2000}</th>
+                  <th id ='6'>Jun - {!selectedyear - 2000}</th>
+                  <th id ='7'>Jul - {!selectedyear - 2000}</th>
+                  <th id ='8'>Aug - {!selectedyear - 2000}</th>
+                  <th id ='9'>Sep - {!selectedyear - 2000}</th>
+                  <th id ='10'>Oct - {!selectedyear - 2000}</th>
+                  <th id ='11'>Nov - {!selectedyear - 2000}</th>
+                  <th id ='12'>Dec - {!selectedyear - 2000}</th>
+                  <th class='thcolr' ></th>
+                  <th>City/Metric</th>
+                  <th id ='13'>Jan - {!selectedyear - 2000}</th>
+                  <th id ='14'>Feb - {!selectedyear - 2000}</th>
+                  <th id ='15'>Mar - {!selectedyear - 2000}</th>
+                  <th id ='16'>Apr - {!selectedyear - 2000}</th>
+                  <th id ='17'>May - {!selectedyear - 2000}</th>
+                  <th id ='18'>Jun - {!selectedyear - 2000}</th>
+                  <th id ='19'>Jul - {!selectedyear - 2000}</th>
+                  <th id ='20'>Aug - {!selectedyear - 2000}</th>
+                  <th id ='21'>Sep - {!selectedyear - 2000}</th>
+                  <th id ='22'>Oct - {!selectedyear - 2000}</th>
+                  <th id ='23'>Nov - {!selectedyear - 2000}</th>
+                  <th id ='24'>Dec - {!selectedyear - 2000}</th>
+               </tr>
+            </thead>
+            <apex:outputPanel rendered="{!IF(selectedYear =2014, 'Data not there', 'true')}"> 
+            <tbody>
+        <tr>
+        <th scope="row" class='thcolr' colspan='27' >Total City Count</th>
+        </tr>
+            <tr >
+            <th scope="row">Total Leads</th>
+        <td id='totallead-1'>0</td>
+        <td id='totallead-2'>0</td>
+        <td id='totallead-3'>0</td>
+        <td id='totallead-4'>0</td>
+        <td id='totallead-5'>0</td>
+        <td id='totallead-6'>0</td>
+        <td id='totallead-7'>0</td>
+        <td id='totallead-8'>0</td>
+        <td id='totallead-9'>0</td>
+        <td id='totallead-10'>0</td>
+        <td id='totallead-11'>0</td>
+        <td id='totallead-12'>0</td>
+        <td class='thcolr'></td>
+        <th>Total Leads %</th>
+        <td id='totalleadper-1' >0</td>
+        <td id='totalleadper-2'>0</td>
+        <td id='totalleadper-3'>0</td>
+        <td id='totalleadper-4'>0</td>
+        <td id='totalleadper-5'>0</td>
+        <td id='totalleadper-6'>0</td>
+        <td id='totalleadper-7'>0</td>
+        <td id='totalleadper-8'>0</td>
+        <td id='totalleadper-9'>0</td>
+        <td id='totalleadper-10'>0</td>
+        <td id='totalleadper-11'>0</td>
+        <td id='totalleadper-12'>0</td>
+            </tr>
+            <tr>
+            <th scope="row">Total Visits</th>
+        <td id='totalvisit-1'>0</td>
+        <td id='totalvisit-2'>0</td>
+        <td id='totalvisit-3'>0</td>
+        <td id='totalvisit-4'>0</td>
+        <td id='totalvisit-5'>0</td>
+        <td id='totalvisit-6'>0</td>
+        <td id='totalvisit-7'>0</td>
+        <td id='totalvisit-8'>0</td>
+        <td id='totalvisit-9'>0</td>
+        <td id='totalvisit-10'>0</td>
+        <td id='totalvisit-11'>0</td>
+        <td id='totalvisit-12'>0</td>
+        <td class='thcolr'></td>
+        <th>Total Visits %</th>
+        <td id='totalvisitper-1'>0</td>
+        <td id='totalvisitper-2'>0</td>
+        <td id='totalvisitper-3'>0</td>
+        <td id='totalvisitper-4'>0</td>
+        <td id='totalvisitper-5'>0</td>
+        <td id='totalvisitper-6'>0</td>
+        <td id='totalvisitper-7'>0</td>
+        <td id='totalvisitper-8'>0</td>
+        <td id='totalvisitper-9'>0</td>
+        <td id='totalvisitper-10'>0</td>
+        <td id='totalvisitper-11'>0</td>
+        <td id='totalvisitper-12'>0</td>
+            </tr>
+            <tr>
+            <th scope="row">Total Order Closed</th>
+        <td id='totalorder-1'>0</td>
+        <td id='totalorder-2'>0</td>
+        <td id='totalorder-3'>0</td>
+        <td id='totalorder-4'>0</td>
+        <td id='totalorder-5'>0</td>
+        <td id='totalorder-6'>0</td>
+        <td id='totalorder-7'>0</td>
+        <td id='totalorder-8'>0</td>
+        <td id='totalorder-9'>0</td>
+        <td id='totalorder-10'>0</td>
+        <td id='totalorder-11'>0</td>
+        <td id='totalorder-12'>0</td>
+        <td class='thcolr'></td>
+        <th>Total Order Closed %</th>
+        <td id='totalorderper-1'>0</td>
+        <td id='totalorderper-2'>0</td>
+        <td id='totalorderper-3'>0</td>
+        <td id='totalorderper-4'>0</td>
+        <td id='totalorderper-5'>0</td>
+        <td id='totalorderper-6'>0</td>
+        <td id='totalorderper-7'>0</td>
+        <td id='totalorderper-8'>0</td>
+        <td id='totalorderper-9'>0</td>
+        <td id='totalorderper-10'>0</td>
+        <td id='totalorderper-11'>0</td>
+        <td id='totalorderper-12'>0</td>
+            </tr>
+               <!-- previous -->  
+               <tr>
+                  <apex:repeat value="{!leadMap}" var="cityval" id="theRepeat">
+                     <th scope="row" class='thcolr' colspan='27' >{!cityval}
+               <tr >
+                   <th scope="row">Total Leads</th>
+                   <apex:param name="q" value="totallead2"/>
+                   <apex:variable var="count" value="{!1}"/> 
+                   <apex:repeat value="{!leadMap[cityval]}" var="keyvalue" >
+                       <td id='{!cityval}-total-{!count}' >{!leadMap[cityval][keyvalue]}</td>  
+                       <apex:variable value="{!count+1}" var="count"/> 
+                   </apex:repeat>
+                   <th scope="row" class='thcolr'></th>
+                   <th scope="row">Overall Lead Conv%</th>
+                 <apex:repeat value="{!oppdatamap[cityval]}" var="keyvalue"  rendered="{!IF(mapOppData[cityval] == 'true',true,false)}">
+                       <td id ='3' ><apex:outputText value="{!if(leadMap[cityval][keyvalue]==0,'0',(Round(oppdatamap[cityval][keyvalue]/leadMap[cityval][keyvalue],2))*100)}%" ></apex:outputText> </td>      
+                   </apex:repeat>
+                   <apex:repeat value="{!mapDefault}" var="keyvalue"  rendered="{!IF(mapOppData[cityval] == 'false',true,false)}">
+                       <td id ='3' ><apex:outputText value="{!mapDefault[keyvalue]}%" ></apex:outputText> </td>      
+                   </apex:repeat>
+               </tr>
+               <tr>
+                   <th scope="row">Visits</th>
+                   <apex:variable var="count" value="{!1}"/>
+                   <apex:repeat value="{!convertedandlead[cityval]}" var="keyvalue"  rendered="{!IF(mapConvertedData[cityval] == 'true',true,false)}">
+                       <td id ='{!cityval}-totalvst-{!count}' >{!convertedandlead[cityval][keyvalue]}</td> 
+                       <apex:variable value="{!count+1}" var="count"/>     
+                   </apex:repeat>
+                  
+                   <apex:repeat value="{!mapDefault}" var="keyvalue"  rendered="{!IF(mapConvertedData[cityval] == 'false',true,false)}">
+                       <td id ='{!cityval}-totalvst-{!count}' >{!mapDefault[keyvalue]}</td>
+                        <apex:variable value="{!count+1}" var="count"/>                        
+                   </apex:repeat>
+                   <th scope="row" class='thcolr'></th>     
+                   <th scope="row">Interested Lead Conv%</th>   
+                   <apex:repeat value="{!convertedandlead[cityval]}" var="keyvalue"  rendered="{!IF(mapConvertedData[cityval] == 'true',true,false)}" >
+                       <td id ='3' ><apex:outputText value="{!if(leadMap[cityval][keyvalue]==0,'0',(Round(convertedandlead[cityval][keyvalue]/leadMap[cityval][keyvalue],2))*100)}%" ></apex:outputText> </td>      
+                   </apex:repeat>
+                   <apex:repeat value="{!mapDefault}" var="keyvalue"  rendered="{!IF(mapConvertedData[cityval] == 'false',true,false)}">
+                       <td id ='3' ><apex:outputText value="{!mapDefault[keyvalue]}%" ></apex:outputText> </td>      
+                   </apex:repeat>
+               </tr>
+               <tr>
+                   <th scope="row">Order Closed</th>
+                   <apex:variable var="count" value="{!1}"/>
+                   
+                   <apex:repeat value="{!oppdatamap[cityval]}" var="keyvalue"  rendered="{!IF(mapOppData[cityval] == 'true',true,false)}">
+                       <td id ='{!cityval}-totalordr-{!count}' >{!oppdatamap[cityval][keyvalue]}</td>
+                       <apex:variable value="{!count+1}" var="count"/>      
+                   </apex:repeat>
+                   <apex:repeat value="{!mapDefault}" var="keyvalue"  rendered="{!IF(mapOppData[cityval] == 'false',true,false)}">
+                       <td id ='{!cityval}-totalordr-{!count}' >{!mapDefault[keyvalue]}</td>
+                         <apex:variable value="{!count+1}" var="count"/>                      
+                   </apex:repeat>
+                   <th scope="row" class='thcolr'></th>
+                   <th scope="row">Orders Conv%</th>
+                   <apex:repeat value="{!oppdatamap[cityval]}" var="keyvalue"  rendered="{!IF((mapOppData[cityval] == 'true') && (mapConvertedData[cityval] =='true'),true,false)}">
+                       <td id ='3' ><apex:outputText value="{!if(convertedandlead[cityval][keyvalue]==0,'0',(Round(oppdatamap[cityval][keyvalue]/convertedandlead[cityval][keyvalue],2))*100)}%" ></apex:outputText> </td>      
+                   </apex:repeat> 
+                   <apex:repeat value="{!mapDefault}" var="keyvalue"  rendered="{!IF(mapOppData[cityval] == 'false',true,false)}">
+                       <td id ='3' ><apex:outputText value="{!mapDefault[keyvalue]}%" ></apex:outputText> </td>      
+                   </apex:repeat>
+               </tr>
+               </th>
+               </apex:repeat> 
+               </tr>
+            </tbody>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!IF(selectedYear =2014, 'true', 'f')}">
+            <tbody>
+               <tr>
+                  <apex:repeat value="{!leadMap}" var="cityval" id="theqRepeat">
+                     <th scope="row" class='thcolr' colspan='27' >{!cityval}
+                 <tr>
+                   <th scope="row">Total Leads</th>
+                   <apex:param name="q" value="totallead2"/>
+                   <apex:repeat value="{!leadMap[cityval]}" var="keyvalue">
+                       <td id='1' >{!leadMap[cityval][keyvalue]}</td>      
+                   </apex:repeat>
+                   
+               </tr>
+              
+               </th>
+               </apex:repeat> 
+               </tr>
+            </tbody>
+            </apex:outputPanel>
+           </table>
+         <!-- report body -->
+          </div>
+            </body>
+         <apex:pageBlockButtons >
+            <apex:commandButton value="Print"  id="prntButton" onclick="window.print();" />
+            <!--<apex:commandButton value="Download"  id="downldButton" action="{!Download}" reRender="theForm" /> -->
+              <button id="btnExport">Export Report</button>
+           <a id="cancelButton" class='atag' href="https://homelane.my.salesforce.com/">Close</a>         </apex:pageBlockButtons>
+      </apex:pageBlock>      
+   </apex:form>
+</apex:page>

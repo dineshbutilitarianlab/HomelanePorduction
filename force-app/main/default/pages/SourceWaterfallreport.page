@@ -1,0 +1,220 @@
+<apex:page controller="SourceWaterfallreportcontroller" showHeader="false"  >
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
+    
+    <apex:stylesheet value="https://homelane--c.ap2.visual.force.com/resource/1499152115000/SLDS232"/>
+   
+
+    <script>
+    $(document).ready(function() {
+  $("#btnExport").click(function(e) {
+    e.preventDefault();
+
+    //getting data from our table
+    var data_type = 'data:application/vnd.ms-excel';
+    var table_div = document.getElementById('table_wrapper');
+    var table_html = table_div.outerHTML.replace(/ /g, '%20');
+
+    var a = document.createElement('a');
+    a.href = data_type + ', ' + table_html;
+    a.download = 'exported_table_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
+    a.click();
+  });
+});
+    </script>
+
+    
+    <style>
+        .thcolr{
+        background-color: cadetblue !important;
+        }
+        #actiondiv{
+        margin: 16px 0px 14px 0px;
+        }
+        .wrapper-dropdown {
+        position: relative; 
+        width: 200px;
+        padding: 10px;
+        margin: 0 auto;
+        background: #9bc7de;
+        color: #fff;
+        outline: none;
+        cursor: pointer;
+        font-weight: bold;
+        margin-left: 10px;
+        }
+        .runbtn{
+        margin: 0px 0px 3px 15px;
+        height: 36px;
+        }
+        .atag{
+        color: #333;
+    margin: 1px;
+    padding: 2px 3px;
+    border: 1px solid #b5b5b5;
+    border-bottom-color: #7f7f7f;
+    background: #e8e8e9 url(/img/alohaSkin/btn_sprite.png) repeat-x right top;
+    font-weight: bold;
+    font-size: .9em;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;}
+        
+    </style>
+    <apex:form id="theForm">
+        <apex:pageBlock id="pgblockmain">
+            <div id ='actiondiv' align="center">
+                <apex:selectList styleClass="wrapper-dropdown" value="{!selectedYear}" size="1">
+                    <apex:selectOptions value="{!Years}"/>
+                </apex:selectList>
+                <apex:selectList styleClass="wrapper-dropdown" id="chooseCity" value="{!selectedcity}" size="1">
+                    <apex:selectOption itemValue="All Cities" itemLabel="All Cities"/>
+                    <apex:selectOption itemValue="Bengaluru" itemLabel="Bengaluru"/>
+                    <apex:selectOption itemValue="Hyderabad" itemLabel="Hyderabad"/>
+                    <apex:selectOption itemValue="Chennai" itemLabel="Chennai"/>
+                    <apex:selectOption itemValue="Mumbai" itemLabel="Mumbai"/>
+                    <apex:selectOption itemValue="NCR" itemLabel="NCR" />
+                </apex:selectList> 
+                <apex:commandButton styleClass="runbtn" title="Run Report" value="Run Report" action="{!getReportdata}"  />
+            </div>
+            
+            
+            
+            
+            <body>
+  
+  <br />
+  <br />
+  <div id="table_wrapper">
+            
+            <!-- reort body -->
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"  id="pgbtable">
+                <thead >
+                    <tr>
+                        <th>Lead Source/Metric</th>
+                        <th id ='1'>Jan - {!selectedyear - 2000}</th>
+                        <th id ='2'>Feb - {!selectedyear - 2000}</th>
+                        <th id ='3'>Mar - {!selectedyear - 2000}</th>
+                        <th id ='4'>Apr - {!selectedyear - 2000}</th>
+                        <th id ='5'>May - {!selectedyear - 2000}</th>
+                        <th id ='6'>Jun - {!selectedyear - 2000}</th>
+                        <th id ='7'>Jul - {!selectedyear - 2000}</th>
+                        <th id ='8'>Aug - {!selectedyear - 2000}</th>
+                        <th id ='9'>Sep - {!selectedyear - 2000}</th>
+                        <th id ='10'>Oct - {!selectedyear - 2000}</th>
+                        <th id ='11'>Nov - {!selectedyear - 2000}</th>
+                        <th id ='12'>Dec - {!selectedyear - 2000}</th>
+                        <th class='thcolr' ></th>
+                        <th>Lead Source/Metric</th>
+                        <th id ='13'>Jan - {!selectedyear - 2000}</th>
+                        <th id ='14'>Feb - {!selectedyear - 2000}</th>
+                        <th id ='15'>Mar - {!selectedyear - 2000}</th>
+                        <th id ='16'>Apr - {!selectedyear - 2000}</th>
+                        <th id ='17'>May - {!selectedyear - 2000}</th>
+                        <th id ='18'>Jun - {!selectedyear - 2000}</th>
+                        <th id ='19'>Jul - {!selectedyear - 2000}</th>
+                        <th id ='20'>Aug - {!selectedyear - 2000}</th>
+                        <th id ='21'>Sep - {!selectedyear - 2000}</th>
+                        <th id ='22'>Oct - {!selectedyear - 2000}</th>
+                        <th id ='23'>Nov - {!selectedyear - 2000}</th>
+                        <th id ='24'>Dec - {!selectedyear - 2000}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <apex:repeat value="{!leadMap}" var="cityval" id="theRepeat">
+                            <th scope="row" class='thcolr' colspan='27' >{!cityval}                     
+                                <tr >
+                                    <th scope="row">Total Leads</th>
+                                    <apex:repeat value="{!leadMap[cityval]}" var="keyvalue" >
+                                        <td>{!leadMap[cityval][keyvalue]}</td>      
+                                    </apex:repeat>
+                                   
+                                    <th scope="row" class='thcolr'></th>
+                                    <th scope="row">Overall Lead Conv%</th>
+                                    <apex:repeat value="{!oppdatamap}" var="cityval3" >
+                                        <apex:repeat rendered="{!cityval == cityval3}" value="{!oppdatamap[cityval]}" var="keyvalue" >
+                                            <td><apex:outputText value="{!if(leadMap[cityval][keyvalue]==0,'0',(Round(oppdatamap[cityval][keyvalue]/leadMap[cityval][keyvalue],3))*100)}%" ></apex:outputText></td>      
+                                        </apex:repeat>
+                                    </apex:repeat>
+                                    
+                                </tr> 
+                                <tr>
+                                    <th scope="row">Visits</th>
+                                    <apex:repeat value="{!convertedandlead}" var="cityval2" >
+                                        <apex:outputPanel rendered="{!cityval == cityval2}">
+                                            <apex:repeat value="{!convertedandlead[cityval]}" var="keyvalue" >
+                                                <td>{!convertedandlead[cityval][keyvalue]}</td>
+                                            </apex:repeat>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            <th scope="row" class='thcolr'></th>     
+                                <th scope="row">Interested Lead Conv%</th>  
+                                    <apex:repeat value="{!convertedandlead}" var="cityval2" >
+                                        <apex:repeat rendered="{!cityval == cityval2}" value="{!convertedandlead[cityval]}" var="keyvalue" >
+                                            <td id ='3' ><apex:outputText value="{!if(leadMap[cityval][keyvalue]==0,'0',(Round(convertedandlead[cityval][keyvalue]/leadMap[cityval][keyvalue],2))*100)}%" ></apex:outputText> </td>      
+                                        </apex:repeat> 
+                                    </apex:repeat>
+                                            
+                                             
+                                        </apex:outputPanel>
+                                        
+                                        
+                                    </apex:repeat>
+                                    
+                                    <!-- <apex:repeat value="{!convertedandlead}" var="cityval2" >
+                                        <apex:outputPanel rendered="{!cityval != cityval2}">
+                                        <apex:repeat value="{!convertedandlead[cityval]}" var="keyvalue" >
+                                        <apex:outputPanel rendered="{!convertedandlead[cityval][keyvalue] == 0}">
+                                                <td>0</td>
+                                                </apex:outputPanel>
+                                                </apex:repeat>
+                                    </apex:outputPanel>
+                                    </apex:repeat> -->
+                                </tr>
+                                <tr>
+                                    <th scope="row">Order Closed</th>
+                                    <apex:repeat value="{!oppdatamap}" var="cityval3" > 
+                                        <apex:repeat value="{!convertedandlead}" var="cityval2" >
+                                            <apex:outputPanel rendered="{!cityval3 == cityval}">
+                                                <apex:outputPanel rendered="{!cityval3 == cityval2}">
+                                                    <apex:repeat value="{!oppdatamap[cityval2]}" var="keyvalue" >
+                                                        <td>{!oppdatamap[cityval2][keyvalue]}</td>      
+                                                    </apex:repeat>
+                                                    
+                                                    <th scope="row" class='thcolr'></th>
+                                                    <th scope="row">Orders Conv%</th>
+                                                    <apex:repeat rendered="{!cityval == cityval3}" value="{!oppdatamap[cityval]}" var="keyvalue" >
+                                                        <td id ='3' ><apex:outputText value="{!if(convertedandlead[cityval][keyvalue]==0,'0',(Round(oppdatamap[cityval][keyvalue]/convertedandlead[cityval][keyvalue],2))*100)}%" ></apex:outputText> </td>      
+                                                    </apex:repeat>
+                                                    
+                                                </apex:outputPanel> 
+                                            </apex:outputPanel>
+                                        </apex:repeat>
+                                    </apex:repeat>
+                                </tr>
+                            </th> 
+                        </apex:repeat> 
+                    </tr>
+                </tbody>
+            </table>
+            <!-- report body -->
+            
+              </div>
+            </body>
+            
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Print"  id="prntButton" onclick="window.print();" />
+                <!--<apex:commandButton value="Download"  id="downldButton"  reRender="theForm" /> -->
+                <button id="btnExport">Export Report</button>
+                <a id="cancelButton" class='atag' href="https://homelane.my.salesforce.com/">Close</a>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>      
+    </apex:form>
+</apex:page>

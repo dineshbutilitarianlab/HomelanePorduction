@@ -1,0 +1,11 @@
+<apex:page sidebar="false" showHeader="false">
+<script> 
+    var previousOnload = window.onload; 
+    window.onload = function() { 
+        if (previousOnload) { 
+            previousOnload(); 
+        } 
+        window.open('https://homelane.force.com/homelane/s/', '_blank');
+    } 
+</script>
+</apex:page>

@@ -1,0 +1,22 @@
+<apex:page standardController="Opportunity" extensions="NextStep_OpportunityController" showHeader="false">
+<apex:stylesheet value="{!URLFOR($Resource.SLDS0122, 'assets/styles/salesforce-lightning-design-system.css')}" />
+
+<div class="slds-card slds-card--narrow">
+  <div class="slds-card__header slds-grid">
+    <div class="slds-media slds-media--center slds-has-flexi-truncate">
+      <div class="slds-media__figure">
+        
+      </div>
+      <div class="slds-media__body slds-truncate">
+        <a href="javascript:void(0);" class="slds-text-link--reset">
+          <span class="slds-text-heading--small">Next Step</span>
+        </a>
+      </div>
+    </div>
+    <div class="slds-no-flex">
+      
+    </div>
+  </div>
+  <div class="slds-card__body slds-text-align--center slds-text-heading--small">{!if(nextsteprec.size>0,nextsteprec[0].Next_Step__c,'No next step assigned')}</div>
+</div>
+</apex:page>

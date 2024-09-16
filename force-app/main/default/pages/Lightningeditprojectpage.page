@@ -1,0 +1,16 @@
+<!--
+    *  Created By : Aditya Saini
+    *  Description : To display Project detail lightning component to view project details.
+                    
+-->
+
+ 
+<apex:page standardController="Opportunity" >
+
+    
+    
+    <script>
+        window.open('https://homelane.lightning.force.com/apex/EditProjectlightning?&Id={!Opportunity.Id}','_blank');
+        window.open('https://homelane.lightning.force.com/one/one.app?source=aloha#/sObject/{!Opportunity.Id}/view','_self');
+    </script>
+    </apex:page>

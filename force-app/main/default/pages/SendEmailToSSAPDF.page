@@ -1,0 +1,291 @@
+<apex:page controller="SendEmailToSSA" sidebar="false" showHeader="false" renderAs="pdf" standardStylesheets="false"   docType="html-5.0" applyBodyTag="false" applyHtmlTag="false" >
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.1/select2.js" />
+
+<html>
+
+<head>
+<style>
+
+</style>
+</head>
+
+<body>
+<h2>Reconfirm Requirements - <apex:outputText value="{!nam}"></apex:outputText> - <apex:outputText value="{!cxid}"></apex:outputText></h2>
+<table border="1" style="empty-cells : hide;  width:700px;table-layout : fixed;page-break-inside:avoid;">
+<caption style="text-align: left;font-weight: bold;font-size: 20px; padding: 5px;">Customer Details</caption>
+<tbody>
+ 
+ <tr>
+    <td>Customer Name </td>
+    <td><apex:outputText value="{!nam}"></apex:outputText></td>
+  </tr>
+  
+  <tr>
+    <td>Mobile Number </td>
+    <td><apex:outputText value="{!pho}"></apex:outputText></td>
+  </tr>
+  
+  <tr>
+    <td>City </td>
+    <td><apex:outputText value="{!cit}"></apex:outputText></td>
+  </tr>
+  
+ <!-- <tr>
+    <td>Languages </td>
+    <td><apex:outputText value="{!lang}"></apex:outputText></td>
+  </tr>
+  
+  <tr>
+    <td>Family members, age and traits </td>
+    <td><apex:outputText value="{!family}"></apex:outputText></td>
+  </tr>  -->
+  
+  <tr>
+    <td>Appointment Date </td>
+    <td><apex:outputText value="{!adstr}"></apex:outputText></td>
+  </tr>
+  
+  <tr>
+    <td>Appointment Time </td>
+    <td><apex:outputText value="{!atstr}"></apex:outputText></td>
+  </tr>
+    
+  <tr>
+    <td>Showroom </td>
+    <td><apex:outputText value="{!sh}"></apex:outputText></td>
+  </tr>
+
+  </tbody>
+</table><br/><br/>
+
+<table border="1" style="empty-cells : hide;width:700px;table-layout : fixed;page-break-inside:avoid;" id="hidevalues">
+<caption style="text-align: left;font-weight: bold;font-size: 20px; padding: 5px;">Property Details</caption>
+<tbody>
+
+ <tr>
+    <td>Property Name </td>
+    <td><apex:outputText value="{!pn}"></apex:outputText></td>
+  </tr>
+ 
+  <tr> 
+    <td>First Home? </td>
+    <td><apex:outputText value="{!firstHome}"></apex:outputText></td>
+  </tr>
+  
+  
+  <tr>
+    <td>Property Status </td>
+    <td><apex:outputText value="{!prs}"></apex:outputText></td>
+  </tr>
+  
+<!--  <tr>
+    <td>Style Preference </td>
+    <td><apex:outputText value="{!sp}"></apex:outputText></td>
+  </tr>  -->
+  
+  <tr>
+    <td>Property Type </td>
+    <td><apex:outputText value="{!pt}"></apex:outputText></td>
+  </tr>
+  
+  <tr>
+    <td>Purpose of Interiors </td>
+    <td><apex:outputText value="{!poi}"></apex:outputText></td>
+  </tr>
+
+  <tr>
+    <td>Interiors Required </td>
+    <td><apex:outputText value="{!ir}"></apex:outputText></td>
+  </tr>
+  
+  <tr>
+    <td>Interior Start Date </td>
+    <td><apex:outputText value="{!isdstr}"></apex:outputText></td>
+  </tr>
+  
+  <tr>
+    <td>Possession Status </td>
+    <td><apex:outputText value="{!ps}"></apex:outputText></td>
+  </tr>
+  
+  <tr>
+    <td>Possession Date </td>
+    <td><apex:outputText value="{!pdstr}"></apex:outputText></td>
+  </tr>
+  
+  <tr>
+    <td>Property Config </td>
+    <td><apex:outputText value="{!pc}"></apex:outputText></td>
+  </tr>
+       
+  <tr>
+    <td>Budget Range </td>
+    <td><apex:outputText value="{!br}"></apex:outputText></td>
+  </tr>
+
+  </tbody>
+</table><br/><br/>
+
+<table border="1" style="width:700px;table-layout : fixed;page-break-inside:avoid;">
+<caption style="text-align: left;font-weight: bold;font-size: 20px; padding: 5px;">Kitchen Requirements</caption>
+<tbody>
+ 
+
+  <tr>
+    <td>Kitchen Layout </td>
+    <td><apex:outputText value="{!kl}"></apex:outputText></td>
+  </tr>
+   
+  <tr>
+    <td>Kitchen Accessories </td>
+    <td><apex:outputText value="{!ka}"></apex:outputText></td>
+  </tr>
+  
+<!--  <tr>
+    <td>Kitchen appliances </td>
+    <td><apex:outputText value="{!kapp}"></apex:outputText></td>
+  </tr>  -->
+  
+  <tr>
+    <td>Kitchen Color </td>
+    <td><apex:outputText value="{!kc}"></apex:outputText></td>
+  </tr>
+
+  <tr>
+    <td>Kitchen Finish </td>
+    <td><apex:outputText value="{!kf}"></apex:outputText></td>
+  </tr>
+   
+ <!-- <tr>
+    <td>Kitchen Material </td>
+    <td><apex:outputText value="{!km}"></apex:outputText></td>
+  </tr>  -->
+  
+  </tbody>
+</table><br/><br/>
+
+<table border="1" style="width:700px;table-layout : fixed;page-break-inside:avoid; display: {!IF(ISBLANK(lrc), 'none', 'Not applicable')};">
+<caption style="text-align: left;font-weight: bold;font-size: 20px; padding: 5px;">Living Room Requirements</caption>
+<tbody>
+
+
+  <tr>
+    <td>Living Room Crockery </td>
+    <td><apex:outputText value="{!lrc}"></apex:outputText></td>
+  </tr>
+  
+  <tr>
+    <td>Living Room Foyer </td>
+    <td><apex:outputText value="{!lrf}"></apex:outputText></td>
+  </tr>
+  
+ <!-- <tr>
+    <td>Living Room Pooja </td>
+    <td><apex:outputText value="{!lrp}"></apex:outputText></td>
+  </tr>  -->
+  
+  <tr>
+    <td>Living Room TV Unit </td>
+    <td><apex:outputText value="{!lrtv}"></apex:outputText></td>
+  </tr>
+  
+  </tbody>
+</table><br/><br/>
+
+<table border="1" style="width:700px;table-layout : fixed;page-break-inside:avoid;  display: {!IF(ISBLANK(bd1pu), 'none', 'Not applicable')};">
+<caption style="text-align: left;font-weight: bold;font-size: 20px; padding: 5px;">Bedroom 1 Requirements</caption>
+<tbody>
+  <tr>
+    <td>Bedroom 1 Primary User </td>
+    <td><apex:outputText value="{!bd1pu}"></apex:outputText></td>
+  </tr>
+  
+  <tr>
+    <td>Bedroom 1 Study Table </td>
+    <td><apex:outputText value="{!bd1st}"></apex:outputText></td>
+  </tr>
+  
+  <tr>
+    <td>Bedroom 1 TV Unit </td>
+    <td><apex:outputText value="{!bd1tv}"></apex:outputText></td>
+  </tr>
+  
+  <tr>
+    <td>Bedroom 1 Wardrobe Type </td>
+    <td><apex:outputText value="{!bd1wt}"></apex:outputText></td>
+  </tr>
+  </tbody>
+</table><br/><br/>  
+
+<table border="1" style="width:700px;table-layout : fixed;page-break-inside:avoid;  display: {!IF(ISBLANK(bd2pm), 'none', 'Not applicable')};">
+<caption style="text-align: left;font-weight: bold;font-size: 20px; padding: 5px;">Bedroom 2 Requirements</caption>
+<tbody>
+  <tr>
+    <td>Bedroom 2 Primary User </td>
+    <td><apex:outputText value="{!bd2pm}"></apex:outputText></td>
+  </tr>
+  
+  <tr>
+    <td>Bedroom 2 Study Table </td>
+    <td><apex:outputText value="{!bd2st}"></apex:outputText></td>
+  </tr>
+  
+  <tr>
+    <td>Bedroom 2 TV Unit </td>
+    <td><apex:outputText value="{!bd2tv}"></apex:outputText></td>
+  </tr>
+  
+  <tr>
+    <td>Bedroom 2 Wardrobe Type </td>
+    <td><apex:outputText value="{!bd2wt}"></apex:outputText></td>
+  </tr>
+</tbody>
+</table><br/><br/>  
+
+<table border="1" style="width:700px;table-layout : fixed;page-break-inside:avoid; display: {!IF(ISBLANK(bd3pu), 'none', 'Not applicable')};">
+<caption style="text-align: left;font-weight: bold;font-size: 20px; padding: 5px;  ">Bedroom 3 Requirements</caption>
+ <tbody>
+  <tr>
+    <td>Bedroom 3 Primary User </td>
+    <td><apex:outputText value="{!bd3pu}"></apex:outputText></td>
+  </tr>
+  
+  <tr>
+    <td>Bedroom 3 Study Table </td>
+    <td><apex:outputText value="{!bd3st}"></apex:outputText></td>
+  </tr>
+  
+  <tr>
+    <td>Bedroom 3 TV Unit </td>
+    <td><apex:outputText value="{!bd3tv}"></apex:outputText></td>
+  </tr>
+  
+  <tr>
+    <td>Bedroom 3 Wardrobe Type </td>
+    <td><apex:outputText value="{!bd3wt}"></apex:outputText></td>
+  </tr>
+
+  </tbody>
+</table>
+</body> 
+</html>
+   <!-- <apex:pageBlock>
+        <apex:pageBlockTable>
+        
+        </<apex:pageBlockTable>
+    </apex:pageBlock>  -->
+  <script>
+     
+      $(document).ready(function(){
+           $('tr').each(function () {
+            $(this).find('td').each(function () {
+                if ($(this).text().trim() == "") {
+                  //  $(this).text("---NA---");
+                  //  $(this).closest("tr").remove();
+                };
+            });
+        });
+      });
+  </script>
+</apex:page>

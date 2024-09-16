@@ -1,0 +1,59 @@
+html {
+  margin: 0 auto;
+  width: 100%;
+  min-height: 300px;
+  margin-top: 0px;
+}
+
+.mariam {
+	margin-bottom: 28px;
+  background-color: #323c4d;
+  color: white;
+  text-align: left;
+  border: 1px solid #000;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border-radius: 0.3125em;
+  border-radius: 50px;
+  -webkit-box-shadow: 0 0 0.125em #000;
+  -moz-box-shadow: 0 0 0.125em #000;
+  box-shadow: 0 0 0.125em #000;
+  width: 864px;
+  height: 36px;
+  margin-top: 50px;
+}
+
+.questionP {
+  margin-left: 63px;
+  margin-top: 5px;
+  font-family: tahoma;
+  font-size: 20px;
+  font-weight: 5px;
+}
+.belhead {
+    width: 390px;
+    padding: 10px;
+    border: 5px solid gray;
+    margin: 7px;
+}
+.container {
+    text-align: justify;
+    -ms-text-justify: distribute-all-lines;
+    text-justify: distribute-all-lines;
+    width:100%;
+}
+.container>div {
+    width: 100px;
+    height: 100px;
+    vertical-align: top;
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    background:red;
+}
+ span {
+    width: 100%;
+    display: inline-block;
+    font-size: 0;
+    line-height: 0
+}

@@ -1,0 +1,2 @@
+<apex:page standardController="Lead" extensions="CreateNewLeadController" action="{!redirectToWebsiteLeadCretionForm}">
+</apex:page>

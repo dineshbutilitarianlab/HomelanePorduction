@@ -1,0 +1,14 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+		
+    
+<div id="slider">
+  <figure>
+      <img src="/homelane/s/slider-1.jpg" alt="Slider1"/>
+      <img src="/homelane/s/slider-2.jpg" alt="Slider2"/>
+      <img src="/homelane/s/slider-3.jpg" alt="Slider3"/>
+      <img src="/homelane/s/slider-4.jpg" alt="Slider4"/>
+      <img src="/homelane/s/slider-5.jpg" alt="Slider5"/>
+  </figure>
+</div>	
+    
+</aura:component>

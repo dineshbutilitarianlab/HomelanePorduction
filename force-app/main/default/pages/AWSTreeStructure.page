@@ -1,0 +1,1380 @@
+<apex:page showHeader="false" standardController="Opportunity"   extensions="HierarchyClassLightning,FetchUsers" sidebar="false" id="AWS_Structure" >  
+       
+     <!---  load relevent culture library and other common library-->
+    <c:CommonLibraries /> 
+
+    <style>
+    
+   
+    
+    .margintop{
+        margin: 10px 0px 10px 0px;
+    }
+    
+    
+    
+    .k-button:focus:active:not(.k-state-disabled):not([disabled]) {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    
+    }
+    
+    
+    #tabStripOnHover > .k-tabstrip-items li
+    {
+        white-space: nowrap;
+        width:49%;
+    }
+    
+    #tabStripOnHover > .k-tabstrip-items .k-link
+    {
+        display: block;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+    
+    .custom-upload {
+        position: relative;
+        height: 18px;
+        width: 200px;
+        margin:5px;
+    }
+    
+    .custom-upload input[type=file]
+    {
+        outline:none;
+        position: relative;
+        text-align: right;    
+        -moz-opacity:0 ;
+        filter:alpha(opacity: 0);
+        opacity: 0;
+        z-index: 2;
+        width:100%;
+        height:100%;
+        
+    }
+    
+    .custom-upload .fake-file
+    {
+        //background:url(http://www.fold3.com/i/upload-icon.png) center right no-repeat;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 200px;
+        padding: 0;
+        margin: 0;
+        z-index: 1;
+        line-height: 100%;
+    }
+    
+    .custom-upload .fake-file input
+    {
+        font-size:16px;
+        height:12px;
+        width:292px;
+    }
+    
+    .topic_box_border {
+        border: none!important;
+        box-shadow: 0px 0px 5px #989898;
+    }
+    #GetFiles {
+        height: 400px;
+        margin-top: 10px;   border-color: #f4f4f4;
+    }
+     #GetFiles td{border-color: #f4f4f4!important;}
+    .people-input {
+            width: 295px;
+            display:inline-block; 
+        }
+        
+        
+        
+    #accordion{
+        list-style: none;
+        padding: 0 0 0 0;
+        width: 250px;
+        margin:0;
+     
+    }
+    
+    #accordion_share {
+        list-style: none;
+        padding: 0 0 0 0;
+        width: 670px;
+        margin:0;
+     
+    }
+    
+    
+    #accordion li,#accordion_share li{
+        display: block;
+        background-color: #d9d9d9;
+       border:1px solid #FFFFFF; 
+        font-weight: bold;
+        margin-bottom: 1px;
+        cursor: pointer;
+        padding: 5px 5px 5px 6px;
+        list-style: circle;
+        -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    }
+    
+    #accordion div,#accordion_share div {
+      
+        margin-bottom:2px;
+        padding: 10px;
+        display: none;
+        border-bottom:1px solid #d9d9d9;
+        border-left:1px solid #d9d9d9;
+        border-right:1px solid #d9d9d9;
+        -webkit-border-bottom-right-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+       
+    }
+    
+    #sharedivparent{width:651px;height;100px;}
+    .margin{margin:10px 0px} 
+    label.label{display: inline-block;width:50px;}
+    
+     #overlay{
+        display:none;
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        z-index:1000;
+        background-color:#333;
+        opacity: 1;
+    }
+    #cboxClose{
+        position: absolute;
+        top: -6px;
+        right: -7px;
+        //background: url(value="/resource/1379180800000/close") no-repeat top center;
+        //width: 35px;
+        //height: 36px;
+        //text-indent: -9999px;
+    }
+    #popup2{
+        color: #333;
+        display: none;
+        position: absolute;
+        top: 5%;
+        left:10%;
+        width:1000px;
+        height: 600px;
+        padding: 1em;
+        //border: 5px solid #94c0d2;
+        background-color: #fff;
+        text-align: left;
+        z-index:1001;
+        overflow: auto;
+        font-size:12px;
+    }
+    
+        .opp_img {
+    background: #FCB95B;
+    width: 50px;
+    height: 50px;
+    float: left;    border-radius: 4px;
+    
+}
+.opp_img img{width:100%;}
+
+.opp_main h3 {
+    display: inherit;
+    font-size: .875rem;
+    line-height: 1.25;
+    color: #696969;
+    text-transform: uppercase;
+    font-family: Lato;
+}
+.opp_main{margin-bottom:15px;display: inline-block;}
+.opp_title {
+    float: left;
+    margin-left: 15px;
+}
+
+.AWS_btn:focus, .AWS_btn:hover,.AWS_btn:active {
+    background-color: rgba(37, 116, 169, 0.1)!important;
+     color: #2574a9;
+border: 1px solid #f4f4f4;
+}
+
+  .AWS_btn {
+    color: #2574a9;
+    font-weight: normal;
+    margin: 0 10px 0 0;
+    border-radius: 4px;
+    padding: 5px 18px;
+    border: 1px solid #f4f4f4;
+    background-color: #fafafa;
+    background-image: none; 
+    }
+    
+ 
+    
+        
+    
+    
+       .AWS_btn:hover{
+           
+            background-image: none;
+        } 
+
+    </style>
+    <script>
+         //AWS Favicon
+       (function() {
+        var link = document.createElement('link');
+        link.type = 'image/x-icon';
+        link.rel = 'shortcut icon';
+        document.getElementsByTagName('head')[0].appendChild(link);
+         $(document).prop('title', 'AWS Tree');
+    }());
+        
+  </script>
+    
+    <apex:includeScript value="{!URLFOR($Resource.AWS_Dependency, '/ClassicJqueryLibrary/JqueryUITabs10/tabs/jquery-ui-1.10.3.js')}"/>  
+    <apex:includeScript value="{!URLFOR($Resource.AWS_Dependency, '/Kendo_ui_2015_1_318/js/kendo.all.min.js')}"/> 
+    <apex:includeScript value="{!$Page.CommonScripts}"/>   
+    <!-- FT stylesheets -->
+    <apex:stylesheet value="{!$Page.CommonStyles}" />
+    <apex:stylesheet value="{!$Page.AdminToolStyles}" />
+   
+   <body>
+    <div id="spinner" class="inactive">
+            <span id="ball_1" class="spinner_ball"></span>
+            <span id="ball_2" class="spinner_ball"></span>
+            <span id="ball_3" class="spinner_ball"></span>
+       </div>
+   </body> 
+    <div id="overlay">
+            <div id="close">             
+                <div id="popup2">
+                    <button class="close" id="cboxClose" >x</button>
+                    <div class="strat_container">
+            <div class="selected_arranged_topics floatLeft">
+                
+                <div class=" ft-right" >  </div>
+                <div class="topic_box_border toClear">
+                
+                <div class="opp_main">
+                <div class="opp_img"><img src="{!objSobjectDetails.imgUrl}" alt=""/></div>
+                <div class="opp_title">
+                <h3>{!objSobjectDetails.sobjectName}</h3>
+                <h2>{!objSobjectDetails.Name}</h2>
+                </div>
+                </div>
+
+                <div class="toClear"></div>
+                    <a  href="#openModal_MainFolder" class="k-button AWS_btn">Add Main Folder</a>
+                    <div id="openModal_MainFolder" class="modalDialog">
+                        <div>   
+                                    <a href="#close" title="Close" class="close">X</a>
+                    
+                                    <h4>Add Main Folder</h4>
+                                
+                                    <div style="margin:20px 0px">
+                                        <label style="font-weight:bold; width:200px; display:inline-block;">Folder Name</label>
+                                        <input  style="width:297px" class="k-textbox" type="text"  id="BucketName"/>
+                                    </div>
+                                    <div style="margin:20px 0px">
+                                        <label style="font-weight:bold;width:200px;display:inline-block;">Folder Description</label>
+                                        <textarea style="width:297px" class="k-textbox"  id="BucketDescription" rows="4" cols="50"></textarea>
+                                    </div>    
+                                    <div style="margin:20px 0px">
+                                        <button type = "button" class="k-button AWS_btn" id="saveBucketId" onclick="addRow();">Save</button>
+                                    </div>
+                        </div>
+                    </div>
+                    <a onclick="checkParentAvail('Add Sub-Folder');" class="k-button AWS_btn">Add Sub-Folder</a>
+
+                    <div id="openModal_SubFolder" class="modalDialog">
+                        <div>   
+                                    <a href="#close" title="Close" class="close">X</a>
+                    
+                                    <h4>Add Sub-Folder</h4>
+                                
+                                    <div style="margin:20px 0px">
+                                    Add Sub-Folder to the folder
+                                    <p style="font-size: large" id="FolderNameInnerHtml"></p>
+                                        <label style="font-weight:bold; width:200px; display:inline-block;">Sub-Folder Name</label>
+                                        <input  style="width:297px" class="k-textbox" type="text"  id="topicName"/>
+                                    </div>
+                                    <div style="margin:20px 0px">
+                                        <label style="font-weight:bold;width:200px;display:inline-block;">Sub-Folder Description</label>
+                                        <textarea style="width:297px" class="k-textbox"  id="topicDescription" rows="4" cols="50"></textarea>
+                                    </div>    
+                                    <div style="margin:20px 0px">
+                                        <button type = "button" class="k-button AWS_btn" id="saveTopicId">Save</button>
+                                    </div>
+                        </div>
+                    </div>
+                    <br/><br/>
+                     <div id="topicOrganiser"></div>
+                 </div>
+             </div> 
+             <div class="selected_arranged_details floatLeft">
+                <div class=" ft-right" > </div>
+                <div class="topic_box_border toClear">
+                    <a onclick="checkParentAvail('Upload File');" class="k-button AWS_btn">Upload File</a>
+
+                    <div id="openModal_uploadFile" class="modalDialogfile">
+                            <div>   
+                                    <a href="#close" title="Close" class="close">X</a>
+                    
+                                    <h4>Upload File</h4>
+                                
+                                    <div style="margin:20px 0px">
+                                        Upload file to the folder 
+                                        <p style="font-size: large" id="FolderNameInnerHtml1"></p>
+                                        <div id="image">
+                                            <div id="fileuploader">Upload</div>
+                                        </div>
+                                    </div> 
+                        </div>
+                    </div>
+                    
+                    <a onclick="checkParentAvail('Share');" class="k-button AWS_btn">Share</a>
+
+                    <div id="openModal_Share" class="modalDialog">
+                        <div>   
+                                    <a href="#close" title="Close" class="close">X</a>
+                    
+                                    <h4>Share Folder/Files</h4>
+                                
+                                    <div style="margin:20px 0px">
+                                        Share all files and folders from the folder 
+                                        <p style="font-size: large" id="FolderNameInnerHtml2"></p>
+                                        <label style="font-weight:bold; width:200px; display:inline-block;">People</label><br/>
+                                        <select type="text" class="people-input" id="people-input" name="res" required="True"></select>
+                                    </div> 
+                                    <div style="margin:20px 0px">
+                                        <button type = "button" class="k-button AWS_btn" onclick="callShare();">Share</button>
+                                    </div>
+                        </div>
+                    </div>
+                    
+                    <!-- <a href="#openModal_Email" class="k-button AWS_btn">E-Mail</a>
+
+                    <div id="openModal_Email" class="modalDialog">
+                        <div>   
+                                    <a href="#close" title="Close" class="close">X</a>
+                    
+                                    <h4>Email Files</h4>
+                                
+                                    <div style="margin:20px 0px">
+                                        <label style="font-weight:bold; width:200px; display:inline-block;">Mail -ID</label><br/>
+                                        <input placeholder="Type Mail-Id.." style="width:297px" type="text" name="email" id="email" class="people-input k-textbox"/>
+                                    </div> 
+                                    <div style="margin:20px 0px">
+                                        <button type = "button" class="k-button AWS_btn" >E-Mail</button>
+                                    </div>
+                        </div>
+                    </div>
+                     -->
+                     
+                    <button class="k-button AWS_btn" onclick="openEmailComp('AWS_Structure:invisibleformId:emailtemplateId');">Email Files</button>
+                    
+                    <button class="k-button AWS_btn" onclick="getAllFiles(relatedId);">All Files</button>
+                    
+                    <button class="k-button AWS_btn" onclick="deleteFiles()">Delete file(s)</button>
+                    
+                    <div id="GetFiles" class=""></div>
+                </div>
+             </div> 
+          </div>
+        
+    
+
+                </div>
+            </div>
+        </div>
+    
+        <apex:actionRegion >
+            <apex:form >
+                <apex:actionfunction name="setParentName" rerender="xxx" action="{!setParentName}">
+                    <apex:param assignTo="{!ParentName}" name="parentString" value="" /> 
+                </apex:actionfunction>  
+            </apex:form>    
+        </apex:actionRegion>
+          
+        <!--------- End Popup Add New topic  + "&token=5a8b577e-7e8d-4fee-b910-ae48c6b9ee48" ----------->
+        <div class = "bg-fade"></div>
+        <div class = "modal-window-addTopic">  
+              
+                <!--------- End activity warning Footer ----------->
+       </div>
+        <!-- End delete warning pop up on activities   --> 
+        
+        
+        <apex:form id="invisibleformId"> 
+            <apex:inputText styleClass="k-textbox" style="display:none" size="40" value="{!eTemplateId}" id="emailtemplateId"  onFocus="this.blur()" disabled="false"/>
+        </apex:form> 
+     <script>
+        var putURL = '{!API_Request_Response.URL__c}';
+        function checkParentAvail(str){
+            if(parentName == ''){
+                //humane.log('Select a folder',{ addnCls: 'humane-flatty-info'});
+                humane.info = humane.spawn({ addnCls: 'humane-libnotify-info', timeout: 1000 });
+                humane.info('Select a folder');
+            }else if(str == 'Add Sub-Folder'){
+                window.location.href = "#openModal_SubFolder";
+            }else if(str == 'Upload File'){
+                
+                var autoNumber;
+                //alert('opp : '+relatedId);
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.HierarchyClassLightning.updateOppFileNumber}',
+                    relatedId,function(result,event){
+                    if(event.status){
+                        autoNumber = result;
+                        var pName ;
+                        if(parentName == 'Site Measurement'){
+                            pName = 'measurements';
+                        } else if(parentName == '3D Drawings'){
+                            pName = '3d_files';
+                        } else if(parentName == '2D Drawings'){
+                            pName = '2d_drawings';
+                        } else if(parentName == 'Quotation'){
+                            pName = 'quotations';
+                        } else {
+                            pName = 'others';
+                        }
+
+                        var uploadfileName = relatedId +'-'+ pName +'-'+ (0+autoNumber);
+                        
+                        actionUrl = "https://"+putURL+"/uploadArtifact?path="+relatedId+"/artifacts/"+pName+"&fileName="+uploadfileName+"&token=5a8b577e-7e8d-4fee-b910-ae48c6b9ee48" ;
+                        console.log('actionUrl : '+actionUrl);
+                        //alert('actionUrl : '+actionUrl);
+                        window.location.href = "#openModal_uploadFile";
+                        $("#fileuploader").uploadFile({
+                        fileName:'file',
+                        url:actionUrl,
+                        showFileCounter: !1,
+                        onSuccess : function(){
+                            //alert('Upload Successful :)');
+                            var NAME = document.getElementById("spinner");
+                            var currentClass = NAME.className;
+                            if (currentClass == "inactive") { // Check the current class name
+                                NAME.className = "active";   // Set other class name
+                            }
+                            var fName = $('.ajax-file-upload-filename').text();
+                            var myString = fName;
+                            var extn;
+                            var start_pos = myString.lastIndexOf('(');
+                            var end_pos = myString.lastIndexOf(')');
+                            //alert('Start : '+start_pos+' End : '+end_pos);
+                            var text_to_get =           myString.substring(start_pos,end_pos+1);
+                            //alert('text_to_get : '+text_to_get);
+                            fName = fName.replace(text_to_get,'');
+                            //alert('fName : '+fName);
+                            
+                            extn = fName.substring(fName.lastIndexOf('.'))
+                            //alert('extn : '+extn);
+
+                            Visualforce.remoting.Manager.invokeAction(
+                                '{!$RemoteAction.HierarchyClassLightning.uploadFile}',
+                                 uploadfileName,'',parentName,'file',extn,text_to_get,relatedId,actionUrl,function(result,event){
+                                location.href = "#close";
+                                location.reload();
+                                //alert('Creation Successful :)');
+                                humane.info = humane.spawn({ addnCls: 'humane-libnotify-info', timeout: 1000 });
+                                humane.info('Upload Successful');
+                                NAME.className = "inactive";
+                            });
+                        },
+                        onError : function(){
+                            alert('Upload UnSuccessful :(');
+                        }
+                        });
+                    }
+                });
+                
+
+            }else if(str == 'Share'){
+                window.location.href = "#openModal_Share"; 
+            }
+        }
+        
+        function deleteFiles(){    
+             var grid =  $("#GetFiles").data("kendoGrid").dataSource.data();
+             Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.HierarchyClassLightning.deleteFiles}',
+                    JSON.stringify(grid),function(result,event){
+                    if(event.status){
+                        if(result == 'Empty'){
+                            humane.log('Select files to delete',{ addnCls: 'humane-flatty-error'});                         
+                        }else{
+                            var res = removeQuotes(result);
+                            console.log('res : '+res);
+                            console.log('JSON.stringify(Res) : '+JSON.stringify(res));
+                            var grid = $("#GetFiles").data("kendoGrid");
+                            grid.dataSource.data(res); 
+                        }
+                    }else{
+                        alert('Retrival Failed');
+                    }
+                });
+        }
+     </script>   
+
+     <script id="treeview-template" type="text/kendo-ui-template">
+             
+            # if ( item.name != undefined && item.name != 'level') { #
+               <span class="rowColor">  <a title="">  #:item.text#</a> <span>
+             # } else { #           
+           
+                <span class="rowSubColor" id= "open_popup" > #:item.text# </span>
+            #}#
+     </script>
+     <script id="treeview-template1" type="text/kendo-ui-template">
+             
+            # if ( item.items == undefined ) { #
+                <a title="click to delete"><span class="k-icon k-delete" >      </span></a>  
+                #:item.text# 
+            # }  #           
+            
+     </script>
+     <script id="checkbox-template" type="text/kendo-ui-template">
+      <div align="center"> <input type="checkbox" class="done"   #if(isSelected){# checked="checked" #}#></input></div>
+     </script>
+     <script>
+        function callToolTip(){
+            console.log('parentNameparentNameparentNameparentName :'+parentName);
+            if(parentName == ''){
+                alert('Select a node in order to Add folder');
+            }else{
+                $("#popup").css("display", "block");
+                $("#tabStripOnHover").kendoTabStrip();
+            }
+        }
+        
+        function callToolTip_Bucket(){
+            $("#popup_Bucket").css("display", "block");
+              $("#tabStripOnHover").kendoTabStrip();
+        }
+        function bucketPopupCancel(){
+            $("#popup_Bucket").css("display", "none");
+        }
+        function closePopup(){
+            $("#popup").css("display", "none");
+        }
+        
+        var parentName='';
+        function onSelect(e) {
+        
+            var NAME = document.getElementById("spinner");
+            var currentClass = NAME.className;
+            if (currentClass == "inactive") { // Check the current class name
+                NAME.className = "active";   // Set other class name
+                //document.getElementById('popup2').style.display='none';
+                //$("#popup2").fadeToggle("fast");
+            }
+            var grid =  $("#GetFiles").data("kendoGrid").dataSource.data();
+            parentName = this.text(e.node);
+            console.log(' onSelect parentName : '+parentName);
+            document.getElementById('FolderNameInnerHtml').innerHTML = parentName;
+            document.getElementById('FolderNameInnerHtml1').innerHTML = parentName;
+            document.getElementById('FolderNameInnerHtml2').innerHTML = parentName;
+            setParentName(parentName);
+            console.log('JSON.stringify(grid) : '+JSON.stringify(grid));
+            Visualforce.remoting.Manager.invokeAction(
+           '{!$RemoteAction.HierarchyClassLightning.getFiles}',
+                JSON.stringify(grid),parentName,'{!relatedId}',function(result,event){  
+                if(event.status){
+                    var res = removeQuotes(result);
+                    console.log('res : '+res);
+                    console.log('JSON.stringify(Res) : '+JSON.stringify(res));
+                    var grid = $("#GetFiles").data("kendoGrid");
+                    if(res == null){
+                        grid.dataSource.data('');
+                        //alert('No Files Found'); 
+                        humane.log('Folder is empty',{ addnCls: 'humane-flatty-error'});
+                    }else{
+                        grid.dataSource.data(res); 
+                    }
+                     NAME.className = "inactive";
+                     //document.getElementById('popup2').style.display='block';
+                }else{
+                    alert('Retrival Failed');
+                }
+            });
+        } 
+        
+        function callShareFolder(){
+            $("#div_shareFolder").css("display", "block");
+        }
+        
+        function callShare(){
+            peopleShare = $("#people-input").data("kendoMultiSelect").value();
+            if(peopleShare == null){
+                peopleShare = '';
+            } 
+            Visualforce.remoting.Manager.invokeAction(
+           '{!$RemoteAction.HierarchyClassLightning.SharePeople}',
+                parentName,peopleShare.toString(),relatedId,function(result,event){ 
+                if(event.status){
+                    location.href = "#close ";
+                }else{
+                    alert('Retrival Failed');
+                }
+            });
+        }
+        
+        function getAllFiles(relId){
+            var NAME = document.getElementById("spinner");
+            var currentClass = NAME.className;
+            if (currentClass == "inactive") { // Check the current class name
+                NAME.className = "active";   // Set other class name
+            } 
+            Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.HierarchyClassLightning.getAllFiles}',
+                relId,function(result,event){  
+                if(event.status){
+                    var res = removeQuotes(result);
+                    console.log('res : '+res);
+                    console.log('JSON.stringify(Res) : '+JSON.stringify(res));
+                    var grid = $("#GetFiles").data("kendoGrid");
+                    if(res == null){
+                        grid.dataSource.data('');
+                        //alert('No Files Found'); 
+                        humane.log('Folder is empty',{ addnCls: 'humane-flatty-error'});
+                    }else{
+                        grid.dataSource.data(res); 
+                    }
+                     NAME.className = "inactive";
+                     //document.getElementById('popup2').style.display='block';
+                }else{
+                    alert('Retrival Failed');
+                }
+            });
+        }
+        
+     </script> 
+     <script>
+        function removeQuotes(mystring) {
+                
+            newString = mystring.replace(/&(lt|gt|quot);/g, function (m, p) { 
+                 return (p == "lt") ? "<" : ((p == "gt") ? ">" : "\"");
+            });
+            
+            //var newJ= $.parseJSON(newString);
+            var  newJ = eval ("(" + newString+ ")");
+            return newJ;
+        }
+     </script>
+
+     <script>
+ 
+         var treeview = null;    
+         var jsonstr  =  JSON.parse($('<div/>').html('{!HTMLENCODE(jsonstr )}').text());
+          $(document).ready(function(){
+        
+            //dragModalTopic(); 
+            treeview = $("#topicOrganiser").kendoTreeView({
+                dragAndDrop: false,
+                template: kendo.template($("#treeview-template").html()),  
+                dataSource:    jsonstr,
+                checkboxes: true,
+                select: onSelect 
+                
+            }).data("kendoTreeView")
+                       
+        });
+        
+        $('#searchDecisionText').keypress(function(e){ 
+             if (e.keyCode == '13'){
+               serachTopics();
+               document.getElementById('searchDecisionText').blur();
+               return false;
+             }
+         });
+        $(document).on("click", "#saveTopicId",function(e){   
+            validateTopic();
+        });        
+        $(document).on("click", "#topicOrganiser .k-delete", function(e) {     
+              e.preventDefault(); alert(1)
+              var next = $(this).parent().parent().parent().parent().next(); 
+              if( $("#topicOrganiser").data("kendoTreeView").dataItem(next) != undefined){
+                 var nextitems = $("#topicOrganiser").data("kendoTreeView").dataItem(next).items;
+                
+                  if(($("#topicOrganiser").data("kendoTreeView")).dataSource.data().length == 0) {
+                          
+                       $("#topicOrganiser").data("kendoTreeView").setDataSource(new kendo.data.HierarchicalDataSource({
+                          data: nextitems 
+                       }));
+                  }
+                  else
+                  {    
+                      $("#topicOrganiser").data("kendoTreeView").append(nextitems);
+                          
+                  }
+              }
+              $("#topicOrganiser").data("kendoTreeView").remove($(this).parent().parent());
+              var grid =  $("#topicOrganiser").data("kendoTreeView").dataSource.data();
+    
+        });
+     </script>
+   
+     <script>
+        
+        var relatedId = '{!relatedId}';
+        
+        function addRow()
+        {     
+             relatedId = '{!relatedId}';
+              var bucName = document.getElementById('BucketName');
+              var bucDescription = document.getElementById('BucketDescription');
+                 console.log('bucName : ',bucName);
+                 console.log('bucDescription : ',bucDescription);
+                 //alert('relatedId  : '+relatedId ); 
+                 
+              if( bucName.value == ''|| bucName.value == undefined){
+                 alert('Enter Folder/Attachment Name');
+                 return false;
+              } else if(bucName.value.length > 80){
+                alert('Maximum length is 80 characters.');
+                return false;
+              }
+              
+               var grid =  $("#topicOrganiser").data("kendoTreeView").dataSource.data();
+                          Visualforce.remoting.Manager.invokeAction(
+                            '{!$RemoteAction.HierarchyClassLightning.createNew_Bucket}',
+                            bucName.value,bucDescription.value,relatedId,function(result,event){ 
+                            if(result == 'success'){
+                                var treeview = $("#topicOrganiser").data("kendoTreeView");
+                                  if($("#topicOrganiser").find('li').length == 0) {
+                                      treeview.setDataSource(new kendo.data.HierarchicalDataSource({
+                                      data: [
+                                        {  "text": bucName.value,"name":"level1" }
+                                      ]
+                                    }));
+                                  }
+                                  else{    
+                                          var treeview = $("#topicOrganiser").data("kendoTreeView"); 
+                                         // appends a new node to the root level
+                                         treeview.append({  "text": bucName.value ,"name":"level1"  });
+                                  }
+                                document.getElementById('BucketName').value = '';
+                                document.getElementById('BucketDescription').value = '';
+                                location.href = "#close ";
+                            }else{
+                                alert('Bucket name with the name: '+bucName.value+' already exists');
+                            }
+                            });
+          }
+          
+          function validateTopic()
+          {
+             var topicName = document.getElementById('topicName');
+             var topicDescription = document.getElementById('topicDescription');
+             creationType = 'folder';
+             console.log('parentName : '+parentName);
+             console.log('topicName : ',topicName);
+             console.log('topicDescription : ',topicDescription);
+              
+            if( topicName.value == ''|| topicName.value == undefined){
+                 alert('Enter Folder/Attachment Name');
+                 return false;
+            } else if(topicName.value.length > 80){
+                alert('Maximum length is 80 characters.');
+                return false;
+            } else {
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.HierarchyClassLightning.uploadFile}',
+                    topicName.value ,topicDescription.value ,parentName,creationType,'Folder',0,relatedId,'',function(result,event){
+                    if(result == 'success'){
+                         //$('.modal-window-addTopic').fadeOut('slow');$('.bg-fade').fadeOut('slow');
+                         $("#popup").css("display", "none");
+                         var selectedNode = treeview.select();
+                            // passing a falsy value as the second append() parameter
+                            // will append the new node to the root group
+                            if (selectedNode.length == 0) {
+                                selectedNode = null;
+                            }
+
+                            treeview.append({
+                                text: $("#topicName").val(),
+                                type: 'folder'
+                            }, selectedNode); 
+                         topicName.value = '';
+                         topicDescription.value =''
+                         var grid =  $("#topicOrganiser").data("kendoTreeView").dataSource.data();
+                         $('body').css('overflow','auto');
+                         location.href = "#close    ";
+                     } else {
+                        alert('Topic name already exist');
+                     }
+                });
+            }
+          }
+            
+          var creationType =''; 
+           
+          
+          function getExtension(path) {
+                var basename = path.split(/[\\/]/).pop(),  // extract file name from full path ...
+                                                           // (supports `\\` and `/` separators)
+                    pos = basename.lastIndexOf(".");       // get last position of `.`
+            
+                if (basename === "" || pos < 1)            // if file name is empty or ...
+                    return "";                             //  `.` not found (-1) or comes first (0)
+            
+                return basename.slice(pos + 1);            // extract extension ignoring `.`
+          }
+          
+          function topicPopupCancel(){
+                document.getElementById('topicName').value = '';
+                document.getElementById('topicDescription').value = '';
+                $("#popup").css("display", "none");
+          }
+           function showModal(){
+                var scrollPosY = $(window).height();
+                var scrollPosX = $(window).width();
+                scrollPosY = (scrollPosY/2)-(($('.modal-window-addTopic').height())/2);
+                scrollPosX = (scrollPosX/2)-(($('.modal-window-addTopic').width())/2);
+                $('.modal-window-addTopic').css('top',scrollPosY+'px');  
+                $('.modal-window-addTopic').css('right',scrollPosX+'px'); 
+                $('body').css('overflow','hidden');
+                $('.bg-fade').fadeIn('slow');       
+                $('.modal-window-addTopic').slideDown('slow');      
+                dragModalRelation();      
+          }
+          
+          // $('.k-treeview span.k-in a .delete-link').css('background','black');
+          //alert($('.delete-link'));
+     </script>
+   <style>
+        .k-pager-numbers .k-link{
+               /* color:#fff !important;*/
+               padding: 0 8px;
+              }
+              .k-pager-numbers .k-link:hover{
+                padding: 0px 8px;
+                border-style: solid;
+                border-width: 0px;
+                line-height: 22px;
+                background: #999;
+              }
+              .k-pager-numbers .k-link{
+                vertical-align: middle;
+             }
+             .k-filter-menu .k-button{
+                font-weight:normal;
+             } 
+             .k-list-container ul li{
+                    margin-left: 0em;
+                }
+                .k-pager-numbers li{
+                    margin-left: 0em;
+                }
+             
+             #tabStripOnHover li.k-state-active {
+                background: #d9d9d9;
+            }
+            
+            
+            #tabStripOnHover .k-item {
+                background: #fff;
+                border-width: inherit;
+                border-radius: inherit;
+            }
+            
+            .k-tabstrip-items .k-tab-on-top {
+                z-index: 1;
+            }  
+            
+            #tabStripOnHover .k-header{
+                border-color: #000;
+            } 
+            #tabStripOnHover .k-block{
+                border-color: #000;
+            }
+            #tabStripOnHover .k-content{
+                border-width: 0;
+            }
+            .k-treeview span.k-in {
+    background: none;
+    width: 85%;
+}
+.k-state-focused.k-state-selected, .k-list > .k-state-focused.k-state-selected, .k-listview > .k-state-focused.k-state-selected, td.k-state-focused.k-state-selected {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.k-state-focused, .k-list > .k-state-focused, .k-listview > .k-state-focused, .k-grid-header th.k-state-focused, td.k-state-focused, .k-button.k-state-focused {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+             
+   </style>
+   
+   <script>
+   var uploadLink = '';
+   var uploadSize = '';
+   function check(link){
+        uploadLink = link.value;
+        console.log('uploadLink : '+uploadLink);
+        console.log(formatSizeUnits(link.files[0].size));
+        uploadSize = formatSizeUnits(link.files[0].size);
+        console.log('uploadSize : '+uploadSize);
+   }
+   
+   </script>
+   
+   <script>
+       function formatSizeUnits(bytes){
+                if      (bytes>=1000000000) {bytes=(bytes/1000000000).toFixed(2)+' GB';}
+                else if (bytes>=1000000)    {bytes=(bytes/1000000).toFixed(2)+' MB';}
+                else if (bytes>=1000)       {bytes=(bytes/1000).toFixed(2)+' KB';}
+                else if (bytes>1)           {bytes=bytes+' bytes';}
+                else if (bytes==1)          {bytes=bytes+' byte';}
+                else                        {bytes='0 byte';}
+                return bytes;
+        }
+   </script>
+   
+   <script>
+   
+    var  gridData = [ ]
+        $(document).ready(
+              function(){
+                $("#GetFiles").kendoGrid({
+                   dataSource:{
+                       data:gridData,
+                       transport: {
+                        read: function(event) {   
+                         },
+                        update: function(e) {  
+                 
+                        }
+                       },
+                       schema: {
+                           model: {
+                              name: "name",
+                              fields: {
+                                  name: { type: "string" },
+                                  description: { type: "string" },
+                                  createddate: { type: "datetime" },
+                                  ext : { type: "string" }, 
+                                  isSelected: { type: "boolean" },
+                                  fileurl : { type: "string" },
+                                  eleId:{ type: "string" },
+                                  size : { type: "string" }
+                              }
+                          }
+                       },
+                       pageSize: 15
+                   },
+                   sortable: true,
+                   resizable: true,
+                   columns: [ 
+                       {
+                           field: "isSelected",
+                           title: "Select",
+                           template:  kendo.template($("#checkbox-template").html()), 
+                           width: 50,
+                           sortable:true
+                       }, 
+                       {
+                           field: "name",
+                           title: "Name",
+                           width: 180,
+                           template: '<div style="vertical-align: top;">#:name#</div>',
+                           sortable:true
+                       } , 
+                       {
+                           field: "eleId",
+                           title: "id",
+                           hidden: true
+                       } ,
+                       {
+                           field: "ext",
+                           title: "Extension", 
+                           width: 80,
+                           sortable:true
+                       }, 
+                       {
+                           field: "size",
+                           title: "Size", 
+                           width: 80,
+                           sortable:true
+                       },  
+                       {
+                           field: "description",
+                           title: "Description", 
+                           width: 80,
+                           sortable:true
+                       },
+                       {
+                           field: "fileurl",
+                           title: "FileURL", 
+                           hidden :true
+                       }
+                  ],
+                filterable: {
+                    extra: false
+                },
+                  pageable: true,
+                  height: 450
+                });
+                
+                $(".k-loading-mask").hide();
+                var grid = $("#GetFiles").data("kendoGrid");
+                grid.tbody.on("change", ".done", function (e) { 
+                    var row = $(e.target).closest("tr");
+                    var item = grid.dataItem(row);
+                    var $target = $(e.currentTarget);
+                    item.set("isSelected", $(e.target).is(":checked") ? 'true' : 'false');
+                    
+                    console.log('item : '+item.name); 
+                    
+                 });
+               }
+               
+          )
+          
+          function removeQuotes(mystring) {
+                    
+                newString = mystring.replace(/&(lt|gt|quot);/g, function (m, p) { 
+                     return (p == "lt") ? "<" : ((p == "gt") ? ">" : "\"");
+                });
+                
+                //var newJ= $.parseJSON(newString);
+                var  newJ = eval ("(" + newString+ ")");
+                return newJ;
+            }
+    </script>
+    <script id="checkbox-template" type="text/kendo-ui-template">
+      <div align="center"> <input type="checkbox" class="done"   #if(isSelected){# checked="checked" #}#></input></div>
+    </script>
+    <script>
+        var usermultiselectCache = {};
+        
+        $(document).ready(function() {
+            forPeople();
+        });
+        
+        function forPeople(){
+          $("#people-input").kendoMultiSelect(autoSelectUserWithGrup({
+                select: onSelectPeople
+          }));
+        }
+        
+        function onSelectPeople(e) {
+            var dataItem = this.dataSource.view()[e.item.index()];
+             if(dataItem.id.indexOf('00G') == 0) {
+             // console.log("event :: select (" + dataItem.name + " : " + dataItem.id + ")" );
+                addedGroup(dataItem.id,'people-input',dataItem, 'resposible');
+            }
+        }
+        
+        function autoSelectUserWithGrup(additioinalOptn) {
+        
+            var defaultOptn = getBasicJSONforUsrMultiSelect(FetchUsers.searchUserNgrps,additioinalOptn.value)
+            defaultOptn["placeholder"] = "Type user or group name..";
+            if (additioinalOptn) {
+                $.extend(defaultOptn, additioinalOptn);
+            }
+            return defaultOptn;
+        }
+        
+        function getBasicJSONforUsrMultiSelect(remoteFunction, defaultValue) {
+            if(defaultValue){
+                $.each(defaultValue, function(index, val){
+                    if(val && val.id){  
+                        val.id = val.id.substring(0, 15);
+                        appendUserInList(val.name, val.id, val.img);
+                    }
+                });    
+            }
+        
+            return {
+                dataTextField: "name",
+                dataValueField: "id",
+                autoBind: false,
+                dataSource: createFetchUserDS(remoteFunction),
+                itemTemplate: '<table>' + '<tr><td rowspan="2" valign="top"><img class="usrImg" src=\"#:data.url#" alt=\"Image\" /></td><td>#: data.name #</td></tr>' + '<tr><td  class="desc">#: data.desc #</td></tr></table>',
+                tagTemplate: '<span class="selected-value">' + "# if (data.img != null) { #" +  '<img class="usrImg" src=\"#:data.img#" alt=\"Image\" />' + "# } else { #"  + '<img class="usrImg" src=\"#:data.url#" alt=\"Image\" />' + "# } #" +
+                '</span><span>#: data.name #</span>'
+            };
+        }
+        
+        function createFetchUserDS(remoteFunction) {
+    
+            return new kendo.data.DataSource({
+                data : getJSONValues(usermultiselectCache),
+                transport: {
+                    read: function(op) {
+                        handleUserAutoSelect(op, remoteFunction);
+                    }
+                },
+                serverFiltering: true
+            });
+        }
+        
+        function getJSONValues(map) {
+            var users = []
+            $.each(map, function(id, val) {
+                users.push(val);
+            });
+            return users;
+        }
+        
+        function handleUserAutoSelect(op, remoteMethod) {
+            if (op.data.filter && op.data.filter.filters[0]) {
+        
+                remoteMethod(op.data.filter.filters[0].value, function(output) {
+                    var users = [];
+                    $.each(output, function(index, arrItems) {
+                        $.each(arrItems, function(count, ug) {
+                            var userId = ug.Id.substring(0, 15);
+                            if (ug.LastName) {
+                                users.push({
+                                    name: (ug.FirstName + ' ' + ug.LastName),
+                                    id: userId,
+                                    url: ug.SmallPhotoUrl,
+                                    desc: !ug.ftUser ? 'User' : '',
+                                    type: 'User'
+                                });
+                            } else {
+                                users.push({
+                                    name: ug.Name,
+                                    id: userId,
+                                    desc: 'Public Group',
+                                    url: '/resource/' + 'AWS_AlohaDependency' + '/common/icon-publicGroups-24x24.png',
+                                    type: 'Public Group'
+                                });
+                            }
+                            usermultiselectCache[userId] = users[users.length - 1];
+                            usermultiselectCache[userId].name = usermultiselectCache[userId].name.replace(/&amp;/g, '&');
+                        });
+                    });
+                    op.success(users);
+                });
+        
+            } else {
+                op.success(getJSONValues(usermultiselectCache));
+            }
+        }
+        
+        function appendUserInList(userName, userId, photoUrl) {
+            if(userId){ 
+                userId = userId.substring(0, 15);
+            }
+            var newVal = {
+                name: userName,
+                id: userId,
+                url: photoUrl,
+                type: 'User'
+            };
+        
+            if (usermultiselectCache[userId]) {
+                $.extend(usermultiselectCache[userId], newVal);
+            } else {
+                newVal['desc'] = '';
+                usermultiselectCache[userId] = newVal;
+            }
+        
+        }
+    </script>
+    
+   
+    <script>
+            $(document).ready(function () { 
+                var _requestBucket;
+                $("#btn_submit").click(function(event){
+                    //alert(1);
+                    event.preventDefault();
+                    var file = document.getElementById('file').files[0];
+                    var attachment;
+                    attachment = window.btoa(this.result);
+                    alert('_filefile : '+file);
+                    var _file;
+                    _file = $("#file").val().replace(/.+[\\\/]/, "");
+                    alert('_file : '+_file);
+                    
+                    $("#key").val(_file);
+                    creationType = 'file';
+                     console.log('uploadLink :uploadFile :  '+uploadLink);
+                     if(uploadLink != ''){
+                     var filename = uploadLink.substring(uploadLink.lastIndexOf('\\')+1);
+                     var fileDesc = document.getElementById('fileDescription'); 
+                     var ext =  getExtension(uploadLink); 
+                     
+                     }
+                    //uploadFile();
+                });
+                
+         });
+    </script>
+    <script>
+        
+      </script>
+    <script>
+        var urls = '';
+        function openEmailComp(emailTempId){
+            
+             var grid =  $("#GetFiles").data("kendoGrid").dataSource.data();
+            
+             Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.HierarchyClassLightning.getFileLinks}',
+                    JSON.stringify(grid),function(result,event){
+                    if(event.status){
+                        if(result == 'Failed'){
+                            humane.log('Select files to mail the links',{ addnCls: 'humane-flatty-error'});
+                        }else{
+                            var res = removeQuotes(result);
+                            for(var i in res)
+                            {   
+                                if(res[i].eleId != undefined) {
+                                    if(urls == ''){
+                                        urls = res[i].eleId;
+                                    }else{
+                                        urls = urls +','+ res[i].eleId;
+                                    }
+                                }   
+                            }
+                            console.log('urls : '+urls);
+                        }
+                    }else{
+                        alert('Retrival Failed');
+                    }
+                });
+                if(urls != ''){
+                     openEmailCompDone(emailTempId);
+                }
+        }
+        
+        var newWinEmail=null;
+        var curUrl = '{!currentURL.URL__c}';
+        function openEmailCompDone(emailTempId){
+            console.log('openWindowEmailComp : ');
+            
+            var url="https://"+curUrl+"/apex/AWS_customEmailTemplate?emailTempId="+emailTempId;
+            newWinEmail=window.open(url, 'Popup','height=500,width=600,left=100,top=100,resizable=no,scrollbars=yes,toolbar=no,status=no');
+            console.log('newWinEmail : '+newWinEmail);
+            if (window.focus) 
+            {
+                newWinEmail.focus(); 
+            }
+            return false;
+        }
+        
+        function closeEmailComp()
+        {
+           if (null!=newWinEmail) 
+           {
+              newWinEmail.close();
+           }  
+           redirectToEmail();
+        }
+        
+        function redirectToEmail(){
+            var templateId = document.getElementById('AWS_Structure:invisibleformId:emailtemplateId').value;
+            //alert('redirectToEmail : '+templateId);
+            
+             data = urls;
+             arr =  $.unique(data.split(','));
+             urls = arr.join(",");
+             //alert('urls : : '+urls);
+            
+            //alert('urls Redirect : '+urls);
+            //location.href = "/_ui/core/email/author/EmailAuthor?template_id="+templateId+"&emailIds="+urls;
+            var sendURL = '{!classiccurrentURL.URL__c}';
+            location.href = "https://"+sendURL+"/apex/SendEmailAWSLink?template_id="+templateId+"&emailIds="+urls+"&relatedId="+relatedId;
+        }
+        
+        $( document ).ready(function() {
+
+            $('#overlay, #popup2').css('display', 'block');
+            var el = document.getElementById("cboxClose");
+            el.addEventListener("click",closePopup2, false);
+                
+        });
+        
+       
+        function closePopup2(){
+           location.href = "/apex/AWSTreeStructureLightning?id="+relatedId;
+        }
+        
+        </script>
+        
+        <script>
+            kendo.ui.TreeView.prototype.getCheckedItems = (function(){
+
+              function getCheckedItems(){
+                var nodes = this.dataSource.view();
+                return getCheckedNodes(nodes);
+              }
+            
+              function getCheckedNodes(nodes){
+                var node, childCheckedNodes;
+                var checkedNodes = [];
+            
+                for (var i = 0; i < nodes.length; i++) {
+                  node = nodes[i];
+                  if (node.checked) {
+                    checkedNodes.push(node);
+                  }
+                    
+                  // to understand recursion, first
+                  // you must understand recursion
+                  if (node.hasChildren) {
+                    childCheckedNodes = getCheckedNodes(node.children.view());
+                    if (childCheckedNodes.length > 0){
+                      checkedNodes = checkedNodes.concat(childCheckedNodes);
+                    }
+                  }
+            
+                }
+            
+                return checkedNodes;
+              }
+            
+              return getCheckedItems;
+            })();
+        </script>
+        <script>
+            var uploadObject;
+            uploadObject= null;
+    
+            function submitFile(){
+                uploadObject.fileName= getFileName($('.ajax-file-upload-filename').text());
+                getURL();
+            }
+            function getFileName(str){
+               return str.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '-');
+            }
+
+            function onuploadSuccess(){
+                var myString = "Get me (betwgjhvhjjheen) results";
+
+                var start_pos = myString.indexOf('(') -1;
+                var end_pos = myString.indexOf(')',start_pos);
+                var text_to_get = myString.substring(start_pos,end_pos+1);
+
+
+                var ext =  getExtension(uploadLink);
+                var fName = getFileName($('.ajax-file-upload-filename').text());
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.HierarchyClassLightning.uploadFile}',
+                         fName,'',parentName,'file',ext,uploadSize,relatedId,uploadObject.url,function(result,event){
+                        location.href = "#close";
+                    });
+            }
+        </script>
+        
+</apex:page>

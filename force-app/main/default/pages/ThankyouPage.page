@@ -1,0 +1,86 @@
+<apex:page showHeader="false" controller="ThankyouPageController" sidebar="false" >
+<head>
+ <link class="asyncAsset" href="https://fonts.googleapis.com/css?family=Lato:wght@400;700;900&display=swap" rel="stylesheet"/>
+    <style>
+    
+          .header {
+            background: #f2f2f2;
+            padding: 15px 20px;
+            padding-bottom: 20px;
+            overflow: auto;
+          }
+          
+          .thankyou_section .content {
+            padding: 30px;
+          }
+                    .thankyou_section .line {
+            border-top: 2px solid;
+            width: 25px;
+            margin: 60px 0px;
+            display: none;
+          }
+                    .thankyou_section h2 {
+            font-weight: bold;
+            font-size: 28px;
+            margin: 10px auto;
+          }
+                    .thankyou_section .content p {
+            font-size: 16px;
+            margin: 40px 0px;
+            line-height: 26px;
+          }
+                      .thankyou_section {
+              padding: 30px;
+              width: 60%;
+              margin: auto;
+              padding-top: 0px;
+            }
+            
+          .thankyou_section .content {
+            text-align: center;
+            padding-top: 30px;
+            padding-right: 209px;
+            padding-bottom: 30px;
+            padding-left: 209px;
+          }
+                    .thankyou_section .content p {
+            font-size: 16px;
+            margin: 40px 0px;
+            line-height: 26px;
+          }
+    </style>
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-50002231-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-50002231-1',{
+      'page_title' : 'SF WorkContract',
+      'page_path': '/WorksContractVFPage'
+    });
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </head>
+    <body style="font-family: Lato,Helvetica,Arial,sans-serif;box-sizing: border-box;padding: 10px;">
+        <apex:Form >
+            <div class="header">
+                <div class="welcome_wrapper">
+                    <div class="logoWrapper">
+                        <img src="https://super.homelane.com/hlrebrand2.png" alt="Brand logo" />
+                    </div>
+                </div>
+            </div>
+            <div class="wrapper align">
+                <div id='thankyou_section' class="hidepages thankyou_section">
+                    <div class="content">
+                        <div class="line"></div>
+                        <h2 >Thank you!</h2>
+                        <p >Your work contract is signed off on <br/> {!workContactSingOffDate}. No further action is required.</p>
+                        <p >If you have any queries please contact us <br/> @1800-102-4663  </p>
+                    </div>
+                </div>
+            </div>
+        </apex:Form>
+    </body>
+</apex:page>

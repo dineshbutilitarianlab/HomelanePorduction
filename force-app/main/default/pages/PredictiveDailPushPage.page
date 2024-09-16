@@ -1,0 +1,3 @@
+<apex:page standardController="Lead" extensions="PredictiveDialPush_Controller" showHeader="false" sidebar="false" docType="html-5.0" action="{!updateDiallerCampaignStatusCallIntiated}" recordSetVar="leads">
+<apex:pageMessages ></apex:pageMessages>
+</apex:page>

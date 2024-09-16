@@ -1,0 +1,18 @@
+<apex:page standardController="Customer_Bill__c" showHeader="false">
+<style>
+    .errorline{
+        color:red;
+        font-family: verdana;
+        font-size: 200%;
+        text-align: center;
+        margin-left: 10%;
+    
+    }
+</style>
+<apex:outputPanel styleClass="errorline">
+{!IF(Customer_Bill__c.Total_Amount_Received__c==0.0, 'Please Create a Payment before submitting for Approval !!', ' ')}
+   
+    
+    </apex:outputPanel>
+    
+</apex:page>

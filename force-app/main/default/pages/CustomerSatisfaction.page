@@ -1,0 +1,1333 @@
+<apex:page controller="WorksContractController" showHeader="false" sidebar="false" docType="html-5.0">
+
+  <apex:form id="mainfrm">
+
+    <html>
+
+    <head>
+      <title></title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta charset="UTF-8" />
+      <style type="text/css">
+        * {
+          box-sizing: border-box;
+          font-family: Arial;
+          margin: auto;
+          -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+          -webkit-appearance: none;
+           ::-webkit-input-placeholder {
+            text-align: center !important;
+          }
+
+           :-moz-placeholder {
+            /* Firefox 18- */
+            text-align: center !important;
+          }
+
+           ::-moz-placeholder {
+            /* Firefox 19+ */
+            text-align: center !important;
+          }
+
+           :-ms-input-placeholder {
+            text-align: center !important;
+          }
+        }
+
+        .movilecirclewrapper {}
+
+        #pageselect {
+          cursor: pointer;
+        }
+
+        button:disabled {
+          color: red !important;
+          background-color: buttonface !important;
+          color: graytext !important;
+          cursor: not-allowed !important;
+          border: none;
+        }
+
+        button:disabled p {
+          color: grey;
+        }
+
+        .highlight {
+          background: #F2F2F2;
+        }
+
+        #tail1 {
+          position: absolute;
+          bottom: -20px;
+          left: 40px;
+          width: 0;
+          height: 0;
+          border-color: #a0c7ff transparent transparent transparent;
+          border-width: 10px;
+          border-style: solid;
+        }
+
+        #tail2 {
+          position: absolute;
+          bottom: -18px;
+          left: 40px;
+          width: 0;
+          height: 0;
+          border-color: #f9f9f9 transparent transparent transparent;
+          border-width: 10px;
+          border-style: solid;
+        }
+
+        .npsmessage {
+          position: absolute;
+          left: 50%;
+          width: 200px;
+          font-size: 20px;
+          font-weight: bold;
+          top: 0%;
+          transform: translate(-50%, -50%);
+        }
+
+        #mobilecircle {
+          position: relative;
+          width: 150px;
+          height: 150px;
+          border-radius: 150px;
+          margin: 200px auto 0px;
+        }
+
+        .align {
+          max-width: 475px;
+          margin: auto;
+        }
+
+        .header {
+          background: #f2f2f2;
+          padding: 15px 20px;
+          padding-bottom: 20px;
+          overflow: auto;
+        }
+
+        .header h3 {
+          font-size: 16px;
+          font-weight: bold;
+          margin: 40px 0px 16px;
+        }
+
+        .header .stage_wrapper .lineCircleWrapper {
+          display: inline-block;
+          width: 25%;
+        }
+
+        .header .stage_wrapper .lineCircleWrapperlast {
+          width: 20%;
+          display: inline-block;
+        }
+
+        .header .stage_wrapper .svg {
+          width: 100%;
+          height: 35px;
+        }
+
+        .header .welcome_wrapper .logoWrapper {
+          width: 190px;
+          float: left;
+        }
+
+        .header .welcome_wrapper .logoWrapper img {
+          max-width: 100%;
+        }
+
+        .welcome_screensection .content {
+          padding: 28px;
+        }
+
+        .thankyou_section .content {
+          padding: 30px;
+        }
+
+        .welcome_screensection .line {
+          border-top: 2px solid;
+          width: 25px;
+          margin: 60px 0px;
+          display: none;
+        }
+
+        .thankyou_section .line {
+          border-top: 2px solid;
+          width: 25px;
+          margin: 60px 0px;
+          display: none;
+        }
+
+        .welcome_screensection h2 {
+          font-weight: bold;
+          font-size: 28px;
+          margin: 4px auto;
+        }
+
+        .thankyou_section h2 {
+          font-weight: bold;
+          font-size: 28px;
+          margin: 10px auto;
+        }
+
+        .welcome_screensection .content {
+          padding-top: 60px;
+        }
+
+        .welcome_screensection .content p {
+          font-size: 14px;
+          margin: 20px 0px;
+          line-height: 26px;
+        }
+
+        .thankyou_section .content p {
+          font-size: 16px;
+          margin: 40px 0px;
+          line-height: 26px;
+        }
+
+        .interiors_rate_section ul {
+          list-style: none;
+          padding: 0px;
+        }
+
+        .interiors_rate_section ul .active {
+          background: #f2f2f2;
+        }
+
+        .interiors_rate_section ul li {
+          width: 75%;
+          cursor: pointer;
+          padding: 15px;
+          margin: 30px auto;
+          border-radius: 100px;
+        }
+
+        .interiors_rate_section ul li span {
+          margin-left: 25px;
+          color: #666666;
+          font-size: 16px;
+        }
+
+        .welcome_wrapper {
+          overflow: auto;
+          width: 200px;
+          float: left;
+        }
+
+        .interiors_rate_section ul li .imageWrapper {
+          display: inline-block;
+          vertical-align: middle;
+          width: 50px;
+          height: 50px;
+          margin-left: 25%;
+        }
+
+        .interiors_rate_section ul li .imageWrapper img {
+          max-width: 100%;
+        }
+
+        .recommend_section .rating_wrapper_mobile {
+          /*position: relative;
+              margin: 20px auto;
+              min-height: 400px;
+              max-width: 400px;
+              width: 100%;*/
+        }
+
+        .recommend_section .rating_wrapper_desktop {
+          position: relative;
+          margin: 160px auto;
+        }
+
+        .recommend_section .rating_wrapper_mobile .circle {
+          position: absolute;
+          width: 50px;
+          height: 50px;
+          background-color: #ac5;
+          border-radius: 100px;
+          line-height: 50px;
+          color: white;
+          left: 3px;
+          top: 3px;
+        }
+
+        .tooltip {
+          position: fixed;
+          padding: 10px 20px;
+          border: 1px solid #b3c9ce;
+          border-radius: 10px;
+          text-align: center;
+          font: italic 14px/1.3 arial, sans-serif;
+          color: #333;
+          background: #fff;
+          box-shadow: 3px 3px 3px rgba(0, 0, 0, .3);
+        }
+
+        .recommend_section .rating_wrapper_mobile .rate7 {
+          background: #46000a;
+        }
+
+        .recommend_section .rating_wrapper_mobile .rate8 {
+
+          background: #780014;
+        }
+
+        .recommend_section .rating_wrapper_mobile .rate9 {
+
+          background: #960014;
+        }
+
+        .recommend_section .rating_wrapper_mobile .rate10 {
+
+          background: #b41928;
+        }
+
+        .recommend_section .rating_wrapper_mobile .rate11 {
+
+          background: #d21928;
+        }
+
+        .recommend_section .rating_wrapper_mobile .rate12 {
+
+          background: #f01928;
+        }
+
+        .recommend_section .rating_wrapper_mobile .rate13 {
+          background: #ff1928;
+        }
+
+        .recommend_section .rating_wrapper_mobile .rate14 {
+          background: #ff9628;
+        }
+
+        .recommend_section .rating_wrapper_mobile .rate15 {
+          background: #ffb428;
+        }
+
+        .recommend_section .rating_wrapper_mobile .rate16 {
+          background: #aac820;
+        }
+
+        .recommend_section .rating_wrapper_mobile .rate1 {
+          background: #96e620;
+        }
+
+        .mostlike_section {
+          margin-top: 15px;
+        }
+
+        .mostlike_section ul {
+          padding: 0px;
+          list-style: none;
+          margin-bottom: 15px;
+        }
+
+        .mostlike_section ul li {
+          padding: 15px;
+          font-size: 16px;
+          border-radius: 100px;
+          margin: 8px;
+          display: inline-block;
+          border: 1px solid #666666;
+          color: #666666;
+          cursor: pointer;
+          width: 47%;
+        }
+
+        .mostlike_section ul .selected {
+          background: #262626;
+          color: white;
+        }
+
+        .footer_next_mob,
+        .fottermobile {
+          cursor: pointer;
+          height: 60px;
+          background: #6600cc;
+          position: fixed;
+          width: 100%;
+          bottom: 0px;
+          max-width: 425px;
+          z-index: 2;
+          left: 0px;
+        }
+
+        .footer_next_mob p,
+        .fottermobile p {
+          color: white;
+          font-size: 16px;
+          font-weight: bold;
+          line-height: 60px;
+          text-align: center;
+        }
+
+        .thankyou_note_placeholder {
+          border-top: 1px solid #b4b4b4;
+          padding: 10px 16px;
+          min-height: 300px;
+          color: #b4b4b4;
+          font-size: 16px;
+          background: #fafafa;
+          display: none;
+        }
+
+        .thankyou_note textarea {
+          width: 100%;
+          padding: 15px;
+          border: none;
+          border: none;
+          overflow: auto;
+          outline: none;
+          -webkit-box-shadow: none;
+          -moz-box-shadow: none;
+          box-shadow: none;
+          font-size: 16px;
+        }
+
+        .recommend_section .rating_wrapper_desktop .circle {
+          border: 1px solid;
+          cursor: pointer;
+          font-size: 14px;
+          border-radius: 50%;
+          width: 45px;
+          height: 45px;
+          color: white;
+          font-weight: bold;
+          line-height: 45px;
+          text-align: center;
+          display: inline-block;
+        }
+
+        .recommend_section .rating_wrapper_desktop .rate0 {
+          background: #46000a;
+        }
+
+        .recommend_section .rating_wrapper_desktop .rate1 {
+          background: #780014;
+        }
+
+        .recommend_section .rating_wrapper_desktop .rate2 {
+          background: #960014;
+        }
+
+        .recommend_section .rating_wrapper_desktop .rate3 {
+          background: #b41928;
+        }
+
+        .recommend_section .rating_wrapper_desktop .rate4 {
+          background: #d21928;
+        }
+
+        .recommend_section .rating_wrapper_desktop .rate5 {
+          background: #f01928;
+        }
+
+        .recommend_section .rating_wrapper_desktop .rate6 {
+          background: #ff1928;
+        }
+
+        .recommend_section .rating_wrapper_desktop .rate7 {
+          background: #ff9628;
+        }
+
+        .recommend_section .rating_wrapper_desktop .rate8 {
+          background: #ffb428;
+        }
+
+        .recommend_section .rating_wrapper_desktop .rate9 {
+          background: #aac820;
+        }
+
+        .recommend_section .rating_wrapper_desktop .rate10 {
+          background: #96e620;
+        }
+
+        .footer_next_desktop {
+          width: 150px;
+          margin: auto;
+          position: fixed;
+          left: 50%;
+          transform: translateX(-50%);
+          bottom: 60px;
+          border: none;
+          color: white;
+          border-radius: 30px;
+          cursor: pointer;
+          line-height: 50px;
+          height: 50px;
+          font-size: 14px;
+          background: #6600cc;
+          text-align: center;
+          margin-top: 80px;
+        }
+        /*.rate_message{
+              overflow: auto;
+          width: 100%;
+          bottom: 30px;
+          position: absolute;
+          color: #333333;
+          }*/
+
+        .rating_wrapper_desktop .outercircle {
+          padding: 3px;
+          position: relative;
+          /* line-height: 50px; */
+          border: 1px solid;
+          /* margin-top: 10px; */
+          border-radius: 50%;
+          display: inline-block;
+          /* padding-top: 5px; */
+          border: none;
+        }
+
+        .rating_wrapper_mobile .outercircle {
+          width: 0px;
+        }
+
+        .outercirclnps {
+          height: 52px;
+          width: 52px;
+          line-height: 52px;
+          border-radius: 50%;
+          padding: 2px;
+        }
+      </style>
+      <style type="text/css">
+        @media screen and (max-width: 475px) {
+          .content {
+            font-size: 12px;
+          }
+          #pageselect{
+            margin-bottom: 20px;
+          }
+          .thankyou_note {
+            border: 1px solid;
+            width: 85%;
+            margin-bottom: 25%;
+          }
+          .rating_wrapper_desktop {
+            display: none;
+          }
+          .thankyou_note textarea {
+            height: 100px;
+          }
+          .mostlike_section ul li {
+            font-size: 14px;
+            width: 90%;
+            padding: 10px;
+          }
+          .header .stage_wrapper .svg {
+            width: 101%;
+          }
+          .welcome_wrapper {
+            /*display: none;*/
+            float: none;
+          }
+          .footer_next_desktop {
+            display: none;
+          }
+          #content {
+            text-align: center;
+          }
+          .interiors_rate_section ul li {
+            text-align: left;
+            margin: 20px auto;
+            padding: 10px;
+          }
+          .header h3 {
+            margin: 15px 0px;
+            margin-top: 20px;
+          }
+          .interiors_rate_section ul li .imageWrapper {
+            margin-left: 20%;
+          }
+        }
+
+        @media screen and (min-width: 320px) and (max-width: 376px) {
+          #mobilecircle {
+            left: 12px;
+          }
+          .outercirclnps {
+            height: 42px;
+            width: 42px;
+            line-height: 42px;
+          }
+          .recommend_section .rating_wrapper_mobile .circle {
+            height: 40px;
+            width: 40px;
+            line-height: 40px;
+          }
+        }
+
+        @media screen and (min-width: 476px) {
+          .header h3 span {
+            display: block;
+          }
+          .logoWrapper {
+            display: block !important;
+          }
+          .wrapcontent {
+            margin-top: 100px;
+          }
+          .welcome_screensection .content {
+            padding-top: 60px;
+          }
+          .stage_wrapper {
+            max-width: 475px;
+            margin: auto;
+            margin-bottom: 20px;
+          }
+
+          .fottermobile {
+            display: none;
+          }
+          .rate_message {
+            bottom: -35px;
+          }
+          .align {
+            max-width: 750px;
+            text-align: center;
+          }
+          .header h3 {
+            text-align: center;
+          }
+          .footer_next_mob {
+            display: none;
+          }
+          .welcome_screensection .line {
+            margin: 40px auto;
+            display: none;
+          }
+          .welcome_screensection .content: {
+            padding: 30px;
+          }
+          .thankyou_section .line {
+            margin: 60px auto;
+          }
+          .rating_wrapper_mobile {
+            display: none;
+          }
+          .welcome_screensection,
+          .interiors_rate_section,
+          .thankyou_section {
+            padding: 30px;
+            width: 60%;
+            margin: auto;
+            padding-top: 0px;
+          }
+          .mostlike_section {
+            padding: 30px 25px;
+            margin: auto;
+          }
+          .interiors_rate_section {
+            text-align: left;
+          }
+          .thankyou_note textarea {
+            width: 80%;
+            border: 1px solid #b4b4b4;
+            padding: 15px;
+            border-radius: 10px;
+          }
+          .thankyou_note_placeholder {
+            display: none;
+          }
+        }
+
+        .hidepages {
+          display: none;
+        }
+
+        li.active {
+          background-color: #f2f2f2 !important;
+        }
+
+        li.activediv {
+          background-color: #eaeaea;
+          color: #333333 !important;
+        }
+
+        .ttip {
+          margin: -82px 0px 100px 33px;
+        }
+      </style>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </head>
+    <body style="margin: 0px;">
+      <div id="content">
+        <div class="header">
+          <div class="welcome_wrapper">
+            <div class="logoWrapper"><img src="https://s3-ap-southeast-1.amazonaws.com/homelane/logo.png" alt="HomeLane" /></div>
+          </div>
+          <div id='pageselect' class="hidepages stage_wrapper">
+            <div id='num1' onclick='changepage()' class="lineCircleWrapper">
+              <svg class="svg">
+                <line x1="0" y1="15" x2="60%" y2="15" stroke="#d2d2d2"></line>
+                <g>
+                  <circle id='cl1' cx="80%" cy="15" r="14" stroke="#d2d2d2" stroke-width="1" fill="#ff9933"></circle>
+                  <text id='cl1' x="80%" y="56%" text-anchor="middle" stroke="white" stroke-width="1">1</text>
+                </g>
+              </svg>
+            </div>
+            <div id='num2' onclick='changepage()' class="lineCircleWrapper">
+              <svg class="svg">
+                <line x1="0" y1="15" x2="60%" y2="15" stroke="#d2d2d2"></line>
+                <g>
+                  <circle id='cl2' cx="80%" cy="15" r="14" stroke="#d2d2d2" stroke-width="1" fill="#D2D2D2"></circle>
+                  <text id='cl2' x="80%" y="56%" text-anchor="middle" stroke="white" stroke-width="1">2</text>
+                </g>
+              </svg>
+            </div>
+            <div id='num3' onclick='changepage()' class="lineCircleWrapper">
+              <svg class="svg">
+                <line x1="0" y1="15" x2="60%" y2="15" stroke="#d2d2d2"></line>
+                <g>
+                  <circle id='cl3' cx="80%" cy="15" r="14" stroke="#d2d2d2" stroke-width="1" fill="#D2D2D2" data-reactid=".22onl8ifclk.0.1.2.0.1.0"></circle>
+                  <text id='cl3' x="80%" y="56%" text-anchor="middle" stroke="white" stroke-width="1" data-reactid=".22onl8ifclk.0.1.2.0.1.1">3</text>
+                </g>
+              </svg>
+            </div>
+            <div class="lineCircleWrapperlast" data-reactid=".22onl8ifclk.0.1.3">
+              <svg class="svg" data-reactid=".22onl8ifclk.0.1.3.0">
+                <line x1="0" y1="15" x2="85%" y2="15" stroke="#d2d2d2" data-reactid=".22onl8ifclk.0.1.3.0.0"></line>
+              </svg>
+            </div>
+          </div>
+          <h3 id='headerques' class='hidepages' data-reactid=".22onl8ifclk.0.2"><span data-reactid=".22onl8ifclk.0.2.0">How would you rate the interiors?</span></h3>
+
+
+          <h3 id='headerques2' class='hidepages' data-reactid=".22onl8ifclk.0.2"><span data-reactid=".22onl8ifclk.0.2.0">How likely is it that you would recommend us to a friend or colleague?</span></h3>
+          <h3 id='headerques3' class='hidepages' data-reactid=".22onl8ifclk.0.2"><span data-reactid=".22onl8ifclk.0.2.0">What do you like the most?</span></h3>
+
+
+        </div>
+        <div class="wrapper align">
+          <div id='welcome_screensection' class="welcome_screensection" data-reactid=".22onl8ifclk.1">
+            <div class="content">
+              <h2 data-reactid=".22onl8ifclk.1.1">Congratulations</h2>
+              <h2 data-reactid=".22onl8ifclk.1.2">Your Home is ready</h2>
+              <div class="wrapcontent">
+                <p data-reactid=".22onl8ifclk.1.4">Once you successfully submit this feedback, we will send you the warranty documents to your Homelane registered e-mail id.</p>
+                <p data-reactid=".22onl8ifclk.1.5">We would love to know what you feel about your experience with Homelane and your new home interiors.</p>
+              </div>
+            </div>
+            <div class="footer_next_desktop" onclick='changepagestate()'>START NOW</div>
+            <button type="button" id='next_mobile' onclick='changepagestate()' class='fottermobile'>
+                      <p>START NOW</p>
+                  </button>
+
+          </div>
+          <div id='interiors_rate_section' class="hidepages interiors_rate_section" data-reactid=".22onl8ifclk.2">
+            <ul class="nav" data-reactid=".22onl8ifclk.2.0">
+              <li id="Love it" data-reactid=".22onl8ifclk.2.0.$1">
+                <div class="imageWrapper" data-reactid=".22onl8ifclk.2.0.$1.0"><img src="https://s3-ap-southeast-1.amazonaws.com/homelane/emoticon1.png" alt="loveit" data-reactid=".22onl8ifclk.2.0.$1.0.0" /></div>
+                <span data-reactid=".22onl8ifclk.2.0.$1.1">Love it
+                      
+                      <apex:actionFunction name="passValueToController" action="{!Submitfeedback}" immediate="true" reRender="mainfrm">
+                                       <apex:param id="interiorValue" name="interiorValue" value=""/>
+                                       <apex:param id="recommandValue" name="recommandValue" value=""/>
+                                       <apex:param id="designhmlValue" name="designhmlValue" value=""/>
+                                       <apex:param id="suggestionboxValue" name="suggestionboxValue" value=""/>  
+                                       <apex:param id="NPSqueshmlValue" name="NPSqueshmlValue" value=""/>
+                                  </apex:actionFunction>
+                      
+                      
+                      </span>
+              </li>
+              <li id="It’s Okay" data-reactid=".22onl8ifclk.2.0.$2">
+                <div class="imageWrapper" data-reactid=".22onl8ifclk.2.0.$2.0"><img src="https://s3-ap-southeast-1.amazonaws.com/homelane/emoticon2.png" alt="okay" data-reactid=".22onl8ifclk.2.0.$2.0.0" /></div>
+                <span data-reactid=".22onl8ifclk.2.0.$2.1">It’s Okay</span>
+              </li>
+              <li id="Don’t like it" data-reactid=".22onl8ifclk.2.0.$3">
+                <div class="imageWrapper" data-reactid=".22onl8ifclk.2.0.$3.0"><img src="https://s3-ap-southeast-1.amazonaws.com/homelane/emoticon3.png" alt="hateit" data-reactid=".22onl8ifclk.2.0.$3.0.0" /></div>
+                <span data-reactid=".22onl8ifclk.2.0.$3.1">Don’t like it</span>
+              </li>
+            </ul>
+
+            <button type="button" id='interiorbtn' class="footer_next_desktop" onclick='nextclick()' disabled='true'>NEXT</button>
+            <button type="button" id='next_mobile1' onclick='nextclick()' disabled='true' class='fottermobile'>
+                  <p>NEXT</p>
+                </button>
+          </div>
+          <div id='recommend_section' class="hidepages recommend_section" data-reactid=".22onl8ifclk.3">
+            <div class="rating_wrapper_mobile" data-reactid=".22onl8ifclk.3.0">
+              <div class="movilecirclewrapper">
+                <div id="mobilecircle">
+                  <div class="npsmessage" style="
+                              
+                          ">
+                  </div>
+                  <span id="left">Less Likely</span>
+                  <span id="right">More Likely</span>
+                </div>
+              </div>
+            </div>
+
+
+            <div class=" row rating_wrapper_desktop">
+              <div class="outercircle">
+                <div id="0" class="cell1 rate0 circle" data-tooltip="Impossible" data-reactid=".22onl8ifclk.3.0.1">0</div>
+              </div>
+              <div class="outercircle">
+                <div id="1" class="cell1 rate1 circle" data-tooltip="Never" data-reactid=".22onl8ifclk.3.0.2">1</div>
+              </div>
+              <div class="outercircle">
+                <div id="2" class="cell1 rate2 circle" data-tooltip="No chance" data-reactid=".22onl8ifclk.3.0.3">2</div>
+              </div>
+              <div class="outercircle">
+                <div id="3" class="cell1 rate3 circle" data-tooltip="I won’t" data-reactid=".22onl8ifclk.3.0.4">3</div>
+              </div>
+              <div class="outercircle">
+                <div id="4" class="cell1 rate4 circle" data-tooltip="Not really" data-reactid=".22onl8ifclk.3.0.5">4</div>
+              </div>
+              <div class="outercircle">
+                <div id="5" class="cell1 rate5 circle" data-tooltip="Don’t care" data-reactid=".22onl8ifclk.3.0.6">5</div>
+              </div>
+              <div class="outercircle">
+                <div id="6" class="cell1 rate6 circle" data-tooltip="Will see" data-reactid=".22onl8ifclk.3.0.7">6</div>
+              </div>
+              <div class="outercircle">
+                <div id="7" class="cell1 rate7 circle" data-tooltip="Don’t mind" data-reactid=".22onl8ifclk.3.0.8">7</div>
+              </div>
+              <div class="outercircle">
+                <div id="8" class="cell1 rate8 circle" data-tooltip="May be" data-reactid=".22onl8ifclk.3.0.9">8</div>
+              </div>
+              <div class="outercircle">
+                <div id="9" class="cell1 rate9 circle" data-tooltip="Definitely" data-reactid=".22onl8ifclk.3.0.a">9</div>
+              </div>
+              <div class="outercircle">
+                <div id="10" class="cell1 rate10 circle" data-tooltip="At any cost" data-reactid=".22onl8ifclk.3.0.b">10</div>
+              </div>
+              <div class="rate_message">
+                <span style="float: left;">Less Likely</span>
+                <span style="float: right;">More Likely</span>
+              </div>
+            </div>
+            <button type="button" id='recommandbtn' class="footer_next_desktop" onclick='ratingnextclick()' disabled='true'>NEXT</button>
+            <button type="button" id='next_mobile2' onclick='ratingnextclick()' disabled='true' class='fottermobile'>
+                      <p>NEXT</p>
+                    </button>
+          </div>
+          <div id='mostlike_section' class="hidepages mostlike_section" data-reactid=".22onl8ifclk.4">
+            <ul id='multiUl' class="nav2" data-reactid=".22onl8ifclk.4.0">
+            </ul>
+            <div id='thankyou_note_placeholder' class="hidepages thankyou_note_placeholder">
+              <p>Write a Thankyou note</p>
+            </div>
+            <div id='thankyou_note' class="hidepages thankyou_note">
+              <textarea id='suggestionbox' rows="4" placeholder="Additional Feedback"></textarea>
+            </div>
+            <button type="button" id='footer_next_desktop' class="hidepages footer_next_desktop" onclick='finalnext()' disabled='true'>NEXT</button>
+            <button type="button" id='next_mobile' onclick='finalnext()' class='fottermobile'>
+                  <p>NEXT</p>
+                </button>
+          </div>
+          <div id='thankyou_section' class="hidepages thankyou_section">
+            <div class="content">
+              <div class="line" data-reactid=".22onl8ifclk.1.0"></div>
+              <h2 data-reactid=".22onl8ifclk.1.1">Thank you!</h2>
+              <p data-reactid=".22onl8ifclk.1.3">We really appreciate your help.We are so thrilled about completing your home interiors and we loved being part of your journey to your dream home.</p>
+              <p data-reactid=".22onl8ifclk.1.4">If you have any queries, write to us at <span style="color:orange">care@homelane.com</span></p>
+            </div>
+            <div id='submitbtn' onclick='submitNPS()' class="hidepages footer_next_desktop">FINISH</div>
+            <button type="button" id='next_mobile' onclick='submitNPS()' class="fottermobile">
+                      <p>FINISH</p>
+                    </button>
+          </div>
+        </div>
+      </div>
+    </body>
+    <script type="text/javascript">
+      var div = 360 / 16;
+      var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+      // console.log(width);
+      var maxwidth = width < 415 ? width : 415;
+      console.log(maxwidth);
+      var radius = (8 * maxwidth) / 20;
+      var parentdiv = document.getElementById('mobilecircle');
+      var offsetToParentCenter = parseInt(parentdiv.offsetWidth / 2); //assumes parent is square
+      var offsetToChildCenter = 20;
+      var totalOffset = offsetToParentCenter - offsetToChildCenter;
+      var tooltipmap = {
+        '0': 'Impossible',
+        '1': 'Never',
+        '2': 'No chance',
+        '3': 'I won’t',
+        '4': 'Not really',
+        '5': 'Don’t care',
+        '6': 'Will see',
+        '7': 'Don’t mind',
+        '8': 'May be',
+        '9': 'Definitely',
+        '10': 'At any cost'
+      }
+      for (var i = 1; i <= 16; ++i) {
+        if (i !== 2 && i !== 3 && i != 4 && i != 5 && i != 6) {
+          var number = i - 7 < 0 ? 10 : i - 7;
+          var outercirclediv = document.createElement('div');
+          var childdiv = document.createElement('div');
+          var t = document.createTextNode(number);
+          childdiv.appendChild(t);
+          outercirclediv.appendChild(childdiv);
+          childdiv.className = 'circle ' + 'recommend_section rating_wrapper_mobile innercircle rate' + i;
+          outercirclediv.className = 'outercirclnps';
+          childdiv.id = number;
+          childdiv.dataset.tooltip = tooltipmap[number];
+          outercirclediv.style.position = 'absolute';
+          var y = Math.sin((div * i) * (Math.PI / 180)) * radius;
+          var x = Math.cos((div * i) * (Math.PI / 180)) * radius;
+          // childdiv.style.top = (y + totalOffset).toString() + "px";
+          // childdiv.style.left = (x + totalOffset + 64).toString() + "px";
+          outercirclediv.style.top = (y + totalOffset).toString() + "px";
+          outercirclediv.style.left = (x + totalOffset + 64).toString() + "px";
+          parentdiv.appendChild(outercirclediv);
+        }
+        if (i === 7) {
+          var leftelement = document.getElementById('left');
+          leftelement.style.position = 'absolute';
+          var y = Math.sin((div * i) * (Math.PI / 180)) * radius;
+          var x = Math.cos((div * i) * (Math.PI / 180)) * radius;
+          leftelement.style.top = (y + totalOffset + 60).toString() + "px";
+          leftelement.style.left = (x + totalOffset + 64).toString() + "px";
+
+        }
+        if (i === 1) {
+          var leftelement = document.getElementById('right');
+          leftelement.style.position = 'absolute';
+          var y = Math.sin((div * i) * (Math.PI / 180)) * radius;
+          var x = Math.cos((div * i) * (Math.PI / 180)) * radius;
+          leftelement.style.top = (y + totalOffset + 60).toString() + "px";
+          leftelement.style.right = -1 * (x + totalOffset - 40).toString() + "px";
+
+        }
+      }
+    </script>
+    <script type="text/javascript">
+      window.onpopstate = function() {
+        console.log(stage);
+        switch(stage){
+          case 2: {
+            stage = 1;
+            $("#interiors_rate_section").removeClass("hidepages");
+            $("#recommend_section").addClass("hidepages");
+            $("#mostlike_section").addClass("hidepages");
+            $("#headerques").removeClass("hidepages");
+            $("#headerques2").addClass("hidepages");
+            $("#headerques3").addClass("hidepages");
+            break;
+          }
+          case 3: {
+            stage = 2;
+            $("#recommend_section").removeClass("hidepages");
+            $("#interiors_rate_section").addClass("hidepages");
+            $("#mostlike_section").addClass("hidepages");
+            $("#headerques2").removeClass("hidepages");
+            $("#headerques").addClass("hidepages");
+            $("#headerques3").addClass("hidepages");
+            break;
+          }
+          // case 4: {
+          //   stage = 3;
+          //   $("#mostlike_section").removeClass("hidepages");
+          //   $("#interiors_rate_section").addClass("hidepages");
+          //   $("#recommend_section").addClass("hidepages");
+          //   $("#headerques3").removeClass("hidepages");
+          //   $("#headerques2").addClass("hidepages");
+          //   $("#headerques").addClass("hidepages");
+          //   $(".tooltip").remove();
+          //   break;
+          // }
+          default: {
+            console.log('the stage is', stage);
+          }
+        }
+      };
+    </script>
+    <script>
+      stage = 0;
+      var num1boolean = false;
+      var num2boolean = false;
+      var num3boolean = false;
+      var questiontext;
+      var selectedreview;
+      var customerrating;
+      var interiorrating;
+      var mostlikingrating;
+      var Stringheader3;
+      $(document).ready(function() {
+        if ($('.ansdiv')){
+          $('#thankyou_note').click(function(event) {
+            event.preventDefault();
+            console.log('I am clicked');
+            $(window).scrollTop($('#thankyou_note').offset().top);
+          });
+        }
+      });
+      $(document).ready(function() {
+        $('ul.nav2').on('click', 'li', function() {
+          $('#footer_next_desktop').attr('disabled', false);
+          if (!selectedreview) {
+            $(this).addClass("highlight");
+            selectedreview = $(this).html();
+            console.log('if selectedreview ', selectedreview);
+          } else {
+            var reviewvalue = $(this).html();
+            console.log(reviewvalue);
+            if ($(this).hasClass("highlight")) {
+              $(this).removeClass("highlight");
+              selectedreview = selectedreview.replace(',' + reviewvalue, '');
+              selectedreview = selectedreview.replace(reviewvalue, '');
+            } else {
+              $(this).addClass("highlight");
+              selectedreview += ',' + $(this).html();
+            }
+          }
+        });
+
+        $(".innercircle").click(function(event) {
+          event.preventDefault();
+          $('#next_mobile2').attr('disabled', false);
+          interiorrating = $(this).attr('id');
+          $('.npsmessage').html($(this).attr("data-tooltip"));
+          var range;
+          var firstgrade = ['0', '1', '2', '3', '4', '5', '6'];
+          var secondgrade = ['7', '8'];
+          var thirdgrade = ['9', '10'];
+          var Npsansw = {
+            'What went wrong?': ["The whole process is very lengthy", "Product quality promised is not received", "Poor communication",
+              "Too many people but none responsible"
+            ],
+            'What all can be improved?': ["Cleaning after installation", "Delay in completion of job",
+              "Supervision at site", "Coordination within homelane team"
+            ],
+            'What did we do well?': ["Timely completion of project",
+              "Transparency in information maintained", "Professional attitude", "Finishing and material fitting done well"
+            ]
+          };
+
+          if ($.inArray(interiorrating, firstgrade) > -1) {
+            range = '0-6';
+          } else if ($.inArray(interiorrating, secondgrade) > -1) {
+            range = '7-8';
+          } else if ($.inArray(interiorrating, thirdgrade) > -1) {
+            range = '9-10';
+          }
+          var grademapping = {
+            '0-6': 'What went wrong?',
+            '7-8': 'What all can be improved?',
+            '9-10': 'What did we do well?'
+          };
+          grademapping = $.map(grademapping, function(value, index) {
+            if (index == range) {
+              Stringheader3 = value;
+              var cList = $('ul.nav2');
+              $('.ansdiv').remove();
+              for (i in Npsansw) {
+                if (i == value) {
+                  console.log('i -------', i);
+                  console.log('valu', Npsansw[i]);
+                  for (var k = 0; k < Npsansw[i].length; k++) {
+                    var li = $('<li/>').addClass('ansdiv').text(Npsansw[i][k]).appendTo(cList);
+                  }
+                }
+              }
+            }
+          });
+        })
+
+        $(".cell1").click(function(event) {
+          $('#recommandbtn').attr('disabled', false);
+          let target = event.target;
+          var tooltipElem = '#tooltip' + target.dataset.tooltip;
+          $(".tooltip:not(+" + tooltipElem + ")").remove();
+          $(".cell1").parent().not(this).css("border", "");
+          $(this).parent().css("border", "1px solid");
+          console.log($(this).attr('id'));
+          interiorrating = $(this).attr('id');
+          console.log('interiorrating ----', interiorrating);
+          $(this).parent().addClass('activediv');
+          event.preventDefault();
+          // if we have tooltip HTML...
+          //console.log(target);
+          let tooltipHtml = target.dataset.tooltip;
+          //console.log('I am hit', tooltipHtml);
+          if (!tooltipHtml) return;
+
+          // ...create the tooltip element
+
+          tooltipElem = document.createElement('div');
+          tooltipElemtail1 = document.createElement('div');
+          tooltipElemtail2 = document.createElement('div');
+          spanelement = document.createElement('span');
+          spanelement.innerHTML = tooltipHtml;
+          tooltipElemtail1.id = "tail1";
+          tooltipElemtail2.id = "tail2";
+          console.log(tooltipElemtail1);
+          console.log(tooltipElemtail2);
+          tooltipElem.appendChild(spanelement);
+          tooltipElem.appendChild(tooltipElemtail1);
+          tooltipElem.appendChild(tooltipElemtail2);
+          tooltipElem.className = 'tooltip';
+          tooltipElem.id = 'tooltip' + target.dataset.tooltip;
+          console.log(tooltipElem);
+          document.body.append(tooltipElem);
+
+          // position it above the annotated element (top-center)
+          let coords = target.getBoundingClientRect();
+
+          let left = coords.left + (target.offsetWidth - tooltipElem.offsetWidth) / 2;
+          if (left < 0) left = 0; // don't cross the left window edge
+
+          let top = coords.top - tooltipElem.offsetHeight - 15;
+          if (top < 0) { // if crossing the top window edge, show below instead
+            top = coords.top + target.offsetHeight + 5;
+          }
+
+          tooltipElem.style.left = left + 'px';
+          tooltipElem.style.top = top - 10 + 'px';
+
+          /************ code for dynamic ques calculation *****************************/
+
+          var range;
+          //console.log(interiorrating);
+          var firstgrade = ['0', '1', '2', '3', '4', '5', '6'];
+          var secondgrade = ['7', '8'];
+          var thirdgrade = ['9', '10'];
+          var Npsansw = {
+            'What went wrong?': ["The whole process is very lengthy", "Product quality promised is not received", "Poor communication",
+              "Too many people but none responsible"
+            ],
+            'What all can be improved?': ["Cleaning after installation", "Delay in completion of job",
+              "Supervision at site", "Coordination within homelane team"
+            ],
+            'What did we do well?': ["Timely completion of project",
+              "Transparency in information maintained", "Professional attitude", "Finishing and material fitting done well"
+            ]
+          };
+
+          if ($.inArray(interiorrating, firstgrade) > -1) {
+            range = '0-6';
+          } else if ($.inArray(interiorrating, secondgrade) > -1) {
+            range = '7-8';
+          } else if ($.inArray(interiorrating, thirdgrade) > -1) {
+            range = '9-10';
+          }
+          var grademapping = {
+            '0-6': 'What went wrong?',
+            '7-8': 'What all can be improved?',
+            '9-10': 'What did we do well?'
+          };
+          console.log('Npsansw ---', Npsansw);
+          grademapping = $.map(grademapping, function(value, index) {
+            if (index == range) {
+
+              Stringheader3 = value;
+              var cList = $('ul.nav2');
+              $('.ansdiv').remove();
+              for (i in Npsansw) {
+                if (i == value) {
+                  console.log('i -------', i);
+                  console.log('valu', Npsansw[i]);
+                  for (var k = 0; k < Npsansw[i].length; k++) {
+                    var li = $('<li/>').addClass('ansdiv').text(Npsansw[i][k]).appendTo(cList);
+                  }
+                }
+              }
+            }
+          });
+
+          /************************** code for dynamic ques calculation *********/
+        });
+
+        $(".cell1").mouseover(function() {
+          let target = event.target;
+          // if we have tooltip HTML...
+          //console.log(target);
+          let tooltipHtml = target.dataset.tooltip;
+          //console.log('I am hit', tooltipHtml);
+          if (!tooltipHtml) return;
+
+          // ...create the tooltip element
+
+          tooltipElem = document.createElement('div');
+          tooltipElemtail1 = document.createElement('div');
+          tooltipElemtail2 = document.createElement('div');
+          spanelement = document.createElement('span');
+          spanelement.innerHTML = tooltipHtml;
+          tooltipElemtail1.id = "tail1";
+          tooltipElemtail2.id = "tail2";
+          //console.log(tooltipElemtail1);
+          //console.log(tooltipElemtail2);
+          tooltipElem.appendChild(spanelement);
+          tooltipElem.appendChild(tooltipElemtail1);
+          tooltipElem.appendChild(tooltipElemtail2);
+          tooltipElem.className = 'tooltip';
+          tooltipElem.id = 'tooltip' + target.dataset.tooltip;
+          //console.log(tooltipElem);
+          document.body.append(tooltipElem);
+
+          // position it above the annotated element (top-center)
+          let coords = target.getBoundingClientRect();
+
+          let left = coords.left + (target.offsetWidth - tooltipElem.offsetWidth) / 2;
+          if (left < 0) left = 0; // don't cross the left window edge
+
+          let top = coords.top - tooltipElem.offsetHeight - 15;
+          if (top < 0) { // if crossing the top window edge, show below instead
+            top = coords.top + target.offsetHeight + 5;
+          }
+
+          tooltipElem.style.left = left + 'px';
+          tooltipElem.style.top = top - 10 + 'px';
+        });
+        $(".cell1").mouseout(function(e) {
+
+          if (tooltipElem) {
+            tooltipElem.remove();
+            tooltipElem = null;
+          }
+        });
+        var selector2 = '.nav2 li';
+        $(selector2).on('click', function() {
+          $(selector2).removeClass('activediv');
+          $(this).addClass('activediv');
+          //console.log($(this).attr('id'));
+          mostlikingrating = $(this).attr('id');
+        });
+
+        var selector = '.nav li';
+
+        $(selector).on('click', function() {
+          $('#interiorbtn').attr('disabled', false);
+          $('#next_mobile1').attr('disabled', false);
+          $(selector).removeClass('active');
+          $(this).addClass('active');
+          console.log($(this).attr('id'));
+          customerrating = $(this).attr('id');
+        });
+      });
+      function changepage() {
+
+        console.log('clicked number');
+        console.log(event.target.id);
+        if (event.target.id == 'cl1' && num1boolean != false) {
+
+          $("#interiors_rate_section").removeClass("hidepages");
+          $("#recommend_section").addClass("hidepages");
+          $("#mostlike_section").addClass("hidepages");
+          $("#headerques").removeClass("hidepages");
+          $("#headerques2").addClass("hidepages");
+          $("#headerques3").addClass("hidepages");
+
+        }
+        if (event.target.id == 'cl2' && num2boolean != false) {
+
+          $("#recommend_section").removeClass("hidepages");
+          $("#interiors_rate_section").addClass("hidepages");
+          $("#mostlike_section").addClass("hidepages");
+          $("#headerques2").removeClass("hidepages");
+          $("#headerques").addClass("hidepages");
+          $("#headerques3").addClass("hidepages");
+
+        }
+        if (event.target.id == 'cl3' && num3boolean != false) {
+
+          $("#mostlike_section").removeClass("hidepages");
+          $("#interiors_rate_section").addClass("hidepages");
+          $("#recommend_section").addClass("hidepages");
+          $("#headerques3").removeClass("hidepages");
+          $("#headerques2").addClass("hidepages");
+          $("#headerques").addClass("hidepages");
+          $(".tooltip").remove();
+
+        }
+      }
+
+      function changepagestate() {
+        console.log('Run Next Page', document.getElementById("interiors_rate_section"));
+        history.pushState({}, '');
+        $('.logoWrapper').css("display", "none");
+        $("#welcome_screensection").addClass("hidepages");
+        $("#interiors_rate_section").removeClass("hidepages");
+
+        $("#pageselect").removeClass("hidepages");
+        $("#headerques").removeClass("hidepages");
+        stage = 1;
+      }
+
+      function nextclick() {
+        history.pushState({}, '');
+        num1boolean = true;
+        stage = 2;
+        console.log('customerrating', customerrating);
+        if (customerrating == undefined) {
+          alert('Please Select Any Rating!!');
+        } else {
+          $("#interiors_rate_section").addClass("hidepages");
+          $("#recommend_section").removeClass("hidepages");
+          $("#headerques").addClass("hidepages");
+          $("#headerques2").removeClass("hidepages");
+          $('#cl2').attr('fill', '#ff9933');
+        }
+      }
+
+      function ratingnextclick() {
+        history.pushState({}, '');
+        num2boolean = true;
+        num3boolean = true;
+        stage = 3;
+        console.log('as', Stringheader3);
+        $("#headerques3 span").text(Stringheader3);
+        $(".tooltip").remove();
+        $("#recommend_section").addClass("hidepages");
+        $("#mostlike_section").removeClass("hidepages");
+        $("#thankyou_note_placeholder").removeClass("hidepages");
+        $("#thankyou_note").removeClass("hidepages");
+        $("#footer_next_desktop").removeClass("hidepages");
+        $("#headerques2").addClass("hidepages");
+        $("#headerques3").removeClass("hidepages");
+        $('#cl3').attr('fill', '#ff9933');
+      }
+
+      function finalnext() {
+        history.pushState({}, '');
+        stage = 4;
+        $('.logoWrapper').css("display", "block");
+        $("#pageselect").addClass("hidepages");
+        console.log('ddww');
+        if (selectedreview == undefined) {
+          alert('Please Select Any Values!!');
+        } else {
+          $("#mostlike_section").addClass("hidepages");
+          $("#thankyou_note_placeholder").addClass("hidepages");
+          $("#thankyou_note").addClass("hidepages");
+          $("#footer_next_desktop").addClass("hidepages");
+
+          $("#thankyou_section").removeClass("hidepages");
+          $("#submitbtn").removeClass("hidepages");
+          $("#footer_next_desktop2").removeClass("hidepages");
+          $("#headerques3").addClass("hidepages");
+          questiontext = $("#headerques3 span").text();
+        }
+      }
+
+      function interiorFunc(value, value2, value3, value4, value5) {
+        passValueToController(value, value2, value3, value4, value5);
+      }
+
+      function submitNPS() {
+
+        var suggestiontext = document.getElementById("suggestionbox").value;
+        console.log('customerrating -----', customerrating);
+        console.log('interiorrating ---------', interiorrating);
+        console.log('selectedreview -------------', selectedreview);
+        console.log('suggestiontext --------------', suggestiontext);
+        interiorFunc(customerrating, interiorrating, selectedreview, suggestiontext, questiontext);
+      }
+    </script>
+    </html>
+  </apex:form>
+
+</apex:page>

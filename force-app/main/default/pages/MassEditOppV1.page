@@ -1,0 +1,244 @@
+<apex:page standardController="Opportunity" recordSetVar="unused" docType="HTML-5.0" showHeader="false" lightningstylesheets="true" cache="true">
+    
+    <head>
+        <style>
+            <apex:slds / > .fill {
+                font-family: cursive;
+                background-color: lightgrey;
+                text-align: center;
+                padding: 0.3em !important;
+                font-size: initial;
+            }
+            
+            .forButton {
+                text-align: center;
+            }
+            
+            .lookupInput a {
+                border: none !important;
+                position: relative;
+                left: -30px;
+                background: none !important;
+                padding: 0 !important;
+                width: auto !important;
+            }
+            
+            .dateFormat {
+                display: none;
+            }
+            .widthClass
+                {
+                    width: 255px !important;
+                }
+        </style>
+    </head>
+
+    <body>
+        <apex:form id="frm">
+            <apex:pageBlock >
+                Note: All modifications made on the page will be lost if Return button is clicked without clicking the Save button first. 
+            <apex:pageMessages ></apex:pageMessages>
+            <p class="fill">
+                Opportunity Editor
+            </p>
+            <div class="slds-text-align_center slds-p-top_medium">
+                <apex:commandButton value="Save" action="{!Save}" styleClass="slds-button slds-button--brand"/>
+                <apex:commandButton value="Cancel" action="{!Cancel}" reRender="aprilend" styleClass="slds-button slds-button_neutral"/>
+                <!--<apex:commandButton value="Clear All" action="{!ClearAllvalues}" styleClass="slds-button slds-button--brand"/>-->
+            </div>
+                <br/>
+            <div>
+                <apex:variable value="{!1}" var="rowNum" />
+                <table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal">
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th>SL No.</th>
+                            <th>Name</th>
+                            <th>Customer Phone Number</th>
+                            <th>Customer Email</th>
+                            <th>Lead Source</th>
+                            <th>Property Name</th>
+                            <th>Property Config</th>
+                            <th>Time Of Actual Appointment start</th>
+                            <th>Customer ID</th>
+                            <th>Appointment Venue - Square</th>
+                            <th>Appointment Type</th>
+                            <th>Design Partner</th>
+                            <th>Property Move-In Date</th>
+                            <th>Quote Link</th>
+                            <th>Quote Sent Time</th>
+                            <th>Last Open Time</th>
+                            <th>Amount</th>
+                            <th>Total Quote Views</th>
+                            <th>Count of Quotes Sent</th>
+                            <th>Description.</th>
+                            <th>Send Email</th>
+                            <th>No of Meetings Done</th>
+                            <th>Meeting Stage</th>
+                            <th>Order Book Date</th>
+                            <th>Second Meeting Time</th>
+                            <th>Send WhatsApp</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <apex:repeat value="{!Selected}" var="opp">
+                            <tr>
+                                <td data-label="SL No.">
+                                    <div class="slds-truncate" title="">
+                                        <apex:outputText value="{!rowNum}"></apex:outputText>
+                                    </div>
+                                </td>
+                                <td data-label="Name">
+                                    <div class="slds-truncate widthClass" title="" >
+                                        <apex:inputField id="trtp" styleClass="slds-input" value="{!opp.Name}"/>
+                                    </div>
+                                </td>
+                                <td data-label="Customer Phone Number">
+                                    <div class="slds-truncate" title="">
+                                        <apex:inputField id="srtdt" styleClass="slds-input" value="{!opp.Customer_Phone_Number__c}" />
+                                    </div>
+                                </td>
+                                <td data-label="Customer Email">
+                                    <div class="slds-truncate widthClass" title="">
+                                        <apex:inputField id="enddt" styleClass="slds-input" value="{!opp.Customer_Email__c}" />
+                                    </div>
+                                </td>
+                                <td data-label="Lead Source">
+                                    <div class="slds-truncate" title="">
+                                        <apex:inputField id="ngt" styleClass="slds-input" value="{!opp.LeadSource}"/>
+                                    </div>
+                                </td>
+                                <td data-label="Property Name">
+                                    <div class="slds-truncate widthClass" title="">
+                                        <apex:inputField id="plvt" styleClass="slds-input" value="{!opp.Property_Name__c}" />
+                                    </div>
+                                </td>
+                                <td data-label="Property Config">
+                                    <div class="slds-truncate" title="">
+                                        <apex:inputField id="purvt" styleClass="slds-select" value="{!opp.Property_Config__c}" />
+                                    </div>
+                                </td>
+                                <td data-label="Time of Actual Appointment Start">
+                                    <div title="">
+                                        <apex:inputField id="cmp" styleClass="slds-input" value="{!opp.Time_of_Actual_Appointment_Start__c}" />
+                                    </div>
+                                </td>
+                                <td data-label="Customer ID">
+                                    <div title="">
+                                        <apex:inputField id="csmst" styleClass="slds-input" value="{!opp.Customer_ID__c}" />
+                                    </div>
+                                </td>
+                                <td data-label="Appointment Venue - Square">
+                                    <div title="">
+                                        <apex:inputField id="prs" styleClass="slds-input" value="{!opp.Appointment_Venue_Square__c}" />
+                                    </div>
+                                </td>
+                                <td data-label="Appointment Type">
+                                    <div class="slds-truncate widthClass" title="">
+                                        <apex:inputField id="rm" styleClass="slds-input" value="{!opp.Appointment_Type__c}" />
+                                    </div>
+                                </td>
+                                <td data-label="Design Partner">
+                                    <div class="slds-truncate" title="">
+                                        <apex:inputField id="rm1" styleClass="slds-input" value="{!opp.Interior_Design_Partner__c}" />
+                                    </div>
+                                </td>
+                                <td data-label="Property Move-In Date">
+                                    <div class="slds-truncate" title="">
+                                        <apex:inputField id="rm2" styleClass="slds-input" value="{!opp.Property_Move_In_Date__c}" />
+                                    </div>
+                                </td>
+                                <td data-label="Quote Link">
+                                    <div class="slds-truncate" title="">
+                                        <apex:outputField id="rm3" styleClass="slds-text-link" value="{!opp.Quote_Link__c}" style="width: 255px !important;" />
+                                    </div>
+                                </td>
+                                <td data-label="Quote Sent Time">
+                                    <div class="slds-truncate" title="">
+                                        <apex:inputField id="rm4" styleClass="slds-input" value="{!opp.Quote_Sent_Time__c}" />
+                                    </div>
+                                </td>
+                                <td data-label="Last Open Time">
+                                    <div class="slds-truncate" title="">
+                                        <apex:inputField id="rm5" styleClass="slds-input" value="{!opp.Last_Open_Time__c}" />
+                                    </div>
+                                </td>
+                                <td data-label="Amount">
+                                    <div class="slds-truncate" title="">
+                                        <apex:inputField id="rm55" styleClass="slds-input" value="{!opp.Amount}" style="width: 120px !important;"/>
+                                    </div>
+                                </td>
+                                <td data-label="Total Quote Views">
+                                    <div class="slds-truncate" title="">
+                                        <apex:inputField id="rm6" styleClass="slds-input" value="{!opp.Total_Quote_Views__c}" />
+                                    </div>
+                                </td>
+                                <td data-label="Count of Quotes Sent">
+                                    <div class="slds-truncate" title="">
+                                        <apex:inputField id="rm7" styleClass="slds-input" value="{!opp.Count_of_Quotes_Sent__c}" />
+                                    </div>
+                                </td>
+                                <td data-label="Description.">
+                                    <div class="slds-truncate" title="">
+                                        <!--<apex:inputField id="rm8" styleClass="slds-input slds-truncate" value="{!opp.DescriptionCopy__c}" />-->
+                                        <apex:inputtextarea label="RichText" styleClass="slds-input slds-truncate widthClass" richtext="false" value="{!opp.DescriptionCopy__c}" id="Body" cols="10" rows="1"/>
+                                    </div>
+                                </td>
+                                <td data-label="Send Email">
+                                    <div class="slds-truncate" title="">
+                                        <apex:outputlink value="https://homelane-hds.typeform.com/to/tB1Iq1?to_email={!opp.Customer_Email__c}" id="theLink1" target="_blank" >Send Email</apex:outputlink>
+                                    </div>
+                                </td>
+                                <td data-label="No. of Meetings Done">
+                                    <div class="slds-truncate" title="">
+                                        <apex:inputField id="rm0" styleClass="slds-input" value="{!opp.No_of_Meetings_Done__c}" />
+                                    </div>
+                                </td>
+                                <td data-label="Meeting Stage">
+                                    <div class="slds-truncate" title="">
+                                        <apex:inputField id="rm11" styleClass="slds-input" value="{!opp.Meeting_Stage__c}" />
+                                    </div>
+                                </td>
+                                <td data-label="Order Book Date">
+                                    <div class="slds-truncate" title="">
+                                        <apex:inputField id="rm12" styleClass="slds-input" value="{!opp.Order_Book_Date__c}" />
+                                    </div>
+                                </td>
+                                 <td data-label="Second Meeting Time">
+                                    <div class="slds-truncate" title="">
+                                        <apex:inputField id="smu" styleClass="slds-input" value="{!opp.Second_Meeting_Time__c}" />
+                                    </div>
+                                </td>
+                                <td data-label="Send WhatsApp">
+                                    <div class="slds-truncate" title="">
+                                        <apex:outputlink value="https://api.whatsapp.com/send?phone={!opp.Customer_Phone_Number__c}" id="theLink" target="_blank" >Send WhatsApp Message</apex:outputlink>
+                                    </div>
+                                </td>
+                            </tr>
+                            <apex:variable value="{!rowNum + 1}" var="rowNum" />
+                        </apex:repeat>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+
+            <div class="slds-text-align_center slds-p-top_medium">
+                <apex:commandButton value="Save" action="{!Save}" styleClass="slds-button slds-button--brand"/>
+                <apex:commandButton value="Cancel" action="{!Cancel}" reRender="aprilend" styleClass="slds-button slds-button_neutral"/>
+                <!--<apex:commandButton value="Clear All" action="{!ClearAllvalues}" styleClass="slds-button slds-button--brand"/>-->
+            </div>
+            <br/>
+</apex:pageBlock>
+ <!--<apex:pageBlock rendered="{!IF(tourlist.size = 0 ,true,false)}" >
+            <h1>
+                There is no Record Selected , Please go back and Select Records to perform Operation
+            </h1>
+        </apex:pageBlock>-->
+        </apex:form>
+    </body>
+
+</apex:page>

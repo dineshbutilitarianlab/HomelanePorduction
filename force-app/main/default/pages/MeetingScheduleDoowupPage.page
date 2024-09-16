@@ -1,0 +1,18 @@
+<apex:page sidebar="false" standardStylesheets="false" showHeader="false" controller="MeetingScheduleController">
+<div style="position: relative;top: 180Px;font-size: 34px;">
+<div>
+ <center>Please select the type of meeting - </Center>
+</div><br/><br/>
+<center><a href="https://homelaneacuitybooking.as.me/schedule.php?appointmentType=category:Doowup%20SCVM&firstName={!objLead.Full_Name__c}&lastName=.&email={!objLead.Email}&phone={!objLead.Phone}&field:12369869={!objLead.Property__r.Name}&field:12369870={!objLead.Possession_Date__c}&field:12369866 ={!objLead.Customer_ID__c}">SCVM</a></Center><br/>
+<center><a href="https://homelaneacuitybooking.as.me/schedule.php?appointmentType=category:Doowup%20Showroom&firstName={!objLead.Full_Name__c}&lastName=.&email={!objLead.Email}&phone={!objLead.Phone}&field:12369866={!objLead.Customer_ID__c}">Showroom Meeting</a></Center><br/>
+
+    <!--<center><a href="http://rosters.homelane.com/appointment/create_meeting?firstName={!objLead.Full_Name__c}&lastName=.&email={!objLead.Email}&phone={!objLead.Phone}&propertyName={!objLead.Property__r.Name}&possessionDate={!objLead.Possession_Date__c}">Overbooking / Last Minute SCVM</a></Center><br/>-->
+
+   <!--<center><a href="https://homelaneshowroom.as.me/?appointmentType=category:Doowup%20Residence%20Visit&firstName={!objLead.Full_Name__c}&lastName=.&email={!objLead.Email}&phone={!objLead.Phone}&field:8875237={!objLead.Customer_ID__c}">Residence Visit</a></Center><br/>
+
+    <!--<center><a href="https://homelaneshowroom.as.me/schedule.php?location=Iron Man Visit&firstName={!objLead.Full_Name__c}&lastName=.&email={!objLead.Email}&phone={!objLead.Phone}">Iron Man</a></Center><br/>-->
+
+ 
+</div>
+
+</apex:page>

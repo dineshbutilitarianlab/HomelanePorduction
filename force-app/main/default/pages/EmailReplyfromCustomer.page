@@ -1,0 +1,5 @@
+<apex:page Controller="EmailReplyfromCustomerController" action="{!updateoppStatus}" >
+ 
+Thank You for the Approval
+  
+</apex:page>

@@ -1,0 +1,162 @@
+.THIS .theCursor{
+    cursor: auto !important;
+}
+.THIS .theOutPutClr{
+    color:black !important;
+}
+    
+.THIS .error_msg{color:#ff0;}
+.THIS .togleIcon{
+	font-size: 25px;
+    cursor:pointer;   
+}
+.THIS .showReasonWon{
+    display : block !important;
+}
+.THIS .hideReasonWon{
+    display : none !important;
+}
+.THIS .headerTop .h_btn {
+  position: absolute;
+  top: -1280px;
+}
+.THIS .theParent{
+    width : 100%;
+    height : 100% !important;
+    padding: 0; 
+    border-radius: 0.25rem; 
+    background-clip: padding-box; 
+    background-color: #f4f6f9;
+    border: 1px solid #d8dde6; 
+}
+.THIS .theChild {
+    padding: 10px 20px;
+}
+.THIS .theSec{
+    background-color: #0076de;
+    font-family: 'Yanone Kaffeesatz',sans-serif;
+    font-weight: normal;
+    font-size: 18px;
+    color: white;
+    padding: 3px 10px 1px 10px;
+}
+.THIS .theItem2{
+   
+}
+.THIS .theSubSection{
+   font-family: 'Yanone Kaffeesatz',sans-serif;
+    font-weight: normal;
+    font-size: 18px;
+    color: #175e9d;
+}
+.THIS .horzentolRowBGClr1{
+    background-color: #175e9d;
+}
+.THIS .horzentolRowBGClr2{
+    background-color: WHITE;
+    height: 2px;
+    margin-top: 8px;
+    margin-right: 18px;
+}
+.THIS .horzentolRow{
+    height: 2px;
+    margin-top: 5px;
+    
+    margin-bottom: 5px;
+    
+}
+
+
+.THIS .theCheck{
+    margin-right: 30%;
+    float : right;    margin-top: 10px;
+}
+.THIS .theClass{
+    float:right;
+}
+.THIS .toggle {
+    display: none;
+}
+
+.THIS .btn_save {
+    background: #78a0a6;
+    border: none;
+    box-shadow: none;
+    padding: 2px 25px;
+    position: relative;
+    z-index:55;
+    float:left;
+}
+.THIS .btn_save:hover{
+    background:#155744;
+}
+
+.THIS .btn_cancel:hover{
+    background:#4e1557;   
+}
+.THIS .btn_save.selected.showReasonWon{
+	padding: 2px 5px;
+    border-radius: 20px;
+}
+.THIS .btn_save.selected.showReasonWon.Assessment{
+    left: 2%;
+}
+.THIS .btn_save.selected.showReasonWon.Discovery{
+    left:23%
+}
+.THIS .btn_save.selected.showReasonWon.Proposal{
+    left:43%
+}
+.THIS .btn_save.selected.showReasonWon.Commitment{
+    left:62%
+}
+.THIS .btn_save.selected.showReasonWon.Closed{
+    left:83.5%
+}
+
+
+.THIS .btn_cancel {
+    background: #9e76a4;
+    border: none;
+    box-shadow: none;
+    padding: 2px 25px;
+}
+
+.THIS .btn_save span,.THIS .btn_cancel span{
+    color: #fff;
+    font-family: 'Yanone Kaffeesatz',sans-serif;
+    font-weight: normal;
+    font-size: 18px;
+    text-shadow: none;
+}
+.THIS .theReady{
+    background-color: #00df5e;
+    color: #fff;
+    font-size: 20px;
+    font-weight: normal;
+    padding: 3px 45px;
+    font-family: 'Yanone Kaffeesatz',sans-serif;
+    border-radius: 35px;
+}
+
+.THIS .theNotReady{
+    color: #fff;
+    font-size: 20px;
+    font-weight: normal;
+    padding: 3px 45px;
+    font-family: 'Yanone Kaffeesatz',sans-serif;
+    border-radius: 35px;
+    background-color: #e20202;
+}
+.THIS theSubSecPad{
+    padding: 5px 0 0 0;
+}
+.THIS toggleDisplay{
+    display : none !important;
+}
+.THIS .dateClass{
+    width: 96% !important;
+}
+.THIS span.assistiveText {
+    display: none !important;
+}

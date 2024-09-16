@@ -1,0 +1,13 @@
+<apex:page sidebar="false" standardStylesheets="false" showHeader="false" standardController="Lead">
+<div style="position: relative;top: 180Px;font-size: 34px;">
+<div>
+ <center>Please select the Brand - </Center>
+</div><br/><br/>
+<center><a href="https://www.homelane.com/create/sfleadcreate?wt_email={!$user.email}">HomeLane</a></Center><br/>
+    <center><a href="https://www.doowup.co/create/sfleadcreate?wt_email={!$user.email}">Doowup</a></Center><br/>
+
+   
+ 
+</div>
+
+</apex:page>

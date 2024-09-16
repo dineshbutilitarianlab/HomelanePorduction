@@ -1,0 +1,62 @@
+<apex:page standardController="Opportunity" extensions="ViewCheckListD1Controller" renderAs="pdf">
+<div style="background: #e4f9ff url(https://hlqa-homelane-qadev.cs6.force.com/Homelaneqadev/servlet/servlet.ImageServer?id=015N0000000URwv&oid=00DN0000000DtHl&lastMod=1466077294000)  no-repeat right top; background-size:cover; padding:5px;">
+    <div ></div>
+    <div style="margin:0 auto;width:650px;min-height:auto;background-color: #fff;padding: 10px;">
+        <div></div>
+        <div style="float:right;">
+            <img src="https://hlqa-homelane-qadev.cs6.force.com/Homelaneqadev/servlet/servlet.ImageServer?id=015N0000000URxe&oid=00DN0000000DtHl&lastMod=1466077950000" height="50px" />
+        </div>
+        <div style="margin:0;">
+            <a href="" target="_blank">
+                ​<img src="https://hlqa-homelane-qadev.cs6.force.com/Homelaneqadev/servlet/servlet.ImageServer?id=015N0000000URxK&oid=00DN0000000DtHl&lastMod=1466077748000" height="50px" />   
+            </a>
+        </div>
+      <!--  <div style="font-family:Arial,Helvetica,sans-serif;color:#7a7a7a;font-size:12px;letter-spacing:-1px;" align="left" bgcolor="#FFFFFF" height="5px">
+            <img src="https://c.cs6.content.force.com/servlet/servlet.ImageServer?id=015N0000000URyr&oid=00DN0000000DtHl&lastMod=1466078254000" alt="break1" height="10px" />
+        </div>
+        <div>
+            <a href="" target="_blank">
+                <img  src="https://c.cs6.content.force.com/servlet/servlet.ImageServer?id=015N0000000URyS&oid=00DN0000000DtHl&lastMod=1466084301000"/> 
+            </a>
+        </div>-->
+     <!--   <div style="clear:both;min-height:25px;">&nbsp;</div> -->
+    </div>
+</div>
+<br/>
+<apex:form >
+    
+   <b> <apex:outputLabel value="Checklist information of  {!Opportunity.Name}"/><br/>
+   <apex:outputLabel value="Customer Id:{!Opportunity.Account.Customer_ID__c}"/><br/>
+   <apex:outputLabel value="DP: {!Opportunity.Design_Partner__r.Name}"/><br/>
+   <apex:outputLabel value="Project Manager:{!Opportunity.PM__r.Name}"/><br/>
+   <apex:outputLabel value="SMM:{!Opportunity.SMM__r.Name}"/><br/>
+   Date OF D1 Checklist: <apex:outputText value="{0,date,dd-MMM-yyyy}">
+                           <apex:param value="{!scUserList[0].CreatedDate}" />
+                           </apex:outputText></b> <br/><br/><br/>
+    <table border="2px" width="100%" style="font-family: Arial, Helvetica, sans-serif; border-collapse: collapse;" cellpadding="5">
+      <tr>
+                    <th ><b>Question </b></th>
+                    <th><b>User Response </b></th>
+                   <!-- <th><b>Date Of D1 Checklist </b></th>-->
+        </tr>
+    <apex:repeat value="{!scUserList}" var="eachOpp">
+              
+                
+                <tr>
+                    <td>{!eachOpp.Item__r.Item__c}</td>
+                    <td>{!eachOpp.User_Response__c}</td>
+                  <!--  <td> <apex:outputText value="{0,date,yyyy-MM-dd}">
+                           <apex:param value="{!eachOpp.CreatedDate}" />
+                           </apex:outputText></td>-->
+                </tr>
+            </apex:repeat> 
+    </table>
+    <br/>
+</apex:form>
+<div>
+            <a href="" target="_blank">
+                <img src="https://hlqa-homelane-qadev.cs6.force.com/Homelaneqadev/servlet/servlet.ImageServer?id=015N0000000URxt&oid=00DN0000000DtHl&lastMod=1466078024000" height="200px" width="700px"/> 
+            </a>
+        </div>
+        &nbsp;
+</apex:page>

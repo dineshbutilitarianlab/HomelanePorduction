@@ -1,0 +1,55 @@
+<apex:page standardController="Opportunity" extensions="ViewCheckListD3Controller" showHeader="false" sidebar="false">
+<div style="background: #e4f9ff url(https://c.cs6.content.force.com/servlet/servlet.ImageServer?id=015N0000000URwv&oid=00DN0000000DtHl&lastMod=1466077294000)  no-repeat right top; background-size:cover; padding:5px;">
+    <div ></div>
+    <div style="margin:0 auto;width:650px;min-height:auto;background-color: #fff;padding: 10px;">
+        <div></div>
+        <div style="float:right;">
+            <img src="https://c.cs6.content.force.com/servlet/servlet.ImageServer?id=015N0000000URxe&oid=00DN0000000DtHl&lastMod=1466077950000" height="50px" width="200px"/>
+        </div>
+        <div style="margin:0;">
+            <a href="" target="_blank">
+                ​<img src="https://c.cs6.content.force.com/servlet/servlet.ImageServer?id=015N0000000URxK&oid=00DN0000000DtHl&lastMod=1466077748000" height="50px" width="200px"/>   
+            </a>
+        </div>
+      <!--  <div style="font-family:Arial,Helvetica,sans-serif;color:#7a7a7a;font-size:12px;letter-spacing:-1px;" align="left" bgcolor="#FFFFFF" height="5px">
+            <img src="https://c.cs6.content.force.com/servlet/servlet.ImageServer?id=015N0000000URyr&oid=00DN0000000DtHl&lastMod=1466078254000" alt="break1" height="10px" />
+        </div>
+        <div>
+            <a href="" target="_blank">
+                <img  src="https://c.cs6.content.force.com/servlet/servlet.ImageServer?id=015N0000000URyS&oid=00DN0000000DtHl&lastMod=1466084301000"/> 
+            </a>
+        </div>-->
+     <!--   <div style="clear:both;min-height:25px;">&nbsp;</div> -->
+    </div>
+</div>
+<br/>
+     <apex:form >
+         <apex:outputPanel id="ErrorMsg">
+             <apex:pageMessages ></apex:pageMessages>
+         </apex:outputPanel>
+         <br/><br/><br/>
+         <apex:outputPanel rendered="{!if(scUserList.size>0,true,false)}">
+            <table border="1" width="100%" style="font-family: Arial, Helvetica, sans-serif; border-collapse: collapse;" cellpadding="5">
+                 <tr>
+                    <th><b>Question </b></th>
+                    <th><b>User Response </b></th>
+                </tr>
+    <apex:repeat value="{!scUserList}" var="eachOpp">
+               
+                <tr>
+                    <td>{!eachOpp.Item__r.Item__c}</td>
+                    <td>{!eachOpp.User_Response__c}</td>
+                </tr>
+            </apex:repeat> 
+    </table>
+    <center>    <apex:commandButton value="Send Email" action="{!sendEmail}"/> </center>
+          
+    </apex:outputPanel>     
+    </apex:form>
+    <div>
+            <a href="" target="_blank">
+                <img src="https://c.cs6.content.force.com/servlet/servlet.ImageServer?id=015N0000000URxt&oid=00DN0000000DtHl&lastMod=1466078024000" height="200px" width="1365px"/> 
+            </a>
+        </div>
+        &nbsp;
+</apex:page>

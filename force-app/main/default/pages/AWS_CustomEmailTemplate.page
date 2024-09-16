@@ -1,0 +1,109 @@
+<apex:page controller="AWS_CustomEmailTempcontroller" sidebar="false" showheader="false">
+    <c:CommonLibraries />
+    <apex:includeScript value="{!URLFOR($Resource.AWS_Dependency, '/ClassicJqueryLibrary/JqueryUITabs10/tabs/jquery-ui-1.10.3.js')}"/>  
+    <apex:includeScript value="{!URLFOR($Resource.AWS_Dependency, '/Kendo_ui_2015_1_318/js/kendo.all.min.js')}"/> 
+    <apex:includeScript value="{!$Page.CommonScripts}"/>   
+    <!-- FT stylesheets -->
+    <apex:stylesheet value="{!$Page.CommonStyles}" />
+    <apex:stylesheet value="{!$Page.AdminToolStyles}" />
+    
+    
+    
+    
+    <script language="javascript">
+               window.onload = new function() 
+               { 
+                  // bring popup window to front
+                  window.focus(); 
+                  var ele=document.getElementById('{!$Component.form.block.section.query}');
+                  if (ele)
+                  {
+                     ele.focus();
+                  }
+               }
+               
+               var ele = '';
+               
+               function fillIn(name,id)
+               { 
+                  var winMain=window.opener;
+                  if (null==winMain) 
+                  {
+                     winMain=window.parent.opener;
+                  }
+                  console.log('ele.id : '+id);
+                  ele=winMain.document.getElementById('{!$CurrentPage.parameters.emailTempId}');
+                  ele.value=id; 
+                  console.log('ele.value : '+ele.value);
+                  CloseWindow();
+                  /*var str = htmlvalue;
+                  var substr = '/{/!';
+                  if(str.indexOf(substr) !== -1)){
+                      htmlvalue.substring(htmlvalue.indexOf('/{/!") + 2 , htmlvalue.indexOf("__"));
+                  }*/
+               }
+
+               function CloseWindow()
+               {  
+                  var winMain=window.opener;
+                  if (null==winMain)
+                  {
+                     winMain=window.parent.opener;
+                  }
+                  winMain.closeEmailComp();
+               }
+            </script>
+            
+            
+            <apex:messages />
+              <apex:form id="form" >  
+                    
+                 <div class="k-content" id="lookup">
+                    <div class="k-block" >
+                        <div> 
+                            <table style="margin:2% auto;"  border="0"  cellpadding="0" width="60%" align="center" class="popup-table" cellspacing="0" >     
+                                <tr>
+                                    <td>
+                                        <font size="3">Select Folder :</font>
+                                    </td>
+                                    <td>
+                                            <apex:selectList value="{!emailFolder}"  size="1" multiselect="true"> 
+                                                <apex:selectOptions value="{!options}"/> 
+                                                <apex:actionSupport event="onchange" reRender="Details" action="{!find}"/>
+                                            </apex:selectList><p/>
+                                            <!-- <apex:commandButton value="Test" action="{!test}" rerender="out" status="status"/>  -->
+                                    </td>
+                                </tr>
+                            </table>
+                        </div> 
+                        
+                        
+                    </div>
+                 
+                     <apex:outputPanel id="Details">
+                         <div class="table-design">
+                            <table width="90%" border="0"  cellpadding="0"  cellspacing="0" class="popup-table" style="margin:2% 5%;" >
+                                <tr>
+                                    <th class="padding5px">Name</th>
+                                    <!-- <th class="padding5px">Type</th> -->
+                                    <th class="padding5px">Description</th>
+                                </tr>
+                                <apex:repeat var="emailT" value="{!lstEmailTemplates}">
+                                    <tr>
+                                        <td><apex:outputLink value="#" onclick="fillIn('{!emailT.name}','{!emailT.id}')">{!emailT.Name}</apex:outputLink></td>
+                                       <!--  <td><apex:outputText >{!emailT.TemplateType}</apex:outputText></td>  -->
+                                        <td><apex:outputText >{!emailT.Description}</apex:outputText></td>
+                                    </tr>
+                                </apex:repeat> 
+                            </table>
+                         </div>
+                    </apex:outputPanel>
+                    
+            
+                    <br/>
+                    <div style=" margin: 10px 60px 20px 60px">
+                        <button class="k-button" style= "cursor:pointer" onclick="CloseWindow();">Close Window</button>
+                    </div>
+                 </div>
+               </apex:form>
+</apex:page>

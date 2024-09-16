@@ -1,0 +1,123 @@
+<aura:component controller="GetprojectdetailController" implements="flexipage:availableForAllPageTypes" access="global" >
+	
+     <ltng:require styles="/resource/SLDS100/assets/styles/salesforce-lightning-design-system.css"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.getTemplatep}"/>
+    
+    <aura:attribute name="projectrecord" type="Project_Name__c" 
+                    default="{ 'sobjectType': 
+                             'Project_Name__c',
+                             'Name': '',
+                             'Start_Date__c': '',
+                             'Number_of_Bedroom__c':'',
+                             'Number_of_Kitchen__c':'',
+                             'Number_of_Living_Room__c':'',
+                             'Number_of_Crockery_Unit__c':'',
+                             'Number_of_Foyer__c':'',
+                             'Opportunity_Project__c':'' }"/>
+    
+    <aura:attribute name="oppId" type="String" />
+    <aura:attribute name="Oppname" type="String" />
+    <aura:attribute name="projectID" type="String" />
+    <aura:attribute name="propertyname" type="String" />
+    
+    <aura:attribute name="tempname" type="String" />
+    <aura:attribute name="templatename" type="String" />
+    
+    <!-- Form to create a project from a template Starts -->
+    
+    <div>
+        <div aura:id="form1" aria-hidden="false" role="dialog" class="slds-modal slds-modal--form slds-fade-in-open">
+            <div class="slds-modal__container slds-modal--form" role="document" tabindex="0">
+                <div class="slds-modal__header">
+                    <button onclick="{!c.getProjectrecord}" class="slds-button slds-button--neutral slds-button--brand">Save</button>
+                    
+                    <h2 class="slds-text-heading--medium slds-truncate">New Project</h2>
+                </div>
+                <div class="slds-modal__content">
+                    <h3 class="slds-section-title--divider">Project Information</h3>
+                    <div class="slds-form--stacked slds-p-around--medium slds-m-bottom--x-small">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control">
+                               <ui:inputText aura:id="expname" label="Project Name" class="slds-input" labelClass="slds-form-element__label" value="{!v.propertyname}" disabled="True"/>
+                            </div>
+                        </div>
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="inputNameSample2">Start Date</label>
+                            <div class="slds-form-element__control">
+                                <ui:inputDate aura:id="today" class="slds-input" value="{!v.projectrecord.Start_Date__c}" required="true" displayDatePicker="true" />
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-m-top--medium large">
+                            <label class="slds-form-element__label" for="select-01">Template</label>
+                            <div class="slds-select_container">
+                                <ui:inputSelect class="slds-select" multiple="false" value="{!v.templatename}" >
+                                    <ui:inputSelectOption text="Select an Option" label="Select an Option" />
+                                    <aura:iteration items="{!v.tempname}" var="pro">
+                                        <ui:inputSelectOption text="{!pro.Name}" label="{!pro.Name}"/>
+                                    </aura:iteration>
+                                </ui:inputSelect>
+                            </div>
+                        </div>
+                        <div class="slds-form-element slds-lookup" data-select="single" data-scope="single">
+                            <label class="slds-form-element__label" for="lookup-01">Opportunity</label>
+                            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                                <input id="lookup-01" class="slds-lookup__search-input slds-input" type="text"  role="combobox" aria-expanded="false" value="{!v.Oppname}" disabled="True" />
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="slds-section-title--divider">Room Details</h3>
+                    <fieldset class="slds-form--compound">
+                        <div class="form-element__group">
+                            <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size--1-of-2">
+                                    <label class="slds-form-element__label" for="input-01">Additonal No of Bedroom:</label>
+                                    <ui:inputNumber aura:id="inputBed" value="{!v.projectrecord.Number_of_Bedroom__c}"  class="slds-input"  />
+                                </div>
+                                <div class="slds-form-element slds-size--1-of-2">
+                                    <label class="slds-form-element__label" for="input-02">Additonal No of Kitchen:</label>
+                                    <ui:inputNumber aura:id="inputKit" value="{!v.projectrecord.Number_of_Kitchen__c}"  class="slds-input"  />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="slds-form--compound">
+                        <div class="form-element__group">
+                            <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size--1-of-2">
+                                    <label class="slds-form-element__label" for="input-01">Additional No of Living Room:</label>
+                                    <ui:inputNumber aura:id="inputlivn"  class="slds-input" value="{!v.projectrecord.Number_of_Living_Room__c}"   />
+                                </div>
+                                <div class="slds-form-element slds-size--1-of-2">
+                                    <label class="slds-form-element__label" for="input-02">Additinal No of Crockery Unit:</label>
+                                    <ui:inputNumber aura:id="inputcroc" value="{!v.projectrecord.Number_of_Crockery_Unit__c}"  class="slds-input"  />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                    <fieldset class="slds-form--compound">
+                        <div class="form-element__group">
+                            <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size--1-of-2">
+                                    <label class="slds-form-element__label" for="input-01">Additonal No of Foyer:</label>
+                                    <ui:inputNumber aura:id="inputFoyer" value="{!v.projectrecord.Number_of_Foyer__c}"  class="slds-input"  />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                    
+                </div>
+            </div>
+        </div>
+        <div aura:id="form2" class="slds-backdrop slds-backdrop--open"></div>
+    </div>
+    
+    <!-- Form to create a project from a template Ends-->
+    
+    <aura:if isTrue="{!v.projectID != undefined }">
+        <c:ProjectTreeViewLightningExperience productid="{!v.projectID}" />
+    </aura:if> 
+   
+</aura:component>

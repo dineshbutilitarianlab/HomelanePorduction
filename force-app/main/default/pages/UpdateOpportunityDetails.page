@@ -1,0 +1,836 @@
+<!--
+@Page Name          : UpdateOpportunityDetails.page
+@Description        : 
+@Author             : Bharatesh Shetty
+@Group              : 
+@Last Modified By   : Bharatesh Shetty
+@Last Modified On   : 8/14/2019, 4:09:15 PM
+@Modification Log   : 
+==============================================================================
+Ver         Date                     Author                 Modification
+==============================================================================
+1.0    8/12/2019, 12:40:47 PM   Bharatesh Shetty     Initial Version
+-->
+<apex:page standardController="Opportunity" extensions="UpdateOpportunityDetails_Controller" docType="html-5.0" cache="false">
+    <apex:form id="mainfrm">  
+        <html> 
+            
+                
+<head>
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1" /> -->
+    <meta name="viewport" content="width=1000"/>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>  
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQAwNqjxL0L2-5X8yqNLEfpsZj6Z1B_Is&libraries=places"></script>
+    <script>
+    
+    
+    var url_string = window.location.href;
+    var page_url = new URL(url_string);
+    var page_lead_id = page_url.searchParams.get("id");
+
+    
+    
+        var itemLocality = '';
+        var itemCountry = '';
+        var uName = '';
+        var postparams = '';
+        var flag = '';
+        var property_name = '';
+
+    debugger;
+    function init1() {
+        debugger;
+        var input = document.getElementById('j_id0:mainfrm:property_search');
+        if(input==null){
+        return false;
+        }
+        var options = {
+        // types: ['establishment'],
+        componentRestrictions: {country: "in"}
+        };
+        var autocomplete = new google.maps.places.Autocomplete(input, options);
+
+        // autocomplete.setComponentRestrictions(
+        //     {'country': ['us', 'pr', 'vi', 'gu', 'mp']});
+
+        google.maps.event.addListener(autocomplete, 'place_changed',
+            function() {
+                var place = autocomplete.getPlace();
+                var lat = place.geometry.location.lat().toString();
+                var lng = place.geometry.location.lng().toString();
+                jQuery.each(place.address_components, function (i, address_component) {
+                    console.log('address_component:'+i);
+
+                    if (address_component.types[0] == "locality"){
+                        console.log("town:"+address_component.long_name);
+                        itemLocality = address_component.long_name;
+                    }
+
+                    if (address_component.types[0] == "country"){ 
+                        console.log("country:"+address_component.long_name); 
+                        itemCountry = address_component.long_name;
+                    }
+                    //return false; // break the loop   
+                });
+                var lead_property_type_add = $("[id$=property_type]").val();
+                var city = itemLocality;
+                var country = itemCountry;
+                var addr = place.formatted_address;
+                property_name=place.name;
+                var lead_id = page_lead_id;
+                //postparams={latitude:lat,longitude:lng,city:city,country:country,searched_address:addr,property_name:property_name,map_url:place.url,lead_id:lead_id,Street:property_name};
+                postparams={Street:addr,lat:lat,lng:lng,City:city,Name:property_name,'Map Link':place.url,Landmark:"",Property_Type__c:lead_property_type_add,PlaceId:place.place_id,UserName:"Homelane",Type:"Property",LeadId:lead_id,OppId:""};
+                place.address_components.forEach(row=>{
+                    type=row['types'][0];                    
+                    switch(type.toLowerCase())
+                    {
+                        case "sublocality":
+                        case "locality":
+                        postparams["Locality"]=row.short_name;break;
+                        case "administrative_area_level_1":postparams.State=row.short_name;break;
+                        //case "route":postparams.Street=row.short_name;break;
+                        case "postal_code":postparams["Postal Code"] =row.short_name;break;
+                    }
+
+                });
+                
+                if(postparams.Locality)
+                    postparams.Locality=postparams.Locality.replace(/(^,)|(,$)/g, "");
+                //console.log(postparams);
+            } 
+        );
+    }
+
+    google.maps.event.addDomListener(window, 'load', init1);
+    
+    </script>
+                <style>
+                    .titleDiv{
+                    margin-bottom: 30px;
+                    text-align: center;
+                    padding: 4px 0px;
+                    }
+                    .title{
+                    font-size: 35px;
+                    font-weight: 500;
+                    }
+                    .bPageHeader .multiforce .messages .msgContent {
+                    display: none;
+                    }
+                    .bPageHeader td.right.vtop {
+                    display: none;
+                    }
+                    #AppBodyHeader .phHeader td.left img:first-child{
+                    display: none;
+                    }
+                    .opportunityTab .brdPalette {
+                    border-top-color: transparent;
+                    }
+                    body {
+                    font-family: Arial;
+                    }
+                    
+                    /* Style the tab */
+                    .tab {
+                    overflow: hidden;
+                    border: 1px solid #ccc;
+                    background-color: #f1f1f1;
+                    }
+                    .sticky {
+                    position: fixed;
+                    top: 0;
+                    width: 97.5%;
+                    z-index: 10000;
+                    }
+                    
+                    
+                    /* Style the buttons inside the tab */
+                    .tab a {
+                    background-color: inherit;
+                    float: left;
+                    border: none;
+                    outline: none;
+                    cursor: pointer;
+                    padding: 14px 16px;
+                    transition: 0.3s;
+                    font-size: 17px;
+                    color: #000;
+                    text-decoration: none;
+                    }
+                    
+                    /* Change background color of buttons on hover */
+                    .tab :hover {
+                    background-color: #ddd;
+                    }
+                    
+                    /* Create an active/current tablink class */
+                    .tab button.active {
+                    background-color: #ccc;
+                    }
+                    
+                    /* Style the tab content */
+                    .tabcontent {
+                    display: block;
+                    padding: 20px 0px;
+                    /*border: 1px solid #ccc;*/
+                    border-top: none;
+                    }
+                    
+                    .form-group {
+                    margin-bottom: 15px;
+                    }
+                    
+                    .frm_label {
+                    margin-left: 10px;
+                    }
+                    
+                    label {
+                    display: inline-block;
+                    max-width: 100%;
+                    margin-bottom: 5px;
+                    font-weight: 700;
+                    }
+                    
+                    .form-control {
+                    display: block;
+                    width: 100%;
+                    height: 34px;
+                    padding: 6px 12px;
+                    font-size: 14px;
+                    line-height: 1.42857143;
+                    color: #555;
+                    background-color: #fff;
+                    background-image: none;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+                    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+                    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+                    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                    }
+                    
+                    .frm_input {
+                    margin-left: 10px;
+                    width: 28%;
+                    height: 28px;
+                    line-height: 28px;
+                    }
+                    
+                    .frm_select {
+                    margin-left: 10px;
+                    width: 29.47%;
+                    height: 42px;
+                    }
+                    
+                    .checkbox_input {
+                    width: 20px;
+                    margin-left: 12px !important;
+                    /*display: inline;*/
+                    }
+                    
+                    .checkbox_text {
+                    display: inline-block;
+                    margin-top: -27px;
+                    padding-top: 0;
+                    position: absolute;
+                    margin-left: 45px;
+                    font-weight: 900;
+                    }
+                    .save{
+                    position: absolute;
+                    right: 15px;
+                    top: 14px;
+                    }
+                    .save>input{riyag.hlc@homelane.sandbox.in
+                    font-size: 18px;
+                    color: white;
+                    background-color: #42804df7;
+                    width: 85px;
+                    border: 1px solid;
+                    height: 30px;
+                    }
+                    .topheadline{
+                    position: relative;
+                    text-align: center;
+                    margin-bottom: 50px;
+                    margin-top: 50px;
+                    }
+                    .footersubmit{
+                    position: fixed;
+                    left: 10px;
+                    right: 10px;
+                    bottom: 0;
+                    height: 40px;
+                    margin-bottom: 0px;
+                    background-color: #eee;
+                    padding: 17px 0px;
+                    text-align: center;
+                    }
+                     body input.btn, body input.btnDisabled, body input.btnCancel {
+                        height: 5vh;
+                    -webkit-appearance: none;
+                    font-size: 25px !important;
+                    color: #fff !important;
+                    background: none;
+                    background-color: #ff4713;
+                    border-radius: 10px;
+                    width: 6vw;
+                    }
+                    .error_cls{        
+                    color: #ca4040;
+                    margin: 12px;
+                    padding-top: 4px !important;
+                    }
+                    .error_txt{
+                    font-size: 1s4px;
+                    margin: 15px 0;
+                    padding: 14px 0;
+                    border: 1px solid #000000;
+                    text-align: center;
+                    color: #ca4040;
+                    font:small-caption;
+                    }
+                    textarea{
+                    resize: none;
+                    }
+                    .textArea{
+                    height: 115px;
+                    }
+                    .frm-body{
+                    display:block;
+                    }  
+                    .read-only{
+                    background-color: #ededed;
+                    }  
+                    fieldset legend {
+                    font-size: 17px;
+                    margin-bottom: 15px;
+                    }
+                    .legend_cls {
+                    pointer-events: none;
+                    }
+                    .frm-body{
+                    display: block;
+                    }
+                    
+                    @media only screen and (max-device-width: 768px){
+                    
+                    .titleDiv{
+                    margin-bottom: 30px;
+                    text-align: center;
+                    padding: 4px 0px;
+                    }
+                    .title{
+                    font-size: 5vw;
+                    font-weight: 500;
+                    }
+                    
+                    #AppBodyHeader .phHeader td.left img:first-child{
+                    width: 40vw !important;
+                    height: 8vh;
+                    }
+                    
+                    .phHeaderCustomLogo #helpNavLabel, .phHeaderCustomLogo #notificationsNavLabel, .phHeaderCustomLogo #userNavLabel{
+                    font-size: 3vw;
+                    }
+                    .messages .textOnly.normalImportance, .messages .textOnly.highImportance {
+                    font-size: 33px;
+                    height: 40px;
+                    width: 275px;
+                    }
+                    
+                    .frm_input {
+                    margin-left: 10px;
+                    width: 90%;
+                    height: 70px;
+                    line-height: 70px;
+                    font-size: 4vw;
+                    padding: 2vw;
+                    }
+                    
+                    .frm_label {
+                    margin-left: 10px;
+                    font-size: 4vw;
+                    margin-top: 1vw;
+                    
+                    }
+                    
+                    .frm_select {
+                    margin-left: 10px;
+                    width: 95%;
+                    height: 110px !important;
+                    font-size: 4vw;
+                    padding: 2vw;
+                    -moz-appearance:none; /* Firefox */ 
+                    -webkit-appearance:none; /* Safari and Chrome */ 
+                    appearance:none;
+                    }
+                    
+                    .checkbox_input{
+                    width: 4vw;
+                    }
+                    
+                    .checkbox_text {
+                    display: inline-block;
+                    margin-top: -40px;
+                    padding-top: 0;
+                    position: absolute;
+                    margin-left: 58px;
+                    margin-right: 62px;
+                    font-size: 4vw;
+                    }
+                    .topheadline {
+                    font-size:6vw;
+                    }
+                    .tab{
+                    display:none;
+                    }
+                    .tab a{
+                    padding: 21px 8px;
+                    font-size: 24px;
+                    }
+                    .sticky{
+                    left: 0;
+                    }
+                    .book_meeting_link{
+                    font-size: 3vw;
+                    }
+                    body input.btn, body input.btnDisabled, body input.btnCancel {
+                    height: 80px;
+                    -webkit-appearance: none;
+                    font-size: 4vw !important;
+                    color: #fff !important;
+                    background: none;
+                    background-color: #ff4713;
+                    border-radius: 12px;
+                    width: 18vw;
+                    }
+                    fieldset legend {
+                    font-size: 5vw;
+                    background-color: #eee;
+                    color: #444;
+                    padding: 18px;
+                    width: 92%;
+                    border: none;
+                    text-align: left;
+                    outline: none;
+                    }
+                    
+                    select { 
+                    -webkit-appearance: none; 
+                    -moz-appearance: none; 
+                    background: transparent; 
+                    background-image: url(data:image/svg+xml;base64,PHN2ZyBmaWxsPSdibGFjaycgaGVpZ2h0PScyNCcgdmlld0JveD0nMCAwIDI0IDI0JyB3aWR0aD0nMjQnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHBhdGggZD0nTTcgMTBsNSA1IDUtNXonLz48cGF0aCBkPSdNMCAwaDI0djI0SDB6JyBmaWxsPSdub25lJy8+PC9zdmc+) !important; 
+                    background-repeat: no-repeat; 
+                    background-position-x: 100%; 
+                    background-position-y: 25px; 
+                    border: 1px solid #dfdfdf; 
+                    border-radius: 2px; 
+                    margin-right: 2rem; 
+                    padding: 1rem; 
+                    padding-right: 2rem;
+                    background-size: 65px 65px; 
+                    }
+                    .active, fieldset legend:active {
+                    background-color: #ccc;
+                    }
+                    .noSidebarCell, .sidebarCell .fixed {
+                    padding: 10px;
+                    }
+                    
+                    .form-group {
+                    margin-bottom: 35px;
+                    margin-top: 20px;
+                    }
+                    .fieldset_cls{
+                    padding-bottom: 10px;
+                    padding-top: 10px;
+                    padding-left: 40px;
+                    border: none;
+                    }
+                    .chkbox-frm-grp{
+                    margin-bottom: 70px;
+                    margin-top: 40px;
+                    }
+                    .footersubmit{
+                    position: fixed;
+                    left: 10px;
+                    right: 12px;
+                    bottom: 0;
+                    height: 80px;
+                    margin-bottom: 0px;
+                    background-color: #eee;
+                    padding: 17px 0px;
+                    }
+                    .smallText{
+                    color: #979797;
+                    font-weight: 500;
+                    display: block;
+                    font-size: 3.5vw;
+                    }
+                    .date{
+                    width: 89.5% !important;
+                    height: 75px !important;
+                    font-size: 4vw !important;
+                    -webkit-appearance: none; 
+                    -moz-appearance: none; 
+                    background: transparent;
+                    background-image: url(data:image/svg+xml;base64,PHN2ZyBmaWxsPSdibGFjaycgaGVpZ2h0PScyNCcgdmlld0JveD0nMCAwIDI0IDI0JyB3aWR0aD0nMjQnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHBhdGggZD0nTTcgMTBsNSA1IDUtNXonLz48cGF0aCBkPSdNMCAwaDI0djI0SDB6JyBmaWxsPSdub25lJy8+PC9zdmc+) !important; 
+                    background-repeat: no-repeat; 
+                    background-position-x: 100%; 
+                    background-position-y: 20px; 
+                    border: 1px solid #dfdfdf; 
+                    border-radius: 2px; 
+                    margin-right: 2rem; 
+                    padding: 1rem; 
+                    padding-right: 2rem;
+                    background-size: 65px 65px;                    
+                    }
+                    .footersubmit > .cancelBtn{
+                    float: right;
+                    width: unset !important;
+                    padding: 0 20px;
+                    }
+                    .textArea{
+                    height:250px;
+                    }
+                    .frm-body{
+                    display:none;
+                    }
+                    legend:after {
+                    content: '\002B';
+                    color: black;
+                    font-weight: bold;
+                    float: right;
+                    margin-left: 5px;
+                    }
+                    legend.active:after {
+                    content: "\2212";
+                    }
+                    .legend_cls {
+                    pointer-events: all;
+                    }
+                    }
+                </style>
+                
+            </head>
+            <body>
+                <div>
+                    <div class="topheadline">
+                        <img src=" https://super.homelane.com/test/homelane-162813964747707958fd772ef.svg" onclick="window.location.href='https://www.homelane.com'" />
+                    </div>       
+                    <span class="save">
+                    </span>
+                    
+                    <div class="titleDiv">
+            <h1 class="title">
+                OPPORTUNITY DETAILS
+            </h1>
+    </div>
+                </div>
+                <div class="tab" id="stickyTab">
+                    <a class="tablinks" href="#customer_details" id="customer_details_tab">Customer Details</a>
+                    <a class="tablinks" href="#Opportunity_details" id="Opportunity_details_tab">Opportunity Details</a>
+                    <a class="tablinks" href="#property_details" id="property_details_tab">Property Details </a>
+                </div>
+                <div>
+                    <apex:pageBlock id="pageMsgBlock">
+                        <apex:pageMessages rendered="true" id="msgId"/>
+                    </apex:pageBlock>
+                </div>
+                <div id="customer_details" class="tabcontent">
+                    <fieldset class="fieldset_cls">
+                        <legend class="legend_cls active">Customer Details </legend>
+                        <div class="frm-body" style="display:block;">
+                            <div class="form-group">
+                                <label for="name" class="frm_label">Name</label>              
+                                <apex:outputText value="{!Name}" styleClass="form-control frm_input read-only"/>               
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="frm_label">Email</label>
+                                <apex:outputText value="{!Email}" styleClass="form-control frm_input read-only"/>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="mobile" class="frm_label">Mobile</label>
+                                <apex:outputText value="{!Mobile}" styleClass="form-control frm_input read-only"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="city" class="frm_label">City </label>
+                                <apex:outputText value="{!City}" styleClass="form-control frm_input read-only"/>
+                            </div>  
+                        </div>
+                    </fieldset>
+                </div>
+                <div id="Opportunity_details" class="tabcontent">
+                    <fieldset class="fieldset_cls">
+                        <legend class="legend_cls">Opportunity Details </legend>
+                        <div class="frm-body">
+                            <!--    <div class="form-group">
+<label for="Lost_Opp" class="frm_label">Lost Opp</label>
+<apex:inputText value="{!lostOpp}" styleClass="form-control frm_input"/>
+</div> -->                  <apex:outputPanel id="Opportunity_Status_Panel">
+                            <div class="form-group">
+                                <label for="Status" class="frm_label">Status</label>
+                                <apex:selectList size="1" value="{!selectedStatus}" styleClass="form-control frm_select" id="Status">
+                                    <apex:selectOptions value="{!listOfStatus}"/>
+                                    <apex:actionsupport event="onchange" action="{!handleStatusFieldDependency}" rerender="Opportunity_Status_Panel"/>
+                                </apex:selectList>
+                                <span Class="error_cls" id="lead_status_error" style="display:none;"></span>
+                            </div>
+                            <div class="form-group">            
+                                <label for="Sub_Status" class="frm_label">Sub Status</label>
+                                <apex:selectList size="1" value="{!selectedSubStatus}" styleClass="form-control frm_select" id="Sub_Status">
+                                    <apex:selectOptions value="{!listOfSubStatus}"/>
+                                </apex:selectList>
+                                <span Class="error_cls" id="lead_Sub_status_error" style="display:none;"></span>
+                            </div>
+                            <!--</apex:outputPanel>-->
+                            <!--<div class="form-group">            
+                                <label for="Blockers" class="frm_label">Blocker</label>
+                                <apex:selectList size="1" value="{!selectedBlockerValue}" styleClass="form-control frm_select" id="Blocker">
+                                    <apex:selectOptions value="{!listOfBlockersValues}"/>
+                                </apex:selectList>
+                            </div>-->
+                            <div class="form-group">
+                                <label for="Follow-Up_Time" class="frm_label">Follow-up Time</label>
+                                <apex:input value="{!followUpTime}" styleClass="form-control frm_input date" type="datetime-local" />
+                            </div>
+                            <div class="form-group">
+                                <label for="New_Close_Date" class="frm_label">Expected Date of Closure</label>
+                                <apex:input value="{!newClosedate}" styleClass="form-control frm_input date" type="date"  />
+                            </div>
+                            <!--Commented with OFM changes-->
+                            <div class="form-group">
+                                <label for="Probability_Of_Closure" class="frm_label">Probability Of Closure (in %)</label>
+                                <apex:input value="{!probabilityOfClosure}" styleClass="form-control frm_input" type="number"  id="inputfieldId" onchange="chkRange(event)" html-placeholder="0" /> 
+                                <!--<input value="{!probabilityOfClosure}" class="form-control frm_input" type="number"  id="inputfieldId" max="100" min="0"/>-->
+                            </div> 
+                            <div class="form-group">
+                                <label for="property_status" class="frm_label">Property Status</label>
+                                <apex:selectList size="1" value="{!selectedPropertyStatus}" id="property_status" styleClass="form-control frm_select">
+                                    <apex:selectOptions value="{!listOfPropertyStatus }"/>
+                                </apex:selectList>
+                                <span Class="error_cls" id="lead_property_status_error" style="display:none;"></span>               
+                            </div>
+                            <div class="form-group"> 
+                                <label for="Sales_Description" class="frm_label">Sales Description</label>
+                                <apex:inputTextarea value="{!SalesDescription }" styleClass="form-control frm_input textArea"/>
+                            </div>
+                            <apex:outputPanel id="Opportunity_details_Panel">
+                                <!--Commented with OFM changes-->
+                                <!--<div class="form-group">            
+                                    <label for="Lost_Opp" class="frm_label">Lost Opportunity?</label>
+                                    <apex:selectList size="1" value="{!lostOpp}" styleClass="form-control frm_select" id="Lost_Opp">
+                                        <apex:actionsupport event="onchange" action="{!checkDisplayLossReason}" rerender="Opportunity_details_Panel"/>
+                                        <apex:selectOptions value="{!listOfLostOpp}"/>
+                                    </apex:selectList>
+                                </div> -->   
+                                <apex:outputPanel id="lostReason_Panel" rendered="{!shouldDisplayLossReason}">
+                                 <!--   <div class="form-group" rendered="true">            
+                                        <label for="Lost_Reason" class="frm_label">Loss Reason</label>
+                                        <apex:selectList size="1" value="{!selectedLostReason}" styleClass="form-control frm_select" id="Lost_Reason">
+                                            <apex:selectOptions value="{!listOfLostReason}"/>
+                                        </apex:selectList>
+                                    </div>-->
+                                    <div class="form-group" rendered="true">            
+                                        <label for="Lost_To_Player" class="frm_label">Lost To Player</label>
+                                        <apex:selectList size="1" value="{!selectedLostToPlayer}" styleClass="form-control frm_select" id="Lost_To_Player">
+                                            <apex:selectOptions value="{!listOfLostToPlayer}"/>
+                                        </apex:selectList>
+                                    </div>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                              </apex:outputPanel>
+                         
+                            <!--<div class="form-group">
+<label for="Follow-Up_Time" class="frm_label">Follow-Up Time</label>
+<apex:input value="{!followUpTime}" styleClass="form-control frm_input" type="datetime-local"/>
+</div> -->
+                        </div>
+                    </fieldset>
+                </div>
+                <div id="property_details" class="tabcontent">
+        <fieldset class="fieldset_cls">
+            <legend class="legend_cls">Property Details </legend>
+            <div class="frm-body">
+                <apex:outputPanel id="Property_Details_Panel">
+                    <apex:outputPanel rendered="{!alreadyHasProperty}">
+                        <label for="existing_Property_Name" class="frm_label">Property Name(Existing)</label>
+                        <apex:outputText value="{!existingPropertyName}" styleClass="form-control frm_input  read-only"  id="existing_Property_Name"/>
+                        <label></label>
+                        <apex:inputCheckbox value="{!isPropertyUpdate}" StyleClass="form-control checkbox_input" id="is_Property_Update">
+                            <apex:actionsupport event="onchange" rerender="Property_Details_Panel" oncomplete="init1();" />
+                        </apex:inputCheckbox>
+                        
+                        
+                        <span class="checkbox_text">Update Property?</span>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{! ( NOT(alreadyHasProperty) || isPropertyUpdate)}" id="property_Search_And_Name_Panel">
+                        <div class="form-group">
+                            <label for="property_search" class="frm_label">Property Name</label>                
+                            <apex:inputText value="{!propertyNameFromGoogle}" id="property_search" styleClass="form-control frm_input" disabled="{!shouldDisableGoogleProperty}" />            
+                        </div>
+                        
+                        <div class="form-group chkbox-frm-grp">
+                            <apex:inputCheckbox value="{!propertyNotFoundInGoogle}" StyleClass="form-control checkbox_input" id="goole_find_property">
+                                <apex:actionsupport action="{!googlePropertySearchDisableToggle}" event="onchange" rerender="property_Search_And_Name_Panel" oncomplete="init1();"/>
+                            </apex:inputCheckbox>
+                            <span class="checkbox_text">Cannot find property name in Google?</span>
+                        </div>
+                        <apex:outputPanel id="property_Name_Panel">
+                            <div class="form-group" id="google_property_not_exist" >
+                                <apex:inputText value="{!propertyNameManual}" styleClass="form-control frm_input" html-placeholder="Enter property name" id="property_name_not_google" rendered="{!propertyNotFoundInGoogle}" />
+                            </div>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                    
+                    <!--<span Class="error_cls" id="lead_possession_month_error" style="display:none;"></span>-->
+                    <div class="form-group">
+                        <label for="possession_month" class="frm_label">Possession Date</label>
+                        <apex:input id="possession_month" value="{!possessionDate}" styleClass="form-control frm_input date" type="date" />
+                    </div>
+                    <span Class="error_cls" id="lead_possession_month_error" style="display:none;"></span>
+                    <div class="form-group">
+                        <label for="property_movein_date" class="frm_label">Property Move-In Date</label>
+                        <apex:input id="property_movein_date" value="{!propertyMoveInDate}" styleClass="form-control frm_input date" type="date" />
+                    </div>
+                    <span Class="error_cls" id="lead_property_movein_date_error" style="display:none;"></span>
+                </apex:outputPanel>
+                </div>
+        </fieldset>
+    </div>
+                <div class="error_txt" style="display:none;" id="comman_error_msg">
+                </div>
+                <div class="footersubmit">
+                 <apex:commandButton value="Save" onclick="doValidation();" style="font-size:15px;color:#403d3d;" reRender="pageMsgBlock" oncomplete="closewin();"/>
+                 </div>
+                <!--- Action Function ------>
+                <apex:actionFunction id="callSave" action="{!saveRecord}" name="callSave" reRender="pageMsgBlock">
+                    <apex:param id="para-Google_Property_Details" name="googlePropertyDetails" value="" />
+                </apex:actionFunction>
+                  
+                <script>
+                $("[id$=goole_find_address]").click(toggleAddress);
+    
+    function toggleAddress(){
+        if($("[id$=goole_find_address]").prop("checked") == true){
+            $("#google_address_not_exist").css("display","block");
+            //$("#google_property_not_exist").show();
+            $("[id$=address_search]").val('').prop("readonly", true);
+            $("[id$=address_search]").addClass("read-only",true);
+            
+        }else if($("[id$=goole_find_address]").prop("checked") == false){
+            $("#google_address_not_exist").css("display","none");
+            //$("#google_property_not_exist").hide();
+            $("[id$=address_search]").val('').prop("readonly", false);
+            $("[id$=address_search]").removeClass("read-only",true);
+        }
+    }
+    
+                function chkRange(event){
+                     var field = document.querySelector('[id$="inputfieldId"]');
+                    if(field.value < 0 || field.value > 100){
+                        event.preventDefault();
+                        alert('Probability Of Closure Should be between 0 to 100');
+                    }
+                }
+                function doValidation(){
+                    window.scrollTo(0,0);
+                    var postString = JSON.stringify(postparams);
+                    console.log(postString);
+                    //Changed and commented with OFM Changes
+                    setFormSubmitting();
+                    //alert(postString);
+                    callSave(postString);
+                    
+                    /*var field = document.querySelector('[id$="inputfieldId"]');
+                    console.log('field ',field.value  );
+                    if(field.value >= 0 && field.value<= 100){
+                        setFormSubmitting();
+                        //alert(postString);
+                        callSave(postString);
+                        
+                    }
+                    else{
+                        alert('Probability Of Closure Should be between 0 to 100');
+                    }*/
+                }
+                
+                window.onscroll = function() {fixTab()};
+                    
+                    var header = document.getElementById("stickyTab");
+                    var sticky = header.offsetTop;
+                    
+                    function fixTab() {
+                        if (window.pageYOffset > sticky) {
+                            header.classList.add("sticky");
+                        } else {
+                            header.classList.remove("sticky");
+                        }
+                    }
+                
+                var formSubmitting = false;
+                var setFormSubmitting = function() { formSubmitting = true; };
+                window.onload = function() {
+                    window.addEventListener("beforeunload", function (e) {
+                        if (formSubmitting) {
+                            return undefined;
+                        }
+                        
+                        var confirmationMessage = 'It looks like you have been editing something. '
+                        + 'If you leave before saving, your changes will be lost.';
+                        
+                        (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+                        //return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+                        return window.confirm(confirmationMessage);
+                    });
+                };
+                
+                $(document).ready(function(){
+                    window.scrollTo(0,0);
+                    var coll = document.getElementsByClassName("legend_cls");
+                    var i;
+                    for (i = 0; i < coll.length; i++) {
+                        coll[i].addEventListener("click", function() {
+                            this.classList.toggle("active");
+                            var content = this.nextElementSibling;
+                            if (content.style.display === "block") {
+                                content.style.display = "none";
+                            } else {
+                                content.style.display = "block";
+                            }
+                        });
+                    }
+                });
+                $(window).on('load', function() {
+                    window.scrollTo(0,0);
+                });
+                $("[id$=goole_find_property]").click(function(){
+        /*alert('Something changed');
+        debugger;*/
+        if($(this).prop("checked") == true){
+            $("#google_property_not_exist").css("display","block");
+            //$("#google_property_not_exist").show();
+            $("[id$=property_search]").val('').prop("readonly", true);
+            $("[id$=property_search]").addClass("read-only",true);
+            
+        }else if($(this).prop("checked") == false){
+            $("#google_property_not_exist").css("display","none");
+            //$("#google_property_not_exist").hide();
+            $("[id$=property_search]").val('').prop("readonly", false);
+            $("[id$=property_search]").removeClass("read-only",true);
+        }
+    });
+              
+                function scrollSomewhere() {
+            document.querySelector('pageMsgBlock').scrollIntoView();
+          }
+               
+    
+                </script> 
+            </body>
+        </html> 
+    </apex:form>
+</apex:page>

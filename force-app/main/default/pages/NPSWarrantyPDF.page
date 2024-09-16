@@ -1,0 +1,133 @@
+<apex:page showHeader="false"  controller="NPSpdfcontroller"  renderas="PDF" >
+
+<apex:stylesheet value="/resource/NPScss"/>
+  <html>
+<head>
+  <title>Warranty</title>
+  
+</head>
+<body>
+  <div style="max-width: 1024px;
+        margin: auto;
+        margin-bottom: 20px;
+        font-size: 16px;">
+    <div id="head">
+        <div id="toplogo">
+            <img src="/resource/HMLlogo" alt="logo" id="toplogoimage" />
+        </div>
+        <div id="care_homelane">
+            <p class="address">Certificate  of  Warranty</p>
+            <p class="address">Care@homelane.com</p>
+        </div>
+    </div>
+    <div style=" border-top: 3px solid orange;
+        padding: 10px;
+        border-bottom: 3px solid orange;">
+      <p>This certificate of warranty (“<strong>Warranty Certificate</strong>”) is issued by Homevista Décor and Furnishing Pvt. Ltd. having the registered brand name, HomeLane (“<strong>HomeLane</strong>”), and having its registered office at #728, Grace Platina,  1st - 3rd Floor, CMH Road Indiranagar, Bengaluru.</p>
+      <p>This certificate is issued to original purchaser of warranted Products (as defined below).</p>
+      <table>
+        <tbody>
+          <tr>
+            <td class="firstdiv">Name of the purchaser</td>
+            <td class="seconddiv"><apex:outputText value="{!CustomerName}"></apex:outputText></td>
+          </tr>
+          <tr>
+            <td class="firstdiv">Date of Completion</td>
+            <td class="seconddiv">
+            <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                <apex:param value="{!Dateofcompletion}" /> 
+            </apex:outputText>
+            
+            </td>
+          </tr>
+          <tr>
+            <td class="firstdiv">Address of installation</td>
+            <td class="seconddiv"><apex:outputText value="{!Addofinstall}"></apex:outputText></td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong><u>Scope of work</u></strong></p>
+      <div id="work_scope"><apex:outputText value="{!ScopeOfwork}"></apex:outputText></div>
+      <p><strong><u>Comments</u></strong></p>
+      <div id="comments"><apex:outputText value="{!CustomerComments}"></apex:outputText></div>
+      <p><strong><u>Scope of Warranty:</u></strong></p>
+      <p>This certificate of warranty covers the following products (“Products”) for the warranty periods provided below:</p>
+      <ol>
+        <li>Cabinets made of laminated 16mm BWP, 17mm Prelam BWR, 17mm Prelam Commercial plywood – 5 years</li>
+        <li>Cabinets made of laminated 18mm MDF – 5 years</li>
+        <li>Cabinets made of pre-laminated 18mm particle board – 5 years</li>
+        <li>Shutters of all finishes and all materials – 5 years</li>
+      </ol><br/>
+      <p><strong><u>Warranty Terms:</u></strong></p>
+      <ol>
+        <li>HomeLane  warrants    to  the  original  purchaser  that  all  Products will  be  free  from  any  manufacturing  defect  and  defect  in  installation  workmanship.</li>
+        <li>The  warranty  only  applies  if  the  Products  are  properly  maintained,  and  used  for  normal  domestic  use.</li>
+        <li>The   warranty   period   for   hardware   used   for   all   our   Products   will   be   the   same   as   that   offered   by   the   original  
+        equipment  manufacturer.</li>
+        <li>The  warranty  period   for  accessories  used   for  all  our  Products  will  be   the   same  as   that  offered  by   the  original  
+        equipment  manufacturer.</li>
+        <li>The  warranty   period   for  appliances   used   for  all   our  Products  will   be   the   same  as   that   offered   by   the   original  
+        equipment  manufacturer.</li>
+        <li>If a defect occurs within the respective warranty period(as per Annexure 1 A &amp; B), the original purchaser must notify HomeLane in writing and, upon confirmation of the defect by an authorized HomeLane representative, HomeLane’s sole responsibility shall be, at its option to either:
+          <ol type="i">
+            <li>Arrange  for  repair  of  defective  Product; or</li>
+            <li>Arrange  a  replacement  of  defective  Product.</li>
+          </ol>
+        </li>
+      </ol>
+      <p>It   is   hereby   clarified   that,   if   a   Product   fails   due   to   defective  manufacturing   or   installation   and   is   no   longer   available,  HomeLane   in   its   absolute   discretion   may   replace   the   Product with   a   substituted   item   which woud   be   as   close   as  
+      possible  in  dimension,  function  and  colour.  HomeLane  will  not  guarantee  that  the  replaced  item  will  be  exactly  the  same  
+      in  all  aspects  when  compared  to  the  original.</p>
+      <p>This  warranty  is  nul  and  void  if  any  person  other  than  HomeLane’s authorized  representative  installs,  repairs  or  alters  
+      the  warranted  products  without  the  prior  consent  of  HomeLane.</p>
+      <p><strong><u>Warranty   Disclaimer:</u></strong> This Warranty   Certificate   sets   forth   HomeLane’s  sole warranty   obligation   with   respect   to the  Products and   is   in   lieu   of   all   other   warranties   oral   or   written,   express   or   implied.   HomeLane makes   no   warranty   of  
+      merchantability  or   fitness   for  a  particuar  purpose  with   respect   to  the  Products and  HomeLane shall  not  be  liable   for  
+      incidental,  special,  consequential  or  other  similar  damages  arising  out  of  any  breach  of  this  warranty</p>
+      <p>HomeLane  does  not  warrant  against  and  is  not  responsible  for  (i)  any  condition  of  the  Product  attributable  to;  or  (ii)  any  
+      damage  to  Products  caused  by  any  of  the  following:</p>
+      <ol>
+        <li>Wear  and  tear  suffered  through  normal  use  (including  scratches,  dents and  cuts)  or  damage  caused  by  impacts  
+        or  accidents;</li>
+        <li>Color,  grain,  or  texture  of  natural  wood  materials,  laminates  and  other  covering  materials;</li>
+        <li>Use  of  inappropriate  chemicals,  detergents,  abrasives  or  other  inappropriate  cleaning  agents  that  can  damage  
+        the  wooden  surface  of  the  products;</li>
+        <li>Mistreatment,  negligent  use,  misuse,  insufficient  or  improper  care (including  but  not  limited  to  exposure  to  
+        harsh  weather  conditions);</li>
+        <li>Fading,  discolouration  or  damage  caused  by  exposure  to  intensive  or  excessive  light,  moisture  or  heat;</li>
+        <li>Alterations,  modifications  or  use  of  Products  which  is  beyond  or  inconsistent  with  supplied  Product  instructions  
+        and  not  been  authorized  by  HomeLane;  </li>
+        <li>Alterations,  modifications  or  use  of  Products  which  is  beyond  or  inconsistent  with  supplied  Product  instructions  
+        and  not  been  authorized  by  HomeLane;  </li>
+        <li>Damage or  stains due  to  water  leakage  and/or  seepage;  and</li>
+        <li>Damage  caused  by  any  Force  majeure  event (such  as  flooding,  hurricane,  earthquake,  lightening,  etc.),  
+        environmental  condition  (such  as  air  pollution,  solvent  exposure,  mold,  mildew  etc.),  or  staining  from  foreign  
+        substances  (such  as  dirt,  grease,  oils,  etc).</li>
+      </ol>
+      <p><strong><u>Annexure 1 (A):</u></strong></p>
+      <img src="/resource/WarrantyConditionsFinal" alt="" height="900" width="700"></img> 
+      <p><strong><u>Annexure 1 (B):</u></strong></p>
+      <img src="/resource/ShutterBendsFinal" alt="" height="900" width="700"></img> 
+      <p><strong><u>Proof   of  Warranty:</u></strong></p>
+      <p>Claims will    not be  accepted    unless  original    proof   of  home    ownership   and product purchase    invoice is  provided    with    this    
+            Warranty    Certificate to  HomeLane.   This    warranty    is  applicable  only    to  the original    purchaser   of  Products    and shall   not 
+            be  assigned    or  transferred including   to  any subsequent  purchaser   of  property    upon    which   the warranted   products    are 
+            installed.  </p>
+            <p><strong><u>Warranty on   Accessories/    Hardware:   </u></strong></p>
+            <p>Warranty on  Accessories will    be  given   only    for those   that    have    been    listed  in  your    Quotation.  Warranty    for Accessories 
+            will    be  as  per the terms   and conditions  of  the OEM brand   that    you had chosen/ lsited  in  the quote.  </p>
+            <p><em>This is  Computer    Generated   Document    and does    not require a   signature.</em></p>
+    </div>
+    <div id="footer">
+        <div id="address_wrapper">
+            <p class="address">Homevista    Décor   and Furnishing  Pvt Ltd</p>
+                <p class="address">#728, Grace Platina,  1st - 3rd Floor,</p>
+                <p class="address">CMH Road Indiranagar, Bengaluru.</p>
+        </div>
+        <div id="logo">
+            <img src="/resource/NPSdocFooter" alt="homelaneLogo" id="bottomlogo" />
+        </div>
+    </div>
+  </div>
+</body>
+</html> 
+</apex:page>

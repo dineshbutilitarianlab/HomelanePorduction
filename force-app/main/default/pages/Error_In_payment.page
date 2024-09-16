@@ -1,0 +1,16 @@
+<apex:page standardController="Payment_Milestone__c" showHeader="false">
+<style>
+    h1{
+        color:red;
+        font-family: verdana;
+        font-size: 200%;
+        text-align: center;
+        margin-left: 10%;
+    
+    }
+</style>
+<h1>
+Please Submit Payment and Bill for Approval !!
+    </h1>
+    
+</apex:page>

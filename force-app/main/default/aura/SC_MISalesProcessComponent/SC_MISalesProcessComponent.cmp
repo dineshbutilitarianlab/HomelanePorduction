@@ -1,0 +1,419 @@
+<!--
+ * Created By  : Sanjeev Shukla.
+ * Modified By : Naveen Kumar B H.
+ * Description : To display Sales Coach Information or to get user response from the user about particular Opportunity.
+                 * Using in Visual Force pages.
+                  1.SC_MI Sales Process (Inline VF page of Opportunity).
+                  2.SC_OpportunityEdit (OnClick of Custom 'Edit' button in Opportunity).
+-->
+<aura:component controller="SC_MISalesProcess" access="global">
+    <ltng:require scripts="/resource/Library/jquery-2.2.4.js" styles="/resource/SLDS0121/assets/styles/salesforce-lightning-design-system.min.css"  afterScriptsLoaded="{!c.doInit}"/> 
+    <link href='https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,300,700' rel='stylesheet' type='text/css'/>
+    <ltng:require styles="/resource/SLDS0121/assets/styles/salesforce-lightning-design-system.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    
+    <!--Start : These attrinbute is used to recieve stage name,Reason won,Reason Lost from callSaveEvent event-->
+    <aura:attribute name="newStage" type="String" default="none"/>
+    
+    <aura:attribute name="readyToMove" type="String" default="none"/>
+    <aura:attribute name="oldProbability" type="String" default="none"/>
+    <aura:attribute name="selectedReasonWon" type="String" default="none"/>
+    <aura:attribute name="selectedReasonLost" type="String" default="none"/>
+    <!--End : These attrinbute is used to recieve stage name,Reason won,Reason Lost from callSaveEvent event-->
+    
+    
+    <!-- This attribute will set from callSave event when user Clicks on current stage and clicked on Mark Stage as Complete -->
+    <aura:attribute name="newStageOnComplete" type="String" default="none"/>
+    
+    <!-- registering event which will be called from SC_MISaleProcess to call child helper methods -->
+    <aura:registerEvent name="appEvent" type="c:callChildHelper"/>
+    
+    <!--calling 'doInit' lightning controller function to get all Sections,Subsections,Items,and Responses from Database -->
+    <!--<aura:handler name="init" value="{!this}" action="{!c.doInit}"/> -->
+    
+    <!-- Attribute 'edit' is to know whether user is in edit mode or not. If user is not in Edit mode all fields are read only. -->
+    <aura:attribute name="edit" type="Boolean" default="false"/>
+    
+    <!-- 'listWrapSec' attribute will hold all all sections,Subsections,Items,Responses. -->
+    <aura:attribute name="listWrapSec" type="Sections[]" />
+    
+    <!-- 'theOpp' attribute will hold Opportunity details which is passed from VF page.  -->
+    <aura:attribute name="theOpp" type="Opportunity" default="{ 'sobjectType' : 'Opportunity','Id': '','Name':'','StageName':'','RecordTypeId':'','Reasonwon__c':'NONE','Reason_Lost__c':'NONE'}"/>
+    
+    <aura:attribute name="listStage" type="String[]" />
+    
+    <!--
+  * 'displayEditButton' is to decide whether to display 'Edit' button based on current Salesforce view(Ex: SF1,Classic view)  
+  * value for this will be passed from vf page.	 
+    -->
+    <aura:attribute name="displayEditButton" type="Boolean" default="true"/>
+    <aura:attribute name="displayBackButton" type="Boolean" default="false"/>
+    <!-- 'isLightning' attribute is to display SalesPath header. It will be displayed only in classic view -->
+    <aura:attribute name="isLightning" type="Boolean" default="false"></aura:attribute>
+    
+    <!-- 'isReady' : To be confirmed by Sanjeev Shukla-->
+    <aura:attribute name="isReady" type="Boolean" default="false"/>
+    
+    <!-- 'rsnWon' attribute is to display Reason won pickList if 'Written customer PO received?' Check Box in Commitment Stage is Ckecked.-->
+    <aura:attribute name="rsnWon" type="String[]"/>   
+    <aura:attribute name="autoSave" type="Boolean"/>  
+    <!-- Contains all information-->
+    <div class="theContainer">
+        <!--Start : Spinner Code -->
+        <div aura:id="spinnerId" class="slds-backdrop slds-backdrop--close">
+            <div aura:id="spinnerIdChild" class="slds-modal slds-fade-in-close" aria-hidden="false" role="dialog">
+                <div class="slds-modal__container">      
+                    <div>
+                        <center><div class="slds-spinner slds-spinner--medium" aura:id="spinner">
+                            <img src="/resource/SLDS0121/assets/images/spinners/slds_spinner_inverse.gif" alt="Loading..." />
+                            </div>
+                        </center>            
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ End : Spinner Code -->
+       
+        <div class="slds-grid slds-wrap">
+            <div id="theFixed" >
+                <div class="h_btn">
+                    <div class="opp_title">
+                        <center>
+                            <!-- To display current Stage info only if current Opportunity Stage not Equal to Closed Lost and Closed Won -->
+                            <div aura:Id="ready"></div>
+                        </center>
+                    </div>
+                    <div class="opp_btn">
+                        <center>
+                            <div>
+                                <!-- If page is in Edit mode then Save and Cancel button will be displayed. Else Edit button Will be displayed. -->
+                                <aura:if isTrue="{!v.edit}">
+                                    <ui:button label="Save" class="btn_save" labelClass="label" press="{!c.save}"/>
+                                    <ui:button label="Cancel" class="btn_cancel" labelClass="label" press="{!c.cancel}"/>
+                                </aura:if>
+                                <aura:if isTrue="{!v.edit != true}">
+                                    <ui:button label="Edit"  class="btn_save" labelClass="label" press="{!c.edit}"/>
+                                </aura:if>
+                            </div>
+                        </center>
+                    </div>
+                </div>
+                
+                <!-- Start : Sales Path Header to keep track on progress of Opportunity.-->
+                <center class="h_tabs">
+                    <c:SC_MISalesPath currentStage="{!v.theOpp.StageName}"/>
+                </center>
+                <!--/ End : Sales Path Header to keep track on progress of Opportunity.-->
+                <div class="h_error_msg">
+                    <center><div id="theErr" style="color: red;font-weight: bold;"/></center>
+                    <center><div id="theMsg" style="color: red;font-weight: bold;"/></center>
+                </div>
+            </div>
+            <!--Start : Code to display Previous Stage SalesCoach information. -->
+            <div class="prev_info" style="width: 100%;">
+                <c:SC_MISalesProcessPreviousStageInfo stageName="{!v.theOpp.StageName}" oppId="{!v.theOpp.Id}" recordTypeId="{!v.theOpp.RecordTypeId}"/>
+            </div>
+            <!--/ End : Code to display Previous Stage SalesCoach information. -->
+            
+            <!-- Start : Current Stage SalesCoach Information  -->
+            <!--Start : Iteration on 'listWrapSec' which holds all SalesCoach information-->
+            <aura:iteration items="{!v.listWrapSec}" var="sec">
+                <div class="theParent">
+                    <!--Start : Code To display Section Name -->
+                    <div class="theSec">{!v.theOpp.StageName}: {!sec.sectionName}
+                        <!--Icon to toggle and collapse Section Information.-->
+                        <div onclick="{!c.toggleCollapse}" class="theClass" >
+                            <i class="fa fa-2x togleIcon fa-minus-square-o"></i>
+                        </div>
+                    </div>
+                    <!--/ End : Code To display Section Name -->
+                    <div class="theChild">
+                        <!-- Start : Code to display Items,Responses of Current Stage -->
+                        <aura:if isTrue="{!v.edit}">
+                            <div>
+                                <!-- Start :If Sections have Subsections, then those subsections will be displayed displayed here -->
+                                <aura:iteration items="{!sec.section}" var="subSec">
+                                    <div class="theItem">
+                                        <div class="theSubSection">{!subSec.sectionName}
+                                            
+                                            <div class="theClass theSubSecPad" onclick="{!c.toggleSubSec}" >
+                                                <i class="fa togleIcon fa-2 fa-sort-asc" aria-hidden="true"></i>
+                                            </div>
+                                            
+                                            
+                                        </div> 
+                                        <div class="horzentolRow horzentolRowBGClr1"></div>
+                                        <!-- Start : Code to display Items under SubSections-->
+                                        <div class="theField">
+                                            <aura:iteration items="{!subSec.item}" var="itm">
+                                                <!-- Start : Displaying '*' in red color for required qustions -->
+                                                <aura:if isTrue="{!itm.required}">  
+                                                    <div style="color:red;float: left;">* &nbsp;</div>
+                                                </aura:if>
+                                                <!--/ End : Displaying '*' in red color for required qustions -->
+                                                <!-- Displaying Item Name -->
+                                                {!itm.itemName}
+                                                <!-- Start :Code To display Check Box -->
+                                                <aura:if isTrue="{!itm.responseType == 'Check Box'}">                                                         
+                                                    <!--Start : Displaying Pick List for reason Won if  'Written customer PO received?' is checked --> 
+                                                    <ui:inputCheckbox labelClass="check" class="theCheck"  value="{!itm.checkValue}" />
+                                                    <!--/ End : Displaying Pick List for reason Won if  'Written customer PO received?' is checked --> 
+                                                </aura:if>        
+                                                <!--/ End : Code To display Check Box -->
+                                                <aura:if isTrue="{!itm.responseType == 'Check Box'}" >
+                                                    <!-- To display a horizontal Line under check Box-->
+                                                    <div class="horzentolRowBGClr2"></div>
+                                                </aura:if>
+                                                <!--Start : code to display a input Text -->
+                                                <aura:if isTrue="{!itm.responseType == 'Open Text'}" >
+                                                    <aura:if isTrue="{!v.isLightning}" >
+                                                        <div class=" slds-form-element__control slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 ">
+                                                            <ui:inputText class="slds-input " labelClass="slds-form-element__label" value="{!itm.value}"   />
+                                                        </div>
+                                                        <aura:set attribute="else">
+                                                            <div>
+                                                                <ui:inputText class="slds-input " labelClass="slds-form-element__label" value="{!itm.value}"   />
+                                                            </div>
+                                                        </aura:set>
+                                                    </aura:if>
+                                                </aura:if>
+                                                <!--/ End : code to display a input Text -->
+                                                <!--Start : code to display a input Date -->
+                                                <aura:if isTrue="{!itm.responseType == 'Date'}" >
+                                                    <div class=" slds-form-element__control slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                                                        <ui:inputDate aura:id="dateField" class="slds-input dateClass" value="{!itm.value}" displayDatePicker="true" />
+                                                    </div>
+                                                </aura:if>
+                                                <!--End : code to display a input Date -->
+
+                                                <!-- Start : code to display a Pick List Field -->
+                                                <aura:if isTrue="{!itm.responseType == 'PickList'}" >                                                        
+                                                    <aura:if isTrue="{!v.isLightning}" >
+                                                        <div class="slds-form-element__control slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                                                            <ui:inputSelect class="slds-input" labelClass="slds-form-element__label"  value="{!itm.value}" required="true">
+                                                                <ui:inputSelectOption text="NONE"  label="--Select--"/>
+                                                                <aura:iteration items="{!itm.response}" var="resVar">
+                                                                    <ui:inputSelectOption text="{!resVar.responseName}" label="{!resVar.responseName}"/>
+                                                                </aura:iteration>
+                                                            </ui:inputSelect>
+                                                        </div>
+                                                        <aura:set attribute="else">
+                                                            <div>
+                                                                <ui:inputSelect value="{!itm.value}" required="true">
+                                                                    <ui:inputSelectOption text="NONE" label="--Select--"/>
+                                                                    <aura:iteration items="{!itm.response}" var="resVar">
+                                                                        <ui:inputSelectOption text="{!resVar.responseName}" label="{!resVar.responseName}"/>
+                                                                    </aura:iteration>
+                                                                </ui:inputSelect>
+                                                            </div>
+                                                        </aura:set>
+                                                    </aura:if>                                                        
+                                                </aura:if>
+                                                <!--/ End : code to display a Pick List Field -->                                                
+                                            </aura:iteration>
+                                        </div>
+                                        <!--/ End : Code to display Items under SubSections-->
+                                    </div>
+                                </aura:iteration>
+                                <!--/ End :If Sections have Subsections, then those subsections will be displayed displayed here -->
+                                
+                                <!-- Start : If Sections don't have Sections then Displaying Items. -->
+                                
+                                <aura:iteration items="{!sec.item}" var="itm">
+                                    <div class="theItem">
+                                        <div class="theField">
+                                            <!-- to Display Red Star for required field -->
+                                            <aura:if isTrue="{!itm.required}">  
+                                                <div style="color:red;float: left;">* &nbsp;</div>
+                                            </aura:if>
+                                            <!-- to Display Item name -->
+                                            {!itm.itemName}
+                                            <!-- Start : Code to display Check Box -->
+                                            <aura:if isTrue="{!itm.responseType == 'Check Box'}" >
+                                                <ui:inputCheckbox labelClass="check" class="theCheck"  value="{!itm.checkValue}" />
+                                            </aura:if>
+                                            <!--/ End : Code to display Check Box -->
+                                            
+                                            <aura:if isTrue="{!itm.responseType == 'Check Box'}" >
+                                                <!-- to display a horizontal line under Check Box Field -->
+                                                <div class="horzentolRowBGClr2"></div>
+                                            </aura:if>      
+                                            <!-- Start : to display input Text Field -->
+                                            <aura:if isTrue="{!itm.responseType == 'Open Text'}" >
+                                                <aura:if isTrue="{!v.isLightning}" >
+                                                    <div class=" slds-form-element__control slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3 ">
+                                                        <ui:inputText class="slds-input " labelClass="slds-form-element__label" value="{!itm.value}" required="true"/>
+                                                    </div>
+                                                    <aura:set attribute="else">
+                                                        <div>
+                                                            <ui:inputText labelClass="slds-form-element__label" value="{!itm.value}" required="true"/>
+                                                        </div>
+                                                    </aura:set>
+                                                </aura:if>
+                                            </aura:if> 
+                                            <!--/ End : to display input Text Field -->
+                                            
+                                            <!--Start : code to display a input Date -->
+                                                <aura:if isTrue="{!itm.responseType == 'Date'}" >
+                                                    <div class=" slds-form-element__control slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                                                        <ui:inputDate aura:id="dateField" class="slds-input dateClass" value="{!itm.value}" displayDatePicker="true" />
+                                                    </div>
+                                                </aura:if>
+                                                <!--End : code to display a input Date -->
+
+                                            
+                                            <!-- Start : To display PickList Field -->
+                                            <aura:if isTrue="{!itm.responseType == 'PickList'}" >                                                
+                                                <aura:if isTrue="{!v.isLightning}" >
+                                                    <div class="slds-form-element__control slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                                                        <ui:inputSelect class="slds-input" labelClass="slds-form-element__label" value="{!itm.value}" required="true">
+                                                            <ui:inputSelectOption text="NONE" label="--Select--"/>                                                            
+                                                            <aura:iteration items="{!itm.response}" var="resVar">
+                                                                <ui:inputSelectOption text="{!resVar.responseName}" label="{!resVar.responseName}"/>
+                                                            </aura:iteration>
+                                                        </ui:inputSelect>
+                                                    </div>
+                                                    <aura:set attribute="else">
+                                                        <div>
+                                                            <ui:inputSelect value="{!itm.value}" required="true">
+                                                                <ui:inputSelectOption text="NONE" label="--Select--"/>
+                                                                <aura:iteration items="{!itm.response}" var="resVar">
+                                                                    <ui:inputSelectOption text="{!resVar.responseName}" label="{!resVar.responseName}"/>
+                                                                </aura:iteration>
+                                                            </ui:inputSelect>
+                                                        </div>
+                                                    </aura:set>
+                                                </aura:if>                                                
+                                            </aura:if>
+                                            <!--/ End : To display PickList Field -->
+                                        </div>
+                                    </div>
+                                </aura:iteration>
+                                <!--/ End : If Sections don't have Sections then Displaying Items. -->
+                            </div>
+                            <!-- Start : code to display all Items and responses in read only Mode -->
+                            <aura:set attribute="else">
+                                <div>
+                                    <aura:iteration items="{!sec.section}" var="subSec">
+                                        <div class="theItem">
+                                            <div class="theSubSection">{!subSec.sectionName}
+                                            	<div class="theClass theSubSecPad" onclick="{!c.toggleSubSec}" >
+                                                	<i class="fa togleIcon fa-2 fa-sort-asc" aria-hidden="true"></i>
+                                            	</div>
+                                            </div>
+                                            <div class="horzentolRow horzentolRowBGClr1"></div>
+                                            <div class="theItem2">
+                                            <aura:iteration items="{!subSec.item}" var="itm">
+                                                
+                                                    <aura:if isTrue="{!itm.required}">  <div style="color:red;float: left;">* &nbsp;</div></aura:if>
+                                                    {!itm.itemName}
+                                                    <aura:if isTrue="{!itm.responseType == 'Check Box'}" >
+                                                        <ui:outputCheckbox class="theCheck" value="{!itm.checkValue}" />
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!itm.responseType == 'Check Box'}" >
+                                                        <div class="horzentolRowBGClr2"></div>
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!itm.responseType == 'Open Text'}" >
+                                                        <aura:if isTrue="{!v.isLightning}" >
+                                                            <div class="slds-form-element__control slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                                                                <ui:outputText class="slds-input"  value="{!itm.value}"/>
+                                                            </div>
+                                                            <aura:set attribute="else">
+                                                                <div>
+                                                                    <ui:outputText value="{!itm.value}"/>
+                                                                </div>
+                                                            </aura:set>
+                                                        </aura:if>
+                                                    </aura:if>
+                                                 <!--Start : code to display a input Date -->
+                                                <aura:if isTrue="{!itm.responseType == 'Date'}" >
+                                                    <div class=" slds-form-element__control slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                                                        <ui:inputDate aura:id="dateField" class="slds-input dateClass" value="{!itm.value}" displayDatePicker="true" />
+                                                    </div>
+                                                </aura:if>
+                                                <!--End : code to display a input Date -->
+
+                                                    <aura:if isTrue="{!itm.responseType == 'PickList'}" >                                                        
+                                                        <aura:if isTrue="{!v.isLightning}" >
+                                                            <div class="slds-form-element__control slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" >
+                                                                <ui:inputSelect class="slds-input theOutPutClr" labelClass="slds-form-element__label" value="{!itm.value}" disabled="true">
+                                                                    <ui:inputSelectOption text="{!itm.value}"/>
+                                                                </ui:inputSelect>
+                                                            </div>
+                                                            <aura:set attribute="else">
+                                                                <div>
+                                                                    <ui:inputSelect class="theOutPutClr" value="{!itm.value}" disabled="true">
+                                                                        <ui:inputSelectOption text="{!itm.value}"/>
+                                                                    </ui:inputSelect>
+                                                                </div>
+                                                            </aura:set>
+                                                        </aura:if>
+                                                    </aura:if>
+                                                
+                                            </aura:iteration>
+                                                </div>
+                                        </div>
+                                    </aura:iteration>
+                                    <aura:iteration items="{!sec.item}" var="itm">
+                                        <div class="theItem">
+                                            <div class="theField">
+                                                <aura:if isTrue="{!itm.required}">  <div style="color:red;float: left;">* &nbsp;</div></aura:if>
+                                                {!itm.itemName}
+                                                <aura:if isTrue="{!itm.responseType == 'Check Box'}" >
+                                                    <ui:outputCheckbox class="theCheck" value="{!itm.checkValue}" />
+                                                </aura:if>
+                                                <aura:if isTrue="{!itm.responseType == 'Check Box'}" >
+                                                    <div class="horzentolRowBGClr2"></div>
+                                                </aura:if>
+                                                <aura:if isTrue="{!itm.responseType == 'Open Text'}" >
+                                                    <aura:if isTrue="{!v.isLightning}" >
+                                                        <div class=" slds-form-element__control slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                                                            <ui:outputText class="slds-input"  value="{!itm.value}"/>
+                                                        </div>
+                                                        <aura:set attribute="else">
+                                                            <div>
+                                                                <ui:outputText value="{!itm.value}"/>
+                                                            </div>
+                                                        </aura:set>
+                                                    </aura:if>
+                                                </aura:if>
+                                                <!--Start : code to display a input Date -->
+                                                <aura:if isTrue="{!itm.responseType == 'Date'}" >
+                                                    <div class=" slds-form-element__control slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                                                        <ui:inputDate aura:id="dateField" class="slds-input dateClass" value="{!itm.value}" displayDatePicker="true" />
+                                                    </div>
+                                                </aura:if>
+                                                <!--End : code to display a input Date -->
+
+                                                <aura:if isTrue="{!itm.responseType == 'PickList'}" >
+                                                    <aura:if isTrue="{!v.isLightning}" >
+                                                        <div class="slds-form-element__control slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" >
+                                                            <ui:inputSelect class="slds-input theOutPutClr" labelClass="slds-form-element__label" value="{!itm.value}" disabled="true">
+                                                                <ui:inputSelectOption text="{!itm.value}"/>
+                                                            </ui:inputSelect>
+                                                        </div>
+                                                        <aura:set attribute="else">
+                                                            <div>
+                                                                <ui:inputSelect class="theOutPutClr" value="{!itm.value}" disabled="true">
+                                                                    <ui:inputSelectOption text="{!itm.value}"/>
+                                                                </ui:inputSelect>
+                                                            </div>
+                                                        </aura:set>
+                                                    </aura:if>
+                                                </aura:if>
+                                            </div>
+                                        </div>
+                                    </aura:iteration>
+                                </div>
+                            </aura:set>
+                            <!--/ End : code to display all Items and responses in read only Mode -->
+                        </aura:if>
+                        <!--/ End : Code to display Items,Responses of Current Stage -->
+                    </div>
+                </div>
+            </aura:iteration>
+            <!--/ End : Iteration on 'listWrapSec' which holds all SalesCoach information-->
+            <!--/ End : Current Stage SalesCoach Information  -->
+        </div>
+    </div>
+</aura:component>

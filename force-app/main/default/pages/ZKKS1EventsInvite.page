@@ -1,0 +1,48 @@
+<apex:page standardController="Event" extensions="ZKKS1EventsInviteController" docType="html-5.0" showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <head>
+        <apex:stylesheet value="{!URLFOR($Resource.slds,'assets/styles/salesforce-lightning-design-system.css')}" />
+        <apex:stylesheet value="{!URLFOR($Resource.KKOrgResources,'css/ZKKS1EventsInvite.css')}" />
+        <script src='/canvas/sdk/js/publisher.js'></script>
+        <apex:includeScript value="{!URLFOR($Resource.KKOrgResources,'js/ZKKS1EventsInvite.js')}" loadOnReady="true" />
+        <apex:includeScript value="{!URLFOR($Resource.KKOrgResources,'js/ZKKS1Utilities.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.KKOrgResources,'lib/lodash.min.js')}" />
+        
+        <script>
+            var sldsAssetUrl = "{!URLFOR($Resource.slds,'assets/')}";
+            var evtId = "{!Event.id}";
+        </script>
+    </head>
+
+    <body >
+        <div id="_container" class="slds-m-around--small">
+            <div id="_searchContainer" class="slds-hide">
+                <div class="slds-form-element">
+                    <div class="slds-lookup__control slds-input-has-icon slds-input-has-icon--right">
+                        <svg aria-hidden="true" class="slds-input__icon" onclick="searchPeople(document.getElementById('_lookup').value)">
+                            <use xlink:href="{!URLFOR($Resource.slds,'assets/icons/utility-sprite/svg/symbols.svg#search')}"></use>
+                        </svg>
+                        <input id="_lookup" class="slds-input" type="text" placeholder="Search for Invitees" aria-label="lookup" aria-haspopup="true" aria-autocomplete="list" role="combobox" oninput="typeAhead();" onfocus="typeAhead();" onblur="searchDropDownHide();" />
+                    </div>
+                </div>
+                <div id="_lookupListBox" class="slds-lookup__menu slds-hide" role="listbox">
+                    <ul id="_lookupList" class="slds-lookup__list" role="presentation">
+                    </ul>
+                </div>
+            </div>
+            <div id="_searchListContainer" class="slds-hide">
+            </div>
+            <div id="_selectedListContainer" class="slds-hide">
+            </div>
+            <div id="_spinner" class="slds-spinner--large slds-container--center slds-show">
+                <img src="{!URLFOR($Resource.slds,'/assets/images/spinners/slds_spinner_brand.gif')}" alt="Loading..." />
+            </div>
+        
+        </div>
+        
+
+    </body>
+
+    </html>
+</apex:page>

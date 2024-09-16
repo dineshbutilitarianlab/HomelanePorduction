@@ -1,0 +1,18 @@
+.THIS span.assistiveText {
+    display: none;
+}
+
+.THIS a.datePicker-openIcon.display {
+    display: none;
+}
+.THIS fieldset.slds-form--compound {
+    padding: 10px;
+}
+.THIS span.assistiveText {
+    display: none ;
+}
+.THIS .slds-modal__container.slds-modal--form {
+    margin: 0 auto;
+    margin-top: 16px;
+    height: 94%;
+}

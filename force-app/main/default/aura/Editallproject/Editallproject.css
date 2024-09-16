@@ -1,0 +1,17 @@
+.THIS .percnt{
+    padding-left: 6px !important;
+}
+.THIS .picklistcs{
+        width: initial !important;
+}
+.THIS .txtareacs{
+    height: 90% !important;
+    width: initial !important;
+}
+.THIS .myStyle {
+    border: 1px solid #d8dde6;
+    border-radius: 0.25rem;
+    width: 77px;
+    height: 31px;
+    padding-left: 7px;
+}

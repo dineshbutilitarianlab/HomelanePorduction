@@ -1,0 +1,60 @@
+<apex:page sidebar="false" controller="LeaveFileController">
+
+   <apex:form >
+      <apex:sectionHeader title="Upload data from CSV file"/>
+      <apex:pagemessages />
+      <apex:pageBlock >
+       <apex:outputPanel rendered="{!IF(isError = false, TRUE,FALSE)}">
+             <center>
+              <apex:inputFile value="{!contentFile}" filename="{!nameFile}" /> <apex:commandButton action="{!ReadFile}" value="Upload File" id="theButton" style="width:70px;"/>
+              <br/> <br/> <font color="red"> <b>Note: Please use the standard template to upload Roster.</b> </font>
+             </center>  
+      
+      </apex:outputPanel>
+      <center>
+       <apex:commandButton value="Refresh" action="{!ReloadPage}" rendered="{!isError}"/>
+      </center>
+     
+      <!--apex:pageblocktable value="{!UploadedAccounts}" var="acc" rendered="{!NOT(ISNULL(UploadedAccounts))}">
+          <apex:column headerValue="Account Name">
+              {!acc.colum1}
+          </apex:column>
+          <apex:column headerValue="Shipping Street">
+              {!acc.colum2}
+          </apex:column>
+          <apex:column headerValue="Shipping City">
+              {!acc.colum3}
+          </apex:column>
+          <apex:column headerValue="Shipping State">
+              {!acc.colum4}
+          </apex:column>
+          <apex:column headerValue="Shipping Postal Code">
+              {!acc.colum5}
+          </apex:column>
+          <apex:column headerValue="Shipping Country">
+              {!acc.colum6}
+          </apex:column>
+          <apex:column headerValue="Account Name">
+              {!acc.colum7}
+          </apex:column>
+          <apex:column headerValue="Shipping Street">
+              {!acc.colum8}
+          </apex:column>
+          <apex:column headerValue="Shipping City">
+              {!acc.colum9}
+          </apex:column>
+          <apex:column headerValue="Shipping State">
+              {!acc.colum10}
+          </apex:column>
+          <apex:column headerValue="Shipping Postal Code">
+              {!acc.colum11}
+          </apex:column>
+          <apex:column headerValue="Shipping Country">
+              {!acc.colum12}
+          </apex:column>
+      </apex:pageblocktable--> 
+      
+      </apex:pageBlock>       
+   </apex:form>   
+
+</apex:page>

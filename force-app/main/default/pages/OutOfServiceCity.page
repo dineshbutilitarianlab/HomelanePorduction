@@ -1,0 +1,179 @@
+<apex:page standardController="Lead" extensions="OutOfServiceCity_Controller">
+    <html>
+
+    <head>
+        <title>Test</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA34s9PgamQPY0xqDwAXCMrpPImuOKcu6M&libraries=places">
+        </script>
+        </link>
+        <style>
+            .form_main {
+                margin: auto;
+                width: 100%;
+                /* border: 3px solid green; */
+                padding: 10px;
+                text-align: center;
+                margin-left: 100%;
+                margin-right: auto;
+                margin-top: 10%;
+            }
+
+            .message .messageText h4 {
+           
+                display: none !important;
+            }
+            .form_main h4 {
+                font-family: roboto;
+                font-size: 20px;
+                font-weight: 300;
+                margin-bottom: 15px;
+                margin-top: 20px;
+                text-transform: uppercase;
+            }
+
+            .heading {
+                border-bottom: 1px solid #fcab0e;
+                padding-bottom: 9px;
+                position: relative;
+            }
+
+            .heading span {
+                background: #9e6600 none repeat scroll 0 0;
+                bottom: -2px;
+                height: 3px;
+                left: 0;
+                position: absolute;
+                width: 170px;
+            }
+
+            .form {
+                border-radius: 7px;
+                padding: 6px;
+            }
+
+            .txt[type="text"] {
+                border: 1px solid #ccc;
+                margin: 10px 0;
+                padding: 10px 0 10px 5px;
+                width: 100%;
+            }
+
+            .txt_3[type="text"] {
+                margin: 10px 0 0;
+                padding: 10px 0 10px 5px;
+                width: 100%;
+            }
+
+            .txt2[type="button"] {
+                background: #FF5A5F none repeat scroll 0 0;
+                border: 1px solid #4f5c04;
+                border-radius: 25px;
+                color: #fff;
+                font-size: 16px;
+                font-style: normal;
+                line-height: 35px;
+                margin: 10px 0;
+                padding: 0;
+                text-transform: uppercase;
+                width: 30%;
+            }
+
+            .txt2:hover {
+                background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+                color: #5793ef;
+                transition: all 0.5s ease 0s;
+            }
+            
+            #error{
+                color: red;
+            }
+        </style>
+        <script type="text/javascript">
+            var city = '';
+           </script>
+    </head>
+
+    <body> 
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form_main">
+                        <apex:pageBlock id="pageMsgBlock">
+                            <apex:pageMessages rendered="true" id="msgId"/>
+                        </apex:pageBlock> 
+                        <h4 class="heading"><strong>Out of Service</strong> City <span></span></h4>
+                        <div class="form">
+                            <apex:form >
+                                <div>
+                                <input type="text" required="" id="locationTextField" placeholder="Please Enter The City" value="" name="city"
+                                    class="txt"></input>
+                                    <span id='error' class='hide'>Please enter the city </span>
+                                </div>
+                                <input type="button" onclick="updateCitySf()" value="submit" name="submit" class="txt2"></input>
+                                <apex:actionFunction name="saveToSf" action="{!UpdateCity}" oncomplete="RefreshPrimaryTab('{!LeadId}',{!isSuccessfullyUpdated}); return true;" status="waitStatus" rerender="view,pageMsgBlock">      
+                                    <apex:param id="para-city" name="scity" value="" />
+                                </apex:actionFunction>  
+                            </apex:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+
+        function init() {
+            var input = document.getElementById('locationTextField');
+            var options = {
+                types: ['(cities)'],
+                componentRestrictions: {
+                    country: "in"
+                }
+            };
+            var autocomplete = new google.maps.places.Autocomplete(input, options);
+
+            google.maps.event.addListener(autocomplete, 'place_changed',
+                function () {
+                debugger;
+                    var place = autocomplete.getPlace();
+                    jQuery.each(place.address_components, function (i, address_component) {
+
+                        if (address_component.types[0] == "locality") {
+                            itemLocality = address_component.long_name;
+                        }
+  
+                    });
+
+                    city = itemLocality;
+                }
+            );
+        }
+
+        google.maps.event.addDomListener(window, 'load', init);
+        
+        function updateCitySf(val){
+            if(!city){
+               $('#error').removeClass('hide');
+               return;
+            }
+            saveToSf(city);
+        }
+    </script>
+    <script type="text/javascript">
+
+        function RefreshPrimaryTab(id,shouldRefresh) 
+        {
+            if(shouldRefresh){
+                window.top.location.href = '/' + id;
+            }
+            
+        }
+
+    </script>
+
+    </html>
+</apex:page>

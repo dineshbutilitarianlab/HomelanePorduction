@@ -1,0 +1,405 @@
+<apex:page standardController="Opportunity" renderAs="pdf">
+    <table width="100%" style="font-family: Arial, Helvetica, sans-serif; border-collapse: collapse;" cellpadding="5">
+        <tr>
+            <td colspan="4">
+                Opportunity information
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" style="font-size: x-large; font-weight: bold">
+                {!Opportunity.Name}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" style="font-weight: bold; border-bottom-style: solid; border-bottom-width: thick;
+                border-bottom-color: #ddb929;">
+                Opportunity Information
+            </td>
+        </tr>
+        <tr>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Opportunity Owner
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Owner.Name}
+            </td>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Expected Revenue
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.ExpectedRevenue}
+            </td>
+        </tr>
+        <tr>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Opportunity Name
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Name}
+            </td>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Close Date
+            </td>
+            <td style="font-weight: bold">
+                <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                    <apex:param value="{!Opportunity.CloseDate}" />
+                </apex:outputText>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Account Name
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Account.Name}
+            </td>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Next Step
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.NextStep}
+            </td>
+        </tr>
+        <tr>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Type
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Type}
+            </td>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Stage
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.StageName}
+            </td>
+        </tr>
+        <tr>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Lead Source
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.LeadSource}
+            </td>
+
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Probability
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Probability}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                &nbsp;
+            </td>
+        </tr>
+
+
+
+
+
+        <tr>
+            <td colspan="4" style="font-weight: bold; border-bottom-style: solid; border-bottom-width: thick;
+                border-bottom-color: #ddb929;">
+                Property Details
+            </td>
+        </tr>
+        <tr>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Builder Name
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Builder_Name__r.Name}
+            </td>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Property Move-In Date
+            </td>
+            <td style="font-weight: bold">
+                <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                    <apex:param value="{!Opportunity.Property_Move_In_Date__c}" />
+                </apex:outputText>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Property Name
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Property_Name__r.Name}
+            </td>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Property Type
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Property_Type__c}
+            </td>
+        </tr>
+
+
+
+        <tr>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Property Config
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Property_Config__c}
+            </td>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Floorplan URL
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Floorplan_URL__c}
+            </td>
+        </tr>
+
+
+
+        <tr>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Floorplan Received
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Floorplan_Received__c}
+            </td>
+
+        </tr>
+
+
+        <tr>
+            <td colspan="4">
+                &nbsp;
+            </td>
+        </tr>
+
+
+        <tr>
+            <td colspan="4" style="font-weight: bold; border-bottom-style: solid; border-bottom-width: thick;
+                border-bottom-color: #ddb929;">
+                Fixed Furniture Requirements Details
+            </td>
+        </tr>
+
+        <tr>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Interior Start Date
+            </td>
+            <td style="font-weight: bold">
+                <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                    <apex:param value="{!Opportunity.Interior_Start_Date__c}" />
+                </apex:outputText>
+            </td>
+
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Study Table / Book Shelf
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Study_Table_Book_Shelf__c}
+            </td>
+        </tr>
+
+
+        <tr>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Interior Budget
+
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Interior_Budget__c}
+            </td>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Foyer / Shoe Rack
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Foyer_Shoe_Rack__c}
+            </td>
+        </tr>
+
+
+
+
+        <tr>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Wardrobes
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Wardrobes__c}
+            </td>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Utility Unit
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Utility_Unit__c}
+            </td>
+        </tr>
+
+        <tr>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Entertainment Unit
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Entertainment_Unit__c}
+            </td>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Pooja
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Pooja__c}
+            </td>
+        </tr>
+
+        <tr>
+
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Crockery Unit
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Crockery_Unit__c}
+            </td>
+        </tr>
+
+
+        <tr>
+            <td colspan="4">
+                &nbsp;
+            </td>
+        </tr>
+
+
+
+        <tr>
+            <td colspan="4" style="font-weight: bold; border-bottom-style: solid; border-bottom-width: thick;
+                border-bottom-color: #ddb929;">
+                Customer Details
+            </td>
+        </tr>
+
+        <tr>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+
+                Customer Email
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Customer_Email__c}
+            </td>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Customer Phone Number
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Customer_Phone_Number__c}
+            </td>
+        </tr>
+
+
+        <tr>
+            <td colspan="4">
+                &nbsp;
+            </td>
+        </tr>
+        
+        
+        
+         <tr>
+            <td colspan="4" style="font-weight: bold; border-bottom-style: solid; border-bottom-width: thick;
+                border-bottom-color: #ddb929;">
+                Residence / Site / Showroom Details
+            </td>
+        </tr>
+
+        <tr>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+               Venue - Site: Street
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Appointment_Venue_Site_Residence_Add1__c}
+            </td>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Venue - Site: Locality
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Appointment_Venue_Site_Resi_Locality__c}
+            </td>
+        </tr>
+        
+        <tr>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+               Venue - Site: City
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Appointment_Venue_Site_Residence_City__c}
+            </td>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Venue - Site: Landmark
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Appointment_Venue_Site_Resi_Landmark__c}
+            </td>
+        </tr>
+        
+        <tr>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+               Venue - Site: State
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Appointment_Venue_Site_Resi_State__c}
+            </td>
+            <td align="right" style="color: #808080; border-right-style: solid; border-right-width: thin;
+                border-right-color: #ddb929;">
+                Residence Address
+            </td>
+            <td style="font-weight: bold">
+                {!Opportunity.Residence_Address__c}
+            </td>
+        </tr>
+
+
+        <tr>
+            <td colspan="4">
+                &nbsp;
+            </td>
+        </tr>
+        
+    </table>
+    <br/>
+    <br/>
+
+</apex:page>

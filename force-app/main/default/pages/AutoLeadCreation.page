@@ -1,0 +1,89 @@
+<apex:page controller="AutoLeadCreationController" showHeader="false" sidebar="false" lightningStylesheets="true" title="Create Leads">
+<!--<div class="leadpick">
+        Is it a test lead? : 
+        <apex:selectList value="{!selectedOption}" id="selected" size="1" styleClass="slds-form-element__control slds-input selecting" >
+            <apex:selectOptions value="{!optionList}"  >
+            </apex:selectOptions>
+        </apex:selectList> <br/><br/>
+        </div>-->
+    
+    <apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.1/select2.css"/>
+  <apex:stylesheet value="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.1/select2.js" />
+   <apex:stylesheet value="/resource/SLDS102/assets/styles/salesforce-lightning-design-system.min.css"/>
+   <style>
+   .slds-m-horizontal_xx-large {
+       margin-right: 500px !important;
+       margin-left: 500px !important;
+   }
+   .slds-button_brand {
+       margin-left: 150px !important;
+   }
+   .boldClass {
+       margin-left: 150px !important;
+   }
+   </style>
+  <apex:slds />
+  <div class="slds-m-horizontal_xx-large">
+  <div class="slds-scope">
+    <apex:form >
+    
+    <apex:pagemessages />
+    <apex:pageBlock >
+      <b class="boldClass">LEAD FORM</b><br/><br/>
+        Name : 
+        <apex:inputText value="{!lastName}" styleClass="slds-form-element__control slds-input"/><br/><br/>
+        Email : 
+        <apex:inputText value="{!email}" styleClass="slds-form-element__control slds-input"/><br/><br/>
+        Phone : 
+        <apex:inputText value="{!phone}" styleClass="slds-form-element__control slds-input"/><br/><br/>
+        City : 
+        <apex:selectList value="{!cityOption1}"  size="1" styleClass="slds-form-element__control slds-input">
+            <apex:selectOptions value="{!cityListOption}"  >
+            </apex:selectOptions>
+        </apex:selectList> <br/><br/>
+        
+               
+        Interior Designer Email : 
+        <apex:inputText value="{!intDesign}" styleClass="slds-form-element__control slds-input"/><br/><br/>
+        
+        <div class="showroomlist">
+        Showroom : 
+        <apex:selectList value="{!showroomOption1}"  size="1" styleClass="slds-form-element__control slds-input" >
+            <apex:selectOptions value="{!showroomListOption}"  >
+            </apex:selectOptions>
+        </apex:selectList> <br/><br/>
+        </div>
+       
+        <apex:commandButton value="Save"  onclick="this.style.display='none';"  action="{!autoLead}" styleClass="slds-button slds-button_brand"/>
+    </apex:pageBlock>
+    </apex:form>
+    </div>
+    </div>
+   <script>
+        
+      $(document).ready(function(){
+          $(".showroomlist").hide();
+          $('.leadpick').change(function(){    
+          if($('.selecting option:selected').val() == 'Yes'){   
+             $('.showroomlist select').val('Test Showroom');            
+            // alert('Yes');
+             $(".showroomlist").hide();
+          }
+          if($('.selecting option:selected').val() == 'No'){   
+              $(".showroomlist").show();
+              $('.showroomlist select').val('---None---');
+            // alert('No');
+          }
+          if($('.selecting option:selected').val() == '---None---'){   
+              $(".showroomlist").hide();
+              $('.showroomlist select').val('---None---');
+            // alert('None');
+          }
+          });
+      });
+    
+   </script>
+</apex:page>

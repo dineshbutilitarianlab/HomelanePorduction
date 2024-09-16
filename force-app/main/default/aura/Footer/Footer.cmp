@@ -1,0 +1,37 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <div class="footer-container">
+        
+        <div class="footer-menu">
+            
+            <div class="fm_block">
+                
+                <ul>
+                    
+                    <li><img src="/homelane/s/Tab_Icon_2.jpg" alt="hmlicon"/></li>
+                    <li><a>Phone: 1800-102-4663</a></li>
+                    <li><a>Email: hello@homelane.com</a></li>
+                </ul>
+            </div>
+            
+            <div class="fm_block">
+                
+                <ul>
+                    
+                    <li><a href="http://www.homelane.com/about"><img src="/homelane/s/widget-link-dark.png" alt="hmlicon"/>  Team</a></li>
+                    <li><a href="http://www.homelane.com/press-coverage"><img src="/homelane/s/widget-link-dark.png" alt="hmlicon"/> Press</a></li>
+                    <li><a href="http://www.homelane.com/past-projects"><img src="/homelane/s/widget-link-dark.png" alt="hmlicon"/> Past Projects</a></li>
+                    <li><a href="http://www.homelane.com/contact"><img src="/homelane/s/widget-link-dark.png" alt="hmlicon"/> Contact Us</a></li>
+                    <li><a href="http://www.homelane.com/homelane-kaleido"><img src="/homelane/s/widget-link-dark.png" alt="hmlicon"/> Kaleido</a></li>
+                    <li><a href="http://www.homelane.com/blog/"><img src="/homelane/s/widget-link-dark.png" alt="hmlicon"/> Blog</a></li>
+                </ul>
+            </div>
+            
+           
+            
+                       
+            
+            
+        </div>
+    </div>
+    
+</aura:component>

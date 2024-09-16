@@ -1,0 +1,12 @@
+.THIS .closedlost{
+	background-color: rgb(194, 57, 52) !important;
+    color : white !important;
+}
+.THIS .closedwon{
+	background-color: rgb(4, 132, 75) !important;
+    border-color :rgb(4, 132, 75) !important;
+}
+
+.THIS .theSVG{
+    margin-right: 15% !important;
+}

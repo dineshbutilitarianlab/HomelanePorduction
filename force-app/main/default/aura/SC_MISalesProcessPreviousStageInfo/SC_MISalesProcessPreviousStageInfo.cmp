@@ -1,0 +1,67 @@
+<!--
+ * Created By  : Sanjeev Shukla.
+ * Modified By : Naveen Kumar B H.
+ * Description : To display Sales Coach Previous Stage Information.
+     			 * Using in SC_MISalesProcess component.
+-->
+<aura:component controller="SC_MISalesProcess" access="global"> 
+    <!--calling 'doInit' lightning controller function to get all Sections,Subsections,Items,and Responses from Database -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!-- event calling from SC_MISalesProcess to call save method-->
+    <aura:handler event="c:callChildHelper" action="{!c.callGetAllPreviousStage}"/>
+    
+    <!-- 'listWrapSec' attribute will hold all all sections,Subsections,Items,Responses of previous Stage. -->        
+    <aura:attribute name="listWrapSec" type="PreviousStageSections[]" />
+    <!-- 'stageName,oppId,recordTypeId' arepassed from SC_MISalesProcess -->
+    <aura:attribute name="stageName" type="String" default=""/>
+    <aura:attribute name="oppId" type="Id" default=""/>
+    <aura:attribute name="recordTypeId" type="String" default=""/>
+    
+    <!--To be confirmed from Sanjeev Shukla -->
+    <aura:attribute name="preStageName" type="String" default=""/>
+    <!--To be confirmed from Sanjeev Shukla -->
+    <aura:attribute name="isDisplay" type="Boolean" default="false"/>
+    
+    <div class="theContainer">
+        <div aura:id="spinnerId" class="slds-backdrop slds-backdrop--close">
+            <div aura:id="spinnerIdChild" class="slds-modal slds-fade-in-close" aria-hidden="false" role="dialog">
+                <div class="slds-modal__container">      
+                    <div>
+                        <center><div class="slds-spinner slds-spinner--medium" aura:id="spinner">
+                            <img src="/resource/SLDS0203/assets/images/spinners/slds_spinner_inverse.gif" alt="Loading..." />
+                            </div>
+                        </center>            
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-grid slds-wrap">   
+            <aura:iteration items="{!v.listWrapSec}" var="sec">
+                <div class="{!if(v.stageName != 'Closed Lost', 'theParentChild', 'theParentChildClose')}">
+                    <aura:if isTrue="{!v.stageName != 'Closed Lost'}">
+                        <div aura:id="SectionContainer" class="theSecChild" style="background-color: #4bca81; color: white;">{!sec.section}                             
+                            <div onclick="{!c.toggleCollapse}" id="{!sec.indexNum}" class="theClass" >
+                                <!-- 'togleIcon' style class is written in SC_MISalesProcess (Parent Component) -->
+                                <i id="{!sec.indexNum+'-icn'}" class="fa fa-2x togleIcon fa-plus-square-o"></i>
+                            </div>
+                        </div>
+                        <aura:set attribute="else">
+                            <div aura:id="SectionContainer" class="theSecChild" style="background-color: #e0e5ee; color: #16325c;">{!sec.section}                               
+                                <div onclick="{!c.toggleCollapse}"  id="{!sec.indexNum}" class="theClass" >
+                                    <!-- 'togleIcon' style class is written in SC_MISalesProcess (Parent Component) -->
+                                    <i id="{!sec.indexNum+'-icn'}" class="fa fa-2x togleIcon fa-plus-square-o"></i>
+                                </div>
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                    <div class="theChild" style="display : none;" >
+                        <aura:if isTrue="{!sec.isShow}">
+                            <c:SC_PreviousStageUserResponse stageName="{!sec.stageName}" oppId="{!v.oppId}" recordTypeId="{!v.recordTypeId}"/>
+                        </aura:if>
+                    </div>
+                </div>
+            </aura:iteration>
+        </div>
+    </div>
+</aura:component>
